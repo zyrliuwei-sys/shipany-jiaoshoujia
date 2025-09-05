@@ -1,5 +1,5 @@
-import { db } from "@/db";
-import { config } from "@/db/schema";
+import { db } from "@/core/db";
+import { config } from "@/config/db/schema";
 
 export type Config = typeof config.$inferSelect;
 export type NewConfig = typeof config.$inferInsert;

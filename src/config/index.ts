@@ -1,42 +1,56 @@
 import "dotenv/config";
 import { config } from "dotenv";
 
+export interface Configs {
+  baseUrl?: string;
+  databaseUrl?: string;
+  databaseDriver?: string;
+  databaseProvider?: string;
+  betterAuthUrl?: string;
+  betterAuthSecret?: string;
+  googleClientId?: string;
+  googleClientSecret?: string;
+  githubClientId?: string;
+  githubClientSecret?: string;
+  resendApiKey?: string;
+  adsenseCode?: string;
+}
+
 export function getConfigs() {
-  // client side
+  const configs: Configs = {
+    baseUrl: "http://localhost:3000",
+  };
+
   if (typeof window !== "undefined") {
-    return {};
+    // browser side
+    configs.baseUrl = process.env.NEXT_PUBLIC_BASE_URL || window.location.href;
+  } else {
+    config({ path: ".env" });
+    config({ path: ".env.local" });
+    config({ path: ".env.development" });
+    config({ path: ".env.production" });
+
+    // database
+    configs.databaseUrl = process.env.DATABASE_URL || "";
+    configs.databaseDriver = process.env.DATABASE_DRIVER || "";
+    configs.databaseProvider = process.env.DATABASE_PROVIDER || "";
+
+    // auth
+    configs.betterAuthUrl = process.env.BETTER_AUTH_URL || configs.baseUrl;
+    configs.betterAuthSecret = process.env.BETTER_AUTH_SECRET || "";
+    configs.googleClientId = process.env.GOOGLE_CLIENT_ID || "";
+    configs.googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || "";
+    configs.githubClientId = process.env.GITHUB_CLIENT_ID || "";
+    configs.githubClientSecret = process.env.GITHUB_CLIENT_SECRET || "";
+
+    // email
+    configs.resendApiKey = process.env.RESEND_API_KEY || "";
+
+    // ad
+    configs.adsenseCode = process.env.ADSENSE_CODE || "";
   }
 
-  // server side
-  config({ path: ".env" });
-  config({ path: ".env.local" });
-  config({ path: ".env.development" });
-  config({ path: ".env.production" });
-
-  // database
-  const databaseProvider = process.env.DATABASE_PROVIDER || "sqlite";
-  const databaseUrl = process.env.DATABASE_URL || "";
-
-  // auth
-  const authUrl = process.env.AUTH_URL || "";
-  const authSecret = process.env.AUTH_SECRET || "";
-
-  // auth: google
-  const authGoogleId = process.env.AUTH_GOOGLE_ID || "";
-  const authGoogleSecret = process.env.AUTH_GOOGLE_SECRET || "";
-
-  // auth: github
-  const authGithubId = process.env.AUTH_GITHUB_ID || "";
-  const authGithubSecret = process.env.AUTH_GITHUB_SECRET || "";
-
-  return {
-    databaseProvider,
-    databaseUrl,
-    authUrl,
-    authSecret,
-    authGoogleId,
-    authGoogleSecret,
-    authGithubId,
-    authGithubSecret,
-  };
+  return configs;
 }
+
+export const configs = getConfigs();

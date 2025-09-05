@@ -1,28 +1,46 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "@/config/styles/globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { getLocale, setRequestLocale } from "next-intl/server";
+import { locales } from "@/config/locale";
+import { getConfigs } from "@/config";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  setRequestLocale(locale);
+
+  const configs = getConfigs();
+  const baseUrl = configs.baseUrl || "";
+  const adsenseCode = configs.adsenseCode || "";
+
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+    <html lang={locale} suppressHydrationWarning>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {adsenseCode && (
+          <meta name="google-adsense-account" content={adsenseCode} />
+        )}
+
+        <link rel="icon" href="/favicon.ico" />
+
+        {locales ? (
+          <>
+            {locales.map((loc) => (
+              <link
+                key={loc}
+                rel="alternate"
+                hrefLang={loc}
+                href={`${baseUrl}${loc === "en" ? "" : `/${loc}`}/`}
+              />
+            ))}
+            <link rel="alternate" hrefLang="x-default" href={baseUrl} />
+          </>
+        ) : null}
+      </head>
+      <body>{children}</body>
     </html>
   );
 }
