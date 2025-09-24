@@ -116,7 +116,6 @@ export class StripeProvider implements PaymentProvider {
           price: request.price,
           customer: request.customer,
           metadata: request.metadata,
-          provider: this.name,
         },
         provider: this.name,
         providerResult: session,
@@ -216,7 +215,6 @@ export class StripeProvider implements PaymentProvider {
           price: request.plan.price,
           customer: request.customer,
           metadata: request.metadata,
-          provider: this.name,
         },
         provider: this.name,
       };
@@ -256,8 +254,6 @@ export class StripeProvider implements PaymentProvider {
         url: session.url || undefined,
         status: this.mapStripeStatus(session.status),
         metadata: session.metadata || undefined,
-        provider: this.name,
-        providerResult: session,
       };
     } catch (error) {
       console.error("Error retrieving Stripe session:", error);

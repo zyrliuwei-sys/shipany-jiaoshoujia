@@ -130,7 +130,6 @@ export class PayPalProvider implements PaymentProvider {
           price: request.price,
           customer: request.customer,
           metadata: request.metadata,
-          provider: this.name,
         },
         provider: this.name,
         providerResult: result,
@@ -295,7 +294,6 @@ export class PayPalProvider implements PaymentProvider {
           price: request.plan.price,
           customer: request.customer,
           metadata: request.metadata,
-          provider: this.name,
         },
         provider: this.name,
       };
@@ -347,8 +345,6 @@ export class PayPalProvider implements PaymentProvider {
       return {
         id: result.id,
         status: this.mapPayPalStatus(result.status),
-        provider: this.name,
-        providerResult: result,
       };
     } catch (error) {
       console.error("Error retrieving PayPal session:", error);

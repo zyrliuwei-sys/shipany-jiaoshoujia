@@ -88,7 +88,6 @@ export class CreemProvider implements PaymentProvider {
           price: request.price,
           customer: request.customer,
           metadata: request.metadata,
-          provider: this.name,
         },
         provider: this.name,
         providerResult: result,
@@ -138,8 +137,6 @@ export class CreemProvider implements PaymentProvider {
         url: result.checkout_url,
         status: this.mapCreemStatus(result.status),
         metadata: result.metadata,
-        provider: this.name,
-        providerResult: result,
       };
     } catch (error) {
       console.error("Error retrieving Creem session:", error);
