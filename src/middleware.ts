@@ -56,6 +56,9 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  intlResponse.headers.set("x-pathname", request.nextUrl.pathname);
+  intlResponse.headers.set("x-url", request.url);
+
   // For all other routes (including /, /sign-in, /sign-up, /sign-out), just return the intl response
   return intlResponse;
 }

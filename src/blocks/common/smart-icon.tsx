@@ -4,11 +4,10 @@ const iconCache: { [key: string]: ComponentType<any> } = {};
 
 // 自动判断图标库的函数
 function detectIconLibrary(name: string): "ri" | "lucide" {
-  // React Icons 的图标都以 "Ri" 开头
-  if (name.startsWith("Ri")) {
+  if (name && name.startsWith("Ri")) {
     return "ri";
   }
-  // 其他情况默认使用 lucide
+
   return "lucide";
 }
 
@@ -36,13 +35,17 @@ export function SmartIcon({
           if (IconComponent) {
             return { default: IconComponent as ComponentType<any> };
           } else {
-            console.warn(`Icon "${name}" not found in react-icons/ri, using fallback`);
+            console.warn(
+              `Icon "${name}" not found in react-icons/ri, using fallback`
+            );
             return { default: module.RiQuestionLine as ComponentType<any> };
           }
         } catch (error) {
           console.error(`Failed to load react-icons/ri:`, error);
           const fallbackModule = await import("react-icons/ri");
-          return { default: fallbackModule.RiQuestionLine as ComponentType<any> };
+          return {
+            default: fallbackModule.RiQuestionLine as ComponentType<any>,
+          };
         }
       });
     } else {
@@ -54,7 +57,9 @@ export function SmartIcon({
           if (IconComponent) {
             return { default: IconComponent as ComponentType<any> };
           } else {
-            console.warn(`Icon "${name}" not found in lucide-react, using fallback`);
+            console.warn(
+              `Icon "${name}" not found in lucide-react, using fallback`
+            );
             return { default: module.HelpCircle as ComponentType<any> };
           }
         } catch (error) {

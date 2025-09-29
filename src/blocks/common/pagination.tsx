@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/pagination";
 
 type PaginatorProps = {
+  total?: number;
+  perPage?: number;
   currentPage: number;
   totalPages: number;
   onPageChange: (pageNumber: number) => void;
@@ -22,6 +24,8 @@ type PaginatorProps = {
 };
 
 function Paginator({
+  total,
+  perPage,
   currentPage,
   totalPages,
   onPageChange,
@@ -30,7 +34,11 @@ function Paginator({
 }: PaginatorProps) {
   return (
     <PaginationComponent className={className}>
-      <PaginationContent>
+      <PaginationContent className="w-full flex justify-center">
+        <div className="text-sm text-muted-foreground">
+          Total: {total}, Page: {currentPage} / {totalPages}
+        </div>
+        <div className="flex-1"></div>
         {showPreviousNext && totalPages && currentPage - 1 >= 1 ? (
           <PaginationItem className="cursor-pointer" key={"prev"}>
             <PaginationPrevious
@@ -74,7 +82,7 @@ const generatePaginationLinks = (
         <PaginationItem className="cursor-pointer" key={`page-${i}`}>
           <PaginationLink
             onClick={() => i !== currentPage && onPageChange(i)}
-            isActive={i === currentPage}
+            isActive={i == currentPage}
             className="cursor-pointer"
           >
             {i}
@@ -161,8 +169,10 @@ export function Pagination({
 
   return (
     <Paginator
-      currentPage={page}
-      totalPages={totalPages}
+      total={Number(total)}
+      perPage={Number(limit)}
+      currentPage={Number(page)}
+      totalPages={Number(totalPages)}
       onPageChange={handlePageChange}
       showPreviousNext={true}
       className={className}

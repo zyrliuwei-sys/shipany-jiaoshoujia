@@ -10,6 +10,7 @@ export interface TableColumn {
 }
 
 export interface Table {
+  title?: string;
   columns: TableColumn[];
   data: any[];
   pagination?: Pagination;

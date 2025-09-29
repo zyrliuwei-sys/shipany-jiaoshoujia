@@ -9,11 +9,7 @@ import {
   updateOrderWithSubscription,
 } from "@/services/order";
 import { paymentService } from "@/services/payment";
-import {
-  createSubscription,
-  NewSubscription,
-  SubscriptionStatus,
-} from "@/services/subscription";
+import { NewSubscription, SubscriptionStatus } from "@/services/subscription";
 import { getUserInfo } from "@/services/user";
 import { redirect } from "next/navigation";
 

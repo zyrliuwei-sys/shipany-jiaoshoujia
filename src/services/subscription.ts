@@ -1,6 +1,6 @@
 import { subscription } from "@/config/db/schema";
 import { db } from "@/core/db";
-import { and, desc, eq } from "drizzle-orm";
+import { and, count, desc, eq } from "drizzle-orm";
 
 export type Subscription = typeof subscription.$inferSelect;
 export type NewSubscription = typeof subscription.$inferInsert;
@@ -77,4 +77,27 @@ export async function getSubscriptions({
     .offset((page - 1) * limit);
 
   return result;
+}
+
+/**
+ * get subscriptions count
+ */
+export async function getSubscriptionsCount({
+  userId,
+  status,
+}: {
+  userId?: string;
+  status?: string;
+} = {}): Promise<number> {
+  const [result] = await db()
+    .select({ count: count() })
+    .from(subscription)
+    .where(
+      and(
+        userId ? eq(subscription.userId, userId) : undefined,
+        status ? eq(subscription.status, status) : undefined
+      )
+    );
+
+  return result?.count || 0;
 }

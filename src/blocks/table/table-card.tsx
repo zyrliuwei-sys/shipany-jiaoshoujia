@@ -1,23 +1,41 @@
 import { Table as TableType } from "@/types/blocks/table";
 import { Table } from "@/blocks/table";
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 import { Pagination } from "@/blocks/common/pagination";
+import { cn } from "@/lib/utils";
 
-export function TableCard({ table }: { table: TableType }) {
+export function TableCard({
+  table,
+  className,
+}: {
+  table: TableType;
+  className?: string;
+}) {
   return (
-    <Card className="p-4">
-      <Table {...table} />
-      <div className="">
-        <div className="flex-1"></div>
-        {table.pagination && (
-          <Pagination
-            total={table.pagination.total}
-            limit={table.pagination.limit}
-            page={table.pagination.page}
-            className="justify-end pb-4"
-          />
-        )}
-      </div>
+    <Card className={cn(className)}>
+      {table.title && (
+        <CardHeader>
+          <CardTitle>{table.title}</CardTitle>
+        </CardHeader>
+      )}
+
+      {table && (
+        <CardContent>
+          <Table {...table} />
+        </CardContent>
+      )}
+
+      {table.pagination && (
+        <CardFooter>
+          <Pagination {...table.pagination} />
+        </CardFooter>
+      )}
     </Card>
   );
 }

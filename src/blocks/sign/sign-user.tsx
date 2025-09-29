@@ -13,10 +13,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "@/core/i18n/navigation";
-import { Loader2 } from "lucide-react";
+import { CreditCard, Loader2 } from "lucide-react";
 import { envConfigs } from "@/config";
 import { SignModal } from "./sign-modal";
 import { useAppContext } from "@/contexts/app";
+import { Link } from "@/core/i18n/navigation";
 
 export function SignUser({
   isScrolled,
@@ -55,6 +56,15 @@ export function SignUser({
         <DropdownMenuContent>
           <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
           <DropdownMenuSeparator />
+
+          <DropdownMenuItem asChild>
+            <Link href="/settings/billing">
+              <CreditCard />
+              Billing
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+
           <DropdownMenuItem
             onClick={() =>
               signOut({

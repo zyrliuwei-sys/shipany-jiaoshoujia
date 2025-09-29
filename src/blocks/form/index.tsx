@@ -154,8 +154,8 @@ export function Form({
         onSubmit={form.handleSubmit(onSubmit)}
         className="w-full md:max-w-xl space-y-0 px-2 pb-2"
       >
-        {title && <h2 className="text-lg font-bold">{title}</h2>}
-        {description && <p className="text-muted-foreground">{description}</p>}
+        {/* {title && <h2 className="text-lg font-bold">{title}</h2>}
+        {description && <p className="text-muted-foreground">{description}</p>} */}
         <div className="space-y-6 my-6">
           {fields.map((item, index) => {
             return (
