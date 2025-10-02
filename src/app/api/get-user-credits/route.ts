@@ -1,6 +1,6 @@
-import { respData, respErr } from "@/lib/resp";
-import { getRemainingCredits } from "@/services/credit";
-import { getUserInfo } from "@/services/user";
+import { respData, respErr } from "@/shared/lib/resp";
+import { getRemainingCredits } from "@/shared/services/credit";
+import { getUserInfo } from "@/shared/services/user";
 
 export async function POST(req: Request) {
   try {

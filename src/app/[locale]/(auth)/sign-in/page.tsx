@@ -1,5 +1,5 @@
-import { SignIn } from "@/blocks/sign/sign-in";
-import { getConfigs } from "@/services/config";
+import { SignIn } from "@/shared/blocks/sign/sign-in";
+import { getConfigs } from "@/shared/services/config";
 
 export default async function SignInPage({
   searchParams,

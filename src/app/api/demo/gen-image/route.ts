@@ -1,8 +1,8 @@
-import { respData, respErr } from "@/lib/resp";
+import { respData, respErr } from "@/shared/lib/resp";
 import { experimental_generateImage as generateImage } from "ai";
 import { replicate } from "@ai-sdk/replicate";
 import { newStorage } from "@/extensions/storage";
-import { getUuid } from "@/lib/hash";
+import { getUuid } from "@/shared/lib/hash";
 
 export async function POST(req: Request) {
   try {

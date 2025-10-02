@@ -1,5 +1,5 @@
-import { Nav } from "@/types/blocks/common";
-import { ConsoleLayout } from "@/blocks/console/layout";
+import { Nav } from "@/shared/types/blocks/common";
+import { ConsoleLayout } from "@/shared/blocks/console/layout";
 import { ReactNode } from "react";
 
 export default function ActivityLayout({ children }: { children: ReactNode }) {

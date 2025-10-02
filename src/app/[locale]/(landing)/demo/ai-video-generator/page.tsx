@@ -1,4 +1,4 @@
-import { Hero } from "@/blocks/landing/hero";
+import { Hero } from "@/themes/default/blocks/hero";
 import { getTranslations } from "next-intl/server";
 
 export default async function AiVideoGeneratorPage() {

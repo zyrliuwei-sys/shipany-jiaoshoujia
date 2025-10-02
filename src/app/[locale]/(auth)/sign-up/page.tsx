@@ -1,5 +1,5 @@
-import { SignUp } from "@/blocks/sign/sign-up";
-import { getConfigs } from "@/services/config";
+import { SignUp } from "@/shared/blocks/sign/sign-up";
+import { getConfigs } from "@/shared/services/config";
 
 export default async function SignUpPage({
   searchParams,

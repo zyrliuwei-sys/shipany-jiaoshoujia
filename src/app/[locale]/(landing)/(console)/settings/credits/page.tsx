@@ -1,16 +1,16 @@
-import { type Table } from "@/types/blocks/table";
-import { TableCard } from "@/blocks/table";
-import { Card } from "@/blocks/card";
-import { getUserInfo } from "@/services/user";
-import { Empty } from "@/blocks/common";
+import { type Table } from "@/shared/types/blocks/table";
+import { TableCard } from "@/shared/blocks/table";
+import { Card } from "@/shared/blocks/card";
+import { getUserInfo } from "@/shared/services/user";
+import { Empty } from "@/shared/blocks/common";
 import {
   Credit,
   CreditStatus,
   getCredits,
   getCreditsCount,
   getRemainingCredits,
-} from "@/services/credit";
-import { Button } from "@/components/ui/button";
+} from "@/shared/services/credit";
+import { Button } from "@/shared/components/ui/button";
 import { Link } from "@/core/i18n/navigation";
 
 export default async function CreditsPage({

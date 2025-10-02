@@ -1,0 +1,43 @@
+import { AvatarCircles } from "@/shared/components/magicui/avatar-circles";
+import { cn } from "@/shared/lib/utils";
+
+const avatars = [
+  {
+    imageUrl: "https://avatars.githubusercontent.com/u/16860528",
+    profileUrl: "https://github.com/dillionverma",
+  },
+  {
+    imageUrl: "https://avatars.githubusercontent.com/u/20110627",
+    profileUrl: "https://github.com/tomonarifeehan",
+  },
+  {
+    imageUrl: "https://avatars.githubusercontent.com/u/106103625",
+    profileUrl: "https://github.com/BankkRoll",
+  },
+  {
+    imageUrl: "https://avatars.githubusercontent.com/u/59228569",
+    profileUrl: "https://github.com/safethecode",
+  },
+  {
+    imageUrl: "https://avatars.githubusercontent.com/u/59442788",
+    profileUrl: "https://github.com/sanjay-mali",
+  },
+  {
+    imageUrl: "https://avatars.githubusercontent.com/u/89768406",
+    profileUrl: "",
+  },
+];
+
+export function SocialAvatars({
+  num,
+  className,
+}: {
+  num?: number;
+  className?: string;
+}) {
+  return (
+    <div className={cn("mt-6 flex justify-center", className)}>
+      <AvatarCircles numPeople={num || 99} avatarUrls={avatars} />
+    </div>
+  );
+}

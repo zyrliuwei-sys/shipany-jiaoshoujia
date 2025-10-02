@@ -1,4 +1,4 @@
-import { Pricing, FAQ, Testimonials } from "@/blocks/landing";
+import { Pricing, FAQ, Testimonials } from "@/themes/default/blocks";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export default async function PricingPage({

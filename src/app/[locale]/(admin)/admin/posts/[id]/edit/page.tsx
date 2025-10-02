@@ -1,21 +1,20 @@
-import { Header, Main, MainHeader } from "@/blocks/dashboard";
-import { FormCard } from "@/blocks/form";
-import { Form } from "@/types/blocks/form";
-import { getUserInfo } from "@/services/user";
+import { Header, Main, MainHeader } from "@/shared/blocks/dashboard";
+import { FormCard } from "@/shared/blocks/form";
+import { Form } from "@/shared/types/blocks/form";
+import { getUserInfo } from "@/shared/services/user";
 import {
   updatePost,
   UpdatePost,
-  NewPost,
   PostType,
   findPost,
-} from "@/services/post";
-import { PostStatus } from "@/services/post";
+} from "@/shared/services/post";
+import { PostStatus } from "@/shared/services/post";
 import {
   getTaxonomies,
   TaxonomyStatus,
   TaxonomyType,
-} from "@/services/taxonomy";
-import { Empty } from "@/blocks/common";
+} from "@/shared/services/taxonomy";
+import { Empty } from "@/shared/blocks/common";
 
 export default async function PostEditPage({
   params,

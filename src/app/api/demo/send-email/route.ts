@@ -1,6 +1,6 @@
-import { respData, respErr } from "@/lib/resp";
-import { emailService } from "@/services/email";
-import { VerificationCode } from "@/blocks/email/verification-code";
+import { respData, respErr } from "@/shared/lib/resp";
+import { emailService } from "@/shared/services/email";
+import { VerificationCode } from "@/shared/blocks/email/verification-code";
 
 export async function POST(req: Request) {
   try {

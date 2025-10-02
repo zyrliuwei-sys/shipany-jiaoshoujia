@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { DashboardLayout } from "@/blocks/dashboard/layout";
+import { DashboardLayout } from "@/shared/blocks/dashboard/layout";
 import { loadMessages } from "@/core/i18n/request";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 

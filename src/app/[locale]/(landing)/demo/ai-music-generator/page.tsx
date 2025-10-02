@@ -1,8 +1,8 @@
-import { PageHeader } from "@/blocks/common";
-import { CTA, FAQ } from "@/blocks/landing";
-import { MusicGenerator } from "@/blocks/generator";
+import { PageHeader } from "@/shared/blocks/common";
+import { CTA, FAQ } from "@/themes/default/blocks";
+import { MusicGenerator } from "@/shared/blocks/generator";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { getMetadata } from "@/lib/seo";
+import { getMetadata } from "@/shared/lib/seo";
 
 export const generateMetadata = getMetadata({
   metadataKey: "demo.ai-music-generator.metadata",

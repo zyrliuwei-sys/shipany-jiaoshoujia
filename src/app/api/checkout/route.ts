@@ -1,15 +1,15 @@
 import { envConfigs } from "@/config";
-import { getSnowId, getUuid } from "@/lib/hash";
-import { respData, respErr } from "@/lib/resp";
+import { getSnowId, getUuid } from "@/shared/lib/hash";
+import { respData, respErr } from "@/shared/lib/resp";
 import {
   createOrder,
   NewOrder,
   OrderStatus,
   updateOrderByOrderNo,
-} from "@/services/order";
-import { getUserInfo } from "@/services/user";
+} from "@/shared/services/order";
+import { getUserInfo } from "@/shared/services/user";
 import { getTranslations } from "next-intl/server";
-import { paymentService } from "@/services/payment";
+import { paymentService } from "@/shared/services/payment";
 import {
   PaymentRequest,
   PaymentInterval,

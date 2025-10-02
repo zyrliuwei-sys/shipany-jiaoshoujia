@@ -1,7 +1,7 @@
-import { FAQ, CTA, Hero, Showcases } from "@/blocks/landing";
-import { ImageGenerator } from "@/blocks/generator/image-generator";
+import { FAQ, CTA, Hero, Showcases } from "@/themes/default/blocks";
+import { ImageGenerator } from "@/shared/blocks/generator/image-generator";
 import { getTranslations } from "next-intl/server";
-import { getMetadata } from "@/lib/seo";
+import { getMetadata } from "@/shared/lib/seo";
 
 export const generateMetadata = getMetadata({
   metadataKey: "demo.ai-image-generator",

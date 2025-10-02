@@ -88,7 +88,7 @@
   },
   "hero": {
     "title": "Ship AI Startups in hours, not days",
-    "highlight_text": "Ship Any",
+    "highlight_text": "in hours",
     "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups.<br/>Ship Fast with a variety of templates and components.",
     "announcement": {
       "badge": "New",
@@ -112,8 +112,16 @@
         "variant": "outline"
       }
     ],
-    "show_avatars": true,
-    "show_award": false
+    "show_avatars": false,
+    "show_award": false,
+    "image": {
+      "src": "/imgs/features/music.png",
+      "alt": "hero"
+    },
+    "image_invert": {
+      "src": "/imgs/features/music-dark.png",
+      "alt": "hero"
+    }
   },
   "logos": {
     "title": "ShipAny is built on the shoulders of giants",
@@ -159,7 +167,7 @@
     "id": "introduce",
     "title": "What is ShipAny",
     "label": "Introduce",
-    "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups.",
+    "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups, including templates, components, and documentation.",
     "image": {
       "src": "/imgs/features/1.png",
       "alt": "introduce"
@@ -189,6 +197,15 @@
         "icon": "RiCloudyFill",
         "image": {
           "src": "/imgs/features/3.png",
+          "alt": "introduce"
+        }
+      },
+      {
+        "title": "AI Integration",
+        "description": "Integrate AI into your project with ease using our built-in AI SDK.",
+        "icon": "RiRobot2Line",
+        "image": {
+          "src": "/imgs/features/4.png",
           "alt": "introduce"
         }
       }
@@ -539,6 +556,17 @@
         "icon": "BookOpenText"
       }
     ]
+  },
+  "subscribe": {
+    "id": "subscribe",
+    "title": "Subscribe to our newsletter",
+    "description": "Get the latest news and updates from ShipAny.",
+    "submit": {
+      "button": {
+        "title": "Subscribe"
+      },
+      "action": "/api/subscribe"
+    }
   },
   "footer": {
     "id": "footer",

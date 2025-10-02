@@ -1,17 +1,17 @@
-import { Blog } from "@/blocks/landing";
-import { getMetadata } from "@/lib/seo";
-import { Blog as BlogType } from "@/types/blocks/blog";
-import { getPosts, PostStatus, PostType } from "@/services/post";
+import { Blog } from "@/themes/default/blocks";
+import { getMetadata } from "@/shared/lib/seo";
+import { Blog as BlogType } from "@/shared/types/blocks/blog";
+import { getPosts, PostStatus, PostType } from "@/shared/services/post";
 import {
   findTaxonomy,
   getTaxonomies,
   TaxonomyStatus,
   TaxonomyType,
-} from "@/services/taxonomy";
+} from "@/shared/services/taxonomy";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import moment from "moment";
 import { envConfigs } from "@/config";
-import { Empty } from "@/blocks/common";
+import { Empty } from "@/shared/blocks/common";
 
 export async function generateMetadata({
   params,

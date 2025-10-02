@@ -1,11 +1,11 @@
-import { Header, Main, MainHeader } from "@/blocks/dashboard";
-import { FormCard } from "@/blocks/form";
-import { Form } from "@/types/blocks/form";
-import { getUuid } from "@/lib/hash";
-import { getUserInfo } from "@/services/user";
-import { addPost, NewPost, PostType } from "@/services/post";
-import { PostStatus } from "@/services/post";
-import { Empty } from "@/blocks/common";
+import { Header, Main, MainHeader } from "@/shared/blocks/dashboard";
+import { FormCard } from "@/shared/blocks/form";
+import { Form } from "@/shared/types/blocks/form";
+import { getUuid } from "@/shared/lib/hash";
+import { getUserInfo } from "@/shared/services/user";
+import { addPost, NewPost, PostType } from "@/shared/services/post";
+import { PostStatus } from "@/shared/services/post";
+import { Empty } from "@/shared/blocks/common";
 
 export default async function PostAddPage() {
   const user = await getUserInfo();

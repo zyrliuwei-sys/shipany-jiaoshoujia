@@ -1,14 +1,14 @@
-import { Header, Main, MainHeader } from "@/blocks/dashboard";
-import { FormCard } from "@/blocks/form";
-import { Form } from "@/types/blocks/form";
+import { Header, Main, MainHeader } from "@/shared/blocks/dashboard";
+import { FormCard } from "@/shared/blocks/form";
+import { Form } from "@/shared/types/blocks/form";
 import {
   addTaxonomy,
   NewTaxonomy,
   TaxonomyStatus,
   TaxonomyType,
-} from "@/services/taxonomy";
-import { getUuid } from "@/lib/hash";
-import { getUserInfo } from "@/services/user";
+} from "@/shared/services/taxonomy";
+import { getUuid } from "@/shared/lib/hash";
+import { getUserInfo } from "@/shared/services/user";
 
 export default async function CategoryAddPage() {
   const user = await getUserInfo();

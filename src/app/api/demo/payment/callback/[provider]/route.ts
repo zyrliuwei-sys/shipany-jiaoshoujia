@@ -1,5 +1,5 @@
-import { respData, respErr } from "@/lib/resp";
-import { paymentService } from "@/services/payment";
+import { respData, respErr } from "@/shared/lib/resp";
+import { paymentService } from "@/shared/services/payment";
 
 export async function GET(
   req: Request,

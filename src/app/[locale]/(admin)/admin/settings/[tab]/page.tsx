@@ -1,11 +1,11 @@
-import { Header, Main, MainHeader } from "@/blocks/dashboard";
-import { FormCard } from "@/blocks/form";
-import { NavItem } from "@/types/blocks/common";
-import { Form as FormType } from "@/types/blocks/form";
-import { saveConfigs } from "@/services/config";
-import { getConfigs } from "@/services/config";
-import { settingGroups, settings } from "@/services/settings";
-import { getUserInfo } from "@/services/user";
+import { Header, Main, MainHeader } from "@/shared/blocks/dashboard";
+import { FormCard } from "@/shared/blocks/form";
+import { NavItem } from "@/shared/types/blocks/common";
+import { Form as FormType } from "@/shared/types/blocks/form";
+import { saveConfigs } from "@/shared/services/config";
+import { getConfigs } from "@/shared/services/config";
+import { settingGroups, settings } from "@/shared/services/settings";
+import { getUserInfo } from "@/shared/services/user";
 
 export default async function SettingsPage({
   params,

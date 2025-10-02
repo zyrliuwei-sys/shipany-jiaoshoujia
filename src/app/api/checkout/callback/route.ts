@@ -1,23 +1,26 @@
 import { envConfigs } from "@/config";
 import { PaymentStatus, PaymentType } from "@/extensions/payment";
-import { getSnowId, getUuid } from "@/lib/hash";
+import { getSnowId, getUuid } from "@/shared/lib/hash";
 import {
   CreditTransactionScene,
   CreditTransactionType,
   NewCredit,
   CreditStatus,
   calculateCreditExpirationTime,
-} from "@/services/credit";
+} from "@/shared/services/credit";
 import {
   findOrderByOrderNo,
   OrderStatus,
   UpdateOrder,
   updateOrderByOrderNo,
   updateOrderInTransaction,
-} from "@/services/order";
-import { paymentService } from "@/services/payment";
-import { NewSubscription, SubscriptionStatus } from "@/services/subscription";
-import { getUserInfo } from "@/services/user";
+} from "@/shared/services/order";
+import { paymentService } from "@/shared/services/payment";
+import {
+  NewSubscription,
+  SubscriptionStatus,
+} from "@/shared/services/subscription";
+import { getUserInfo } from "@/shared/services/user";
 import { redirect } from "next/navigation";
 
 export async function GET(req: Request) {

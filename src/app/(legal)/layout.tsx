@@ -1,6 +1,6 @@
 import React from "react";
 import { MdOutlineHome } from "react-icons/md";
-import { defaultMetadata } from "@/lib/seo";
+import { defaultMetadata } from "@/shared/lib/seo";
 
 export const generateMetadata = defaultMetadata;
 

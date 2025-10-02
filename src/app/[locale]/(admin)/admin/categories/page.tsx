@@ -1,14 +1,14 @@
-import { Header, Main, MainHeader } from "@/blocks/dashboard";
-import { TableCard } from "@/blocks/table";
-import { type Table } from "@/types/blocks/table";
-import { Button } from "@/types/blocks/common";
+import { Header, Main, MainHeader } from "@/shared/blocks/dashboard";
+import { TableCard } from "@/shared/blocks/table";
+import { type Table } from "@/shared/types/blocks/table";
+import { Button } from "@/shared/types/blocks/common";
 import {
   getTaxonomies,
   getTaxonomiesCount,
   TaxonomyStatus,
   TaxonomyType,
   type Taxonomy,
-} from "@/services/taxonomy";
+} from "@/shared/services/taxonomy";
 
 export default async function CategoriesPage({
   searchParams,

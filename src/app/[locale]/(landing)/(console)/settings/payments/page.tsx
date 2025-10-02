@@ -1,13 +1,13 @@
-import { type Table } from "@/types/blocks/table";
-import { TableCard } from "@/blocks/table";
-import { getUserInfo } from "@/services/user";
-import { Empty } from "@/blocks/common";
+import { type Table } from "@/shared/types/blocks/table";
+import { TableCard } from "@/shared/blocks/table";
+import { getUserInfo } from "@/shared/services/user";
+import { Empty } from "@/shared/blocks/common";
 import {
   getOrders,
   getOrdersCount,
   Order,
   OrderStatus,
-} from "@/services/order";
+} from "@/shared/services/order";
 
 export default async function PaymentsPage({
   searchParams,

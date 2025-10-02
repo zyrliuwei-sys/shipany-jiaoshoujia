@@ -1,7 +1,7 @@
-import { Header, Main, MainHeader } from "@/blocks/dashboard";
-import { TableCard } from "@/blocks/table";
-import { type Table } from "@/types/blocks/table";
-import { getUsers } from "@/services/user";
+import { Header, Main, MainHeader } from "@/shared/blocks/dashboard";
+import { TableCard } from "@/shared/blocks/table";
+import { type Table } from "@/shared/types/blocks/table";
+import { getUsers } from "@/shared/services/user";
 import { getTranslations } from "next-intl/server";
 
 export default async function AdminUsersPage() {

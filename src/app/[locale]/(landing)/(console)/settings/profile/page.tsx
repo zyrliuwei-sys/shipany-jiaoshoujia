@@ -1,7 +1,7 @@
-import { getUserInfo } from "@/services/user";
-import { Empty } from "@/blocks/common";
-import { Form as FormType } from "@/types/blocks/form";
-import { FormCard } from "@/blocks/form";
+import { getUserInfo } from "@/shared/services/user";
+import { Empty } from "@/shared/blocks/common";
+import { Form as FormType } from "@/shared/types/blocks/form";
+import { FormCard } from "@/shared/blocks/form";
 
 export default async function ProfilePage() {
   const user = await getUserInfo();

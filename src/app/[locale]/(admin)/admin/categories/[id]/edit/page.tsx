@@ -1,13 +1,13 @@
-import { Header, Main, MainHeader } from "@/blocks/dashboard";
-import { FormCard } from "@/blocks/form";
-import { Form } from "@/types/blocks/form";
+import { Header, Main, MainHeader } from "@/shared/blocks/dashboard";
+import { FormCard } from "@/shared/blocks/form";
+import { Form } from "@/shared/types/blocks/form";
 import {
   findTaxonomy,
   TaxonomyStatus,
   updateTaxonomy,
   UpdateTaxonomy,
-} from "@/services/taxonomy";
-import { getUserInfo } from "@/services/user";
+} from "@/shared/services/taxonomy";
+import { getUserInfo } from "@/shared/services/user";
 
 export default async function CategoryEditPage({
   params,

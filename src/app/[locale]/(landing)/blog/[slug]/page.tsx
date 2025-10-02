@@ -1,9 +1,9 @@
-import { findPost } from "@/services/post";
-import { BlogDetailTwo } from "@/blocks/landing/blog-detail-two";
+import { findPost } from "@/shared/services/post";
+import { BlogDetailTwo } from "@/themes/default/blocks/blog-detail-two";
 import { getTranslations } from "next-intl/server";
 import { envConfigs } from "@/config";
-import { Post as PostType } from "@/types/blocks/blog";
-import { Empty } from "@/blocks/common";
+import { Post as PostType } from "@/shared/types/blocks/blog";
+import { Empty } from "@/shared/blocks/common";
 import moment from "moment";
 
 export async function generateMetadata({

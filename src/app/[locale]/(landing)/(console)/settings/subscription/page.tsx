@@ -1,12 +1,12 @@
-import { type Table } from "@/types/blocks/table";
-import { TableCard } from "@/blocks/table";
-import { getUserInfo } from "@/services/user";
-import { Empty } from "@/blocks/common";
+import { type Table } from "@/shared/types/blocks/table";
+import { TableCard } from "@/shared/blocks/table";
+import { getUserInfo } from "@/shared/services/user";
+import { Empty } from "@/shared/blocks/common";
 import {
   getSubscriptions,
   getSubscriptionsCount,
   Subscription,
-} from "@/services/subscription";
+} from "@/shared/services/subscription";
 import moment from "moment";
 
 export default async function SubscriptionPage({

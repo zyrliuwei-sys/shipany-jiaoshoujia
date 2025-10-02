@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 import { routing } from "@/core/i18n/config";
 import { setRequestLocale } from "next-intl/server";
 import { ThemeProvider } from "@/core/theme/provider";
-import { AppContextProvider } from "@/contexts/app";
-import { Toaster } from "@/components/ui/sonner";
-import { defaultMetadata } from "@/lib/seo";
+import { AppContextProvider } from "@/shared/contexts/app";
+import { Toaster } from "@/shared/components/ui/sonner";
+import { defaultMetadata } from "@/shared/lib/seo";
 
 export const generateMetadata = defaultMetadata;
 

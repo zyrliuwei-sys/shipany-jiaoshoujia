@@ -1,4 +1,4 @@
-import { respData, respErr } from "@/lib/resp";
+import { respData, respErr } from "@/shared/lib/resp";
 
 export async function POST(req: Request) {
   try {

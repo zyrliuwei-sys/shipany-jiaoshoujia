@@ -1,7 +1,7 @@
-import { ConsoleLayout } from "@/blocks/console/layout";
-import { Nav } from "@/types/blocks/common";
+import { ConsoleLayout } from "@/shared/blocks/console/layout";
+import { Nav } from "@/shared/types/blocks/common";
 import { ReactNode } from "react";
-import { getPathname } from "@/lib/browser";
+import { getPathname } from "@/shared/lib/browser";
 
 export default async function SettingsLayout({
   children,

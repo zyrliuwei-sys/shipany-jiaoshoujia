@@ -1,11 +1,11 @@
-import { Header, Main, MainHeader } from "@/blocks/dashboard";
-import { TableCard } from "@/blocks/table";
-import { type Table } from "@/types/blocks/table";
-import { getUserInfo } from "@/services/user";
-import { getPosts, getPostsCount, Post } from "@/services/post";
-import { PostType } from "@/services/post";
-import { Button } from "@/types/blocks/common";
-import { getTaxonomies, TaxonomyType } from "@/services/taxonomy";
+import { Header, Main, MainHeader } from "@/shared/blocks/dashboard";
+import { TableCard } from "@/shared/blocks/table";
+import { type Table } from "@/shared/types/blocks/table";
+import { getUserInfo } from "@/shared/services/user";
+import { getPosts, getPostsCount, Post } from "@/shared/services/post";
+import { PostType } from "@/shared/services/post";
+import { Button } from "@/shared/types/blocks/common";
+import { getTaxonomies, TaxonomyType } from "@/shared/services/taxonomy";
 
 export default async function PostsPage({
   searchParams,

@@ -1,5 +1,5 @@
-import { CTA, Showcases } from "@/blocks/landing";
-import { getMetadata } from "@/lib/seo";
+import { CTA, Showcases } from "@/themes/default/blocks";
+import { getMetadata } from "@/shared/lib/seo";
 import { getTranslations } from "next-intl/server";
 import { setRequestLocale } from "next-intl/server";
 

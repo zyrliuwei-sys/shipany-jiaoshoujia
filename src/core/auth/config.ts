@@ -1,6 +1,6 @@
-import { getConfigs } from "@/services/config";
+import { getConfigs } from "@/shared/services/config";
 import { envConfigs } from "@/config";
-import { getUuid } from "@/lib/hash";
+import { getUuid } from "@/shared/lib/hash";
 import { db } from "@/core/db";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import * as schema from "@/config/db/schema";

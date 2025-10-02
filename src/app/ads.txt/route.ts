@@ -1,4 +1,4 @@
-import { getAllConfigs } from "@/services/config";
+import { getAllConfigs } from "@/shared/services/config";
 import { NextResponse } from "next/server";
 
 export async function GET() {
