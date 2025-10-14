@@ -85,11 +85,11 @@
     "show_avatars": false,
     "show_award": false,
     "image": {
-      "src": "/imgs/features/admin.png",
+      "src": "/imgs/features/music.png",
       "alt": "hero"
     },
     "image_invert": {
-      "src": "/imgs/features/admin-dark.png",
+      "src": "/imgs/features/music-dark.png",
       "alt": "hero"
     }
   },
