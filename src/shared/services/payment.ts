@@ -6,8 +6,17 @@ import {
   PaymentType,
   PayPalProvider,
   StripeProvider,
-} from "@/extensions/payment";
-import { Configs, getAllConfigs } from "@/shared/services/config";
+} from '@/extensions/payment';
+import { Configs, getAllConfigs } from '@/shared/services/config';
+
+import { getSnowId, getUuid } from '../lib/hash';
+import {
+  calculateCreditExpirationTime,
+  CreditStatus,
+  CreditTransactionScene,
+  CreditTransactionType,
+  NewCredit,
+} from './credit';
 import {
   findOrderByOrderNo,
   NewOrder,
@@ -17,22 +26,14 @@ import {
   updateOrderByOrderNo,
   updateOrderInTransaction,
   updateSubscriptionInTransaction,
-} from "./order";
+} from './order';
 import {
   NewSubscription,
   Subscription,
   SubscriptionStatus,
   UpdateSubscription,
   updateSubscriptionBySubscriptionNo,
-} from "./subscription";
-import { getSnowId, getUuid } from "../lib/hash";
-import {
-  calculateCreditExpirationTime,
-  CreditStatus,
-  CreditTransactionScene,
-  CreditTransactionType,
-  NewCredit,
-} from "./credit";
+} from './subscription';
 
 /**
  * get payment service with configs
@@ -43,42 +44,42 @@ export function getPaymentServiceWithConfigs(configs: Configs) {
   const defaultProvider = configs.default_payment_provider;
 
   // add stripe provider
-  if (configs.stripe_enabled === "true") {
+  if (configs.stripe_enabled === 'true') {
     paymentManager.addProvider(
       new StripeProvider({
         secretKey: configs.stripe_secret_key,
         publishableKey: configs.stripe_publishable_key,
         signingSecret: configs.stripe_signing_secret,
       }),
-      defaultProvider === "stripe"
+      defaultProvider === 'stripe'
     );
   }
 
   // add creem provider
-  if (configs.creem_enabled === "true") {
+  if (configs.creem_enabled === 'true') {
     paymentManager.addProvider(
       new CreemProvider({
         apiKey: configs.creem_api_key,
         environment:
-          configs.creem_environment === "production" ? "production" : "sandbox",
+          configs.creem_environment === 'production' ? 'production' : 'sandbox',
         signingSecret: configs.creem_signing_secret,
       }),
-      defaultProvider === "creem"
+      defaultProvider === 'creem'
     );
   }
 
   // add paypal provider
-  if (configs.paypal_enabled === "true") {
+  if (configs.paypal_enabled === 'true') {
     paymentManager.addProvider(
       new PayPalProvider({
         clientId: configs.paypal_client_id,
         clientSecret: configs.paypal_client_secret,
         environment:
-          configs.paypal_environment === "production"
-            ? "production"
-            : "sandbox",
+          configs.paypal_environment === 'production'
+            ? 'production'
+            : 'sandbox',
       }),
-      defaultProvider === "paypal"
+      defaultProvider === 'paypal'
     );
   }
 
@@ -113,12 +114,12 @@ export async function handleCheckoutSuccess({
 }) {
   const orderNo = order.orderNo;
   if (!orderNo) {
-    throw new Error("invalid order");
+    throw new Error('invalid order');
   }
 
   if (order.paymentType === PaymentType.SUBSCRIPTION) {
     if (!session.subscriptionId || !session.subscriptionInfo) {
-      throw new Error("subscription id or subscription info not found");
+      throw new Error('subscription id or subscription info not found');
     }
   }
 
@@ -134,7 +135,7 @@ export async function handleCheckoutSuccess({
       paidAt: session.paymentInfo?.paidAt,
       invoiceId: session.paymentInfo?.invoiceId,
       invoiceUrl: session.paymentInfo?.invoiceUrl,
-      subscriptionNo: "",
+      subscriptionNo: '',
       transactionId: session.paymentInfo?.transactionId,
       paymentUserName: session.paymentInfo?.paymentUserName,
       paymentUserId: session.paymentInfo?.paymentUserId,
@@ -157,7 +158,7 @@ export async function handleCheckoutSuccess({
         subscriptionId: subscriptionInfo.subscriptionId,
         subscriptionResult: JSON.stringify(session.subscriptionResult),
         productId: order.productId,
-        description: subscriptionInfo.description || "Subscription Created",
+        description: subscriptionInfo.description || 'Subscription Created',
         amount: subscriptionInfo.amount,
         currency: subscriptionInfo.currency,
         interval: subscriptionInfo.interval,
@@ -234,7 +235,7 @@ export async function handleCheckoutSuccess({
       paymentResult: JSON.stringify(session.paymentResult),
     });
   } else {
-    throw new Error("unknown payment status");
+    throw new Error('unknown payment status');
   }
 }
 
@@ -250,12 +251,12 @@ export async function handlePaymentSuccess({
 }) {
   const orderNo = order.orderNo;
   if (!orderNo) {
-    throw new Error("invalid order");
+    throw new Error('invalid order');
   }
 
   if (order.paymentType === PaymentType.SUBSCRIPTION) {
     if (!session.subscriptionId || !session.subscriptionInfo) {
-      throw new Error("subscription id or subscription info not found");
+      throw new Error('subscription id or subscription info not found');
     }
   }
 
@@ -354,7 +355,7 @@ export async function handlePaymentSuccess({
       newCredit,
     });
   } else {
-    throw new Error("unknown payment status");
+    throw new Error('unknown payment status');
   }
 }
 
@@ -367,14 +368,14 @@ export async function handleSubscriptionRenewal({
 }) {
   const subscriptionNo = subscription.subscriptionNo;
   if (!subscriptionNo || !subscription.amount || !subscription.currency) {
-    throw new Error("invalid subscription");
+    throw new Error('invalid subscription');
   }
 
   if (!session.subscriptionId || !session.subscriptionInfo) {
-    throw new Error("invalid payment session");
+    throw new Error('invalid payment session');
   }
   if (session.subscriptionId !== subscription.subscriptionId) {
-    throw new Error("subscription id mismatch");
+    throw new Error('subscription id mismatch');
   }
 
   const subscriptionInfo = session.subscriptionInfo;
@@ -383,7 +384,7 @@ export async function handleSubscriptionRenewal({
     !subscriptionInfo.currentPeriodStart ||
     !subscriptionInfo.currentPeriodEnd
   ) {
-    throw new Error("invalid subscription info");
+    throw new Error('invalid subscription info');
   }
 
   // payment success
@@ -410,14 +411,14 @@ export async function handleSubscriptionRenewal({
       paymentType: PaymentType.RENEW,
       paymentInterval: subscription.interval,
       paymentProvider: session.provider || subscription.paymentProvider,
-      checkoutInfo: "",
+      checkoutInfo: '',
       createdAt: currentTime,
       productName: subscription.productName,
-      description: "Subscription Renewal",
-      callbackUrl: "",
+      description: 'Subscription Renewal',
+      callbackUrl: '',
       creditsAmount: subscription.creditsAmount,
       creditsValidDays: subscription.creditsValidDays,
-      planName: subscription.planName || "",
+      planName: subscription.planName || '',
       paymentProductId: subscription.paymentProductId,
       paymentResult: JSON.stringify(session.paymentResult),
       paymentAmount: session.paymentInfo?.paymentAmount,
@@ -473,7 +474,7 @@ export async function handleSubscriptionRenewal({
       newCredit,
     });
   } else {
-    throw new Error("unknown payment status");
+    throw new Error('unknown payment status');
   }
 }
 
@@ -486,18 +487,18 @@ export async function handleSubscriptionUpdated({
 }) {
   const subscriptionNo = subscription.subscriptionNo;
   if (!subscriptionNo || !subscription.amount || !subscription.currency) {
-    throw new Error("invalid subscription");
+    throw new Error('invalid subscription');
   }
 
   const subscriptionInfo = session.subscriptionInfo;
   if (!subscriptionInfo || !subscriptionInfo.status) {
-    throw new Error("invalid subscription info");
+    throw new Error('invalid subscription info');
   }
 
   let updateSubscriptionStatus: SubscriptionStatus = SubscriptionStatus.ACTIVE;
-  if (subscriptionInfo.status === "pending_cancel") {
+  if (subscriptionInfo.status === 'pending_cancel') {
     updateSubscriptionStatus = SubscriptionStatus.PENDING_CANCEL;
-  } else if (subscriptionInfo.status === "canceled") {
+  } else if (subscriptionInfo.status === 'canceled') {
     updateSubscriptionStatus = SubscriptionStatus.CANCELED;
   }
 
@@ -507,11 +508,11 @@ export async function handleSubscriptionUpdated({
     currentPeriodEnd: subscriptionInfo.currentPeriodEnd,
     canceledAt: subscriptionInfo.canceledAt || null,
     canceledEndAt: subscriptionInfo.canceledEndAt || null,
-    canceledReason: subscriptionInfo.canceledReason || "",
-    canceledReasonType: subscriptionInfo.canceledReasonType || "",
+    canceledReason: subscriptionInfo.canceledReason || '',
+    canceledReasonType: subscriptionInfo.canceledReasonType || '',
   });
 
-  console.log("handle subscription updated", subscriptionInfo);
+  console.log('handle subscription updated', subscriptionInfo);
 }
 
 export async function handleSubscriptionCanceled({
@@ -523,7 +524,7 @@ export async function handleSubscriptionCanceled({
 }) {
   const subscriptionNo = subscription.subscriptionNo;
   if (!subscriptionNo || !subscription.amount || !subscription.currency) {
-    throw new Error("invalid subscription");
+    throw new Error('invalid subscription');
   }
 
   const subscriptionInfo = session.subscriptionInfo;
@@ -532,7 +533,7 @@ export async function handleSubscriptionCanceled({
     !subscriptionInfo.status ||
     !subscriptionInfo.canceledAt
   ) {
-    throw new Error("invalid subscription info");
+    throw new Error('invalid subscription info');
   }
 
   await updateSubscriptionBySubscriptionNo(subscriptionNo, {
@@ -543,5 +544,5 @@ export async function handleSubscriptionCanceled({
     canceledReasonType: subscriptionInfo.canceledReasonType,
   });
 
-  console.log("handle subscription canceled", subscriptionInfo);
+  console.log('handle subscription canceled', subscriptionInfo);
 }

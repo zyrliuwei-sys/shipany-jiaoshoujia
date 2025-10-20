@@ -9,11 +9,11 @@ export interface AIConfigs {
  * ai generate content type
  */
 export enum AIGenerateType {
-  MUSIC = "music",
-  IMAGE = "image",
-  VIDEO = "video",
-  TEXT = "text",
-  SPEECH = "speech",
+  MUSIC = 'music',
+  IMAGE = 'image',
+  VIDEO = 'video',
+  TEXT = 'text',
+  SPEECH = 'speech',
 }
 
 /**
@@ -130,7 +130,7 @@ export class AIManager {
     }
 
     if (!defaultProvider) {
-      throw new Error("No AI provider configured");
+      throw new Error('No AI provider configured');
     }
 
     return defaultProvider.generate(request);
@@ -150,7 +150,7 @@ export class AIManager {
     }
 
     if (!defaultProvider) {
-      throw new Error("No AI provider configured");
+      throw new Error('No AI provider configured');
     }
 
     if (!defaultProvider.query) {
@@ -164,4 +164,4 @@ export class AIManager {
 // ai manager
 export const aiManager = new AIManager();
 
-export * from "./kie";
+export * from './kie';

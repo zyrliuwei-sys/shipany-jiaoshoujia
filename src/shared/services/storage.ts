@@ -1,5 +1,5 @@
-import { StorageManager, R2Provider, S3Provider } from "@/extensions/storage";
-import { Configs, getAllConfigs } from "@/shared/services/config";
+import { R2Provider, S3Provider, StorageManager } from '@/extensions/storage';
+import { Configs, getAllConfigs } from '@/shared/services/config';
 
 /**
  * get storage service with configs
@@ -15,7 +15,7 @@ export function getStorageServiceWithConfigs(configs: Configs) {
   ) {
     // r2_region in settings stores the Cloudflare Account ID
     // For R2, region is typically "auto" but can be customized
-    const accountId = configs.r2_account_id || "";
+    const accountId = configs.r2_account_id || '';
 
     storageManager.addProvider(
       new R2Provider({
@@ -23,7 +23,7 @@ export function getStorageServiceWithConfigs(configs: Configs) {
         accessKeyId: configs.r2_access_key,
         secretAccessKey: configs.r2_secret_key,
         bucket: configs.r2_bucket_name,
-        region: "auto", // R2 uses "auto" as region
+        region: 'auto', // R2 uses "auto" as region
         endpoint: configs.r2_endpoint, // Optional custom endpoint
         publicDomain: configs.r2_domain,
       }),

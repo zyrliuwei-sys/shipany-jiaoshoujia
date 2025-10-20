@@ -1,26 +1,27 @@
-"use client";
+'use client';
 
-import { ScrollArea, ScrollBar } from "@/shared/components/ui/scroll-area";
+import { useEffect, useState } from 'react';
+
+import { useRouter } from '@/core/i18n/navigation';
+import { ScrollArea, ScrollBar } from '@/shared/components/ui/scroll-area';
 import {
+  Tabs as TabsComponent,
   TabsList,
   TabsTrigger,
-  Tabs as TabsComponent,
-} from "@/shared/components/ui/tabs";
-import { Tab } from "@/shared/types/blocks/common";
-import { useEffect, useState } from "react";
-import { cn } from "@/shared/lib/utils";
-import { useRouter } from "@/core/i18n/navigation";
+} from '@/shared/components/ui/tabs';
+import { cn } from '@/shared/lib/utils';
+import { Tab } from '@/shared/types/blocks/common';
 
 export function Tabs({
   tabs,
   size,
 }: {
   tabs: Tab[];
-  size?: "sm" | "md" | "lg";
+  size?: 'sm' | 'md' | 'lg';
 }) {
   const router = useRouter();
   const [tabName, setTabName] = useState(
-    tabs?.find((tab) => tab.is_active)?.name || ""
+    tabs?.find((tab) => tab.is_active)?.name || ''
   );
   const [tab, setTab] = useState({} as Tab);
 
@@ -38,11 +39,11 @@ export function Tabs({
   return (
     <div className="relative mb-8">
       <ScrollArea className="w-full lg:max-w-none">
-        <div className="space-x-2 flex items-center">
+        <div className="flex items-center space-x-2">
           <TabsComponent value={tabName} onValueChange={setTabName}>
-            <TabsList className={cn(size === "sm" && "h-8")}>
+            <TabsList className={cn(size === 'sm' && 'h-8')}>
               {tabs.map((tab, idx) => (
-                <TabsTrigger key={idx} value={tab.name || ""}>
+                <TabsTrigger key={idx} value={tab.name || ''}>
                   {tab.title}
                 </TabsTrigger>
               ))}

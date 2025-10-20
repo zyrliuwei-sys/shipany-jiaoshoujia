@@ -1,5 +1,5 @@
-import moment from "moment";
-import { useLocale } from "next-intl";
+import moment from 'moment';
+import { useLocale } from 'next-intl';
 
 export function Time({
   value,
@@ -21,8 +21,8 @@ export function Time({
   }
 
   let locale = useLocale();
-  if (locale === "zh") {
-    locale = "zh-cn";
+  if (locale === 'zh') {
+    locale = 'zh-cn';
   }
 
   return (

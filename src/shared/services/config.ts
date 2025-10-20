@@ -1,11 +1,12 @@
-import { db } from "@/core/db";
-import { config } from "@/config/db/schema";
-import { envConfigs } from "@/config";
-import { publicSettingNames } from "./settings";
+import { db } from '@/core/db';
+import { envConfigs } from '@/config';
+import { config } from '@/config/db/schema';
+
+import { publicSettingNames } from './settings';
 
 export type Config = typeof config.$inferSelect;
 export type NewConfig = typeof config.$inferInsert;
-export type UpdateConfig = Partial<Omit<NewConfig, "name">>;
+export type UpdateConfig = Partial<Omit<NewConfig, 'name'>>;
 
 export type Configs = Record<string, string>;
 
@@ -52,7 +53,7 @@ export async function getConfigs(): Promise<Configs> {
   }
 
   for (const config of result) {
-    configs[config.name] = config.value ?? "";
+    configs[config.name] = config.value ?? '';
   }
 
   return configs;
@@ -83,11 +84,11 @@ export async function getPublicConfigs(): Promise<Configs> {
   let dbConfigs: Configs = {};
 
   // only get configs from db in server side
-  if (typeof window === "undefined" && envConfigs.database_url) {
+  if (typeof window === 'undefined' && envConfigs.database_url) {
     try {
       dbConfigs = await getConfigs();
     } catch (e) {
-      console.log("get configs from db failed:", e);
+      console.log('get configs from db failed:', e);
       dbConfigs = {};
     }
   }

@@ -1,5 +1,5 @@
-import { envConfigs } from "@/config";
-import { defaultTheme, themeNames } from "@/config/theme";
+import { envConfigs } from '@/config';
+import { defaultTheme, themeNames } from '@/config/theme';
 
 /**
  * get active theme

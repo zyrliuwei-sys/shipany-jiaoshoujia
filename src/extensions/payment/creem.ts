@@ -1,14 +1,14 @@
 import {
-  PaymentProvider,
+  CheckoutSession,
   PaymentConfigs,
-  PaymentOrder,
-  PaymentStatus,
-  PaymentSession,
-  PaymentInterval,
   PaymentCustomField,
   PaymentEvent,
-  CheckoutSession,
-} from ".";
+  PaymentInterval,
+  PaymentOrder,
+  PaymentProvider,
+  PaymentSession,
+  PaymentStatus,
+} from '.';
 
 /**
  * Creem payment provider configs
@@ -17,7 +17,7 @@ import {
 export interface CreemConfigs extends PaymentConfigs {
   apiKey: string;
   signingSecret?: string;
-  environment?: "sandbox" | "production";
+  environment?: 'sandbox' | 'production';
 }
 
 /**
@@ -25,7 +25,7 @@ export interface CreemConfigs extends PaymentConfigs {
  * @website https://creem.io/
  */
 export class CreemProvider implements PaymentProvider {
-  readonly name = "creem";
+  readonly name = 'creem';
   configs: CreemConfigs;
 
   private baseUrl: string;
@@ -33,9 +33,9 @@ export class CreemProvider implements PaymentProvider {
   constructor(configs: CreemConfigs) {
     this.configs = configs;
     this.baseUrl =
-      configs.environment === "production"
-        ? "https://api.creem.io"
-        : "https://test-api.creem.io";
+      configs.environment === 'production'
+        ? 'https://api.creem.io'
+        : 'https://test-api.creem.io';
   }
 
   // create payment
@@ -46,7 +46,7 @@ export class CreemProvider implements PaymentProvider {
   }): Promise<CheckoutSession> {
     try {
       if (!order.productId) {
-        throw new Error("productId is required");
+        throw new Error('productId is required');
       }
 
       // build payment payload
@@ -78,11 +78,11 @@ export class CreemProvider implements PaymentProvider {
         metadata: order.metadata,
       };
 
-      const result = await this.makeRequest("/v1/checkouts", "POST", payload);
+      const result = await this.makeRequest('/v1/checkouts', 'POST', payload);
 
       // create payment failed
       if (result.error) {
-        throw new Error(result.error.message || "create payment failed");
+        throw new Error(result.error.message || 'create payment failed');
       }
 
       // create payment success
@@ -112,15 +112,15 @@ export class CreemProvider implements PaymentProvider {
       // retrieve payment
       const session = await this.makeRequest(
         `/v1/checkouts?checkout_id=${sessionId}`,
-        "GET"
+        'GET'
       );
 
       if (!session.id || !session.order) {
-        throw new Error(session.error || "get payment failed");
+        throw new Error(session.error || 'get payment failed');
       }
 
       let subscription: any | undefined = undefined;
-      let billingUrl = "";
+      let billingUrl = '';
 
       if (session.subscription) {
         subscription = session.subscription;
@@ -130,11 +130,11 @@ export class CreemProvider implements PaymentProvider {
         provider: this.name,
         paymentStatus: this.mapCreemStatus(session),
         paymentInfo: {
-          discountCode: "",
+          discountCode: '',
           discountAmount: undefined,
           discountCurrency: undefined,
           paymentAmount: session.order.amount_paid || 0,
-          paymentCurrency: session.order.currency || "",
+          paymentCurrency: session.order.currency || '',
           paymentEmail: session.customer?.email || undefined,
           paidAt: session.order.updated_at
             ? new Date(session.order.updated_at)
@@ -150,20 +150,20 @@ export class CreemProvider implements PaymentProvider {
         result.subscriptionInfo = {
           subscriptionId: subscription.id,
           productId: session.product?.id,
-          planId: "",
-          description: session.product?.description || "",
+          planId: '',
+          description: session.product?.description || '',
           amount: session.order.amount_paid || 0,
           currency: session.order.currency,
           currentPeriodStart: new Date(subscription.current_period_start_date),
           currentPeriodEnd: new Date(subscription.current_period_end_date),
           interval:
-            session.product?.billing_period === "every-month"
+            session.product?.billing_period === 'every-month'
               ? PaymentInterval.MONTH
-              : subscription.product?.billing_period === "every-year"
+              : subscription.product?.billing_period === 'every-year'
                 ? PaymentInterval.YEAR
-                : subscription.product?.billing_period === "every-week"
+                : subscription.product?.billing_period === 'every-week'
                   ? PaymentInterval.WEEK
-                  : subscription.product?.billing_period === "every-day"
+                  : subscription.product?.billing_period === 'every-day'
                     ? PaymentInterval.DAY
                     : undefined,
           intervalCount: 1,
@@ -181,14 +181,14 @@ export class CreemProvider implements PaymentProvider {
   async getPaymentEvent({ req }: { req: Request }): Promise<PaymentEvent> {
     try {
       const rawBody = await req.text();
-      const signature = req.headers.get("creem-signature") as string;
+      const signature = req.headers.get('creem-signature') as string;
 
       if (!rawBody || !signature) {
-        throw new Error("Invalid webhook request");
+        throw new Error('Invalid webhook request');
       }
 
       if (!this.configs.signingSecret) {
-        throw new Error("Signing Secret not configured");
+        throw new Error('Signing Secret not configured');
       }
 
       const computedSignature = await this.generateSignature(
@@ -197,13 +197,13 @@ export class CreemProvider implements PaymentProvider {
       );
 
       if (computedSignature !== signature) {
-        throw new Error("Invalid webhook signature");
+        throw new Error('Invalid webhook signature');
       }
 
       // parse the webhook payload
       const event = JSON.parse(rawBody);
       if (!event || !event.eventType) {
-        throw new Error("Invalid webhook payload");
+        throw new Error('Invalid webhook payload');
       }
 
       return {
@@ -226,19 +226,19 @@ export class CreemProvider implements PaymentProvider {
       const messageData = encoder.encode(payload);
 
       const key = await crypto.subtle.importKey(
-        "raw",
+        'raw',
         keyData,
-        { name: "HMAC", hash: "SHA-256" },
+        { name: 'HMAC', hash: 'SHA-256' },
         false,
-        ["sign"]
+        ['sign']
       );
 
-      const signature = await crypto.subtle.sign("HMAC", key, messageData);
+      const signature = await crypto.subtle.sign('HMAC', key, messageData);
 
       const signatureArray = new Uint8Array(signature);
       return Array.from(signatureArray)
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join("");
+        .map((b) => b.toString(16).padStart(2, '0'))
+        .join('');
     } catch (error: any) {
       throw new Error(`Failed to generate signature: ${error.message}`);
     }
@@ -247,8 +247,8 @@ export class CreemProvider implements PaymentProvider {
   private async makeRequest(endpoint: string, method: string, data?: any) {
     const url = `${this.baseUrl}${endpoint}`;
     const headers = {
-      "x-api-key": this.configs.apiKey,
-      "Content-Type": "application/json",
+      'x-api-key': this.configs.apiKey,
+      'Content-Type': 'application/json',
     };
 
     const config: RequestInit = {
@@ -272,17 +272,17 @@ export class CreemProvider implements PaymentProvider {
     const status = session.status;
 
     switch (status) {
-      case "pending":
+      case 'pending':
         return PaymentStatus.PROCESSING;
-      case "processing":
+      case 'processing':
         return PaymentStatus.PROCESSING;
-      case "completed":
-      case "paid":
+      case 'completed':
+      case 'paid':
         return PaymentStatus.SUCCESS;
-      case "failed":
+      case 'failed':
         return PaymentStatus.FAILED;
-      case "canceled":
-      case "expired":
+      case 'canceled':
+      case 'expired':
         return PaymentStatus.CANCELED;
       default:
         throw new Error(`Unknown Creem status: ${status}`);

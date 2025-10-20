@@ -1,4 +1,4 @@
-import { Fragment, ReactNode } from "react";
+import { Fragment, ReactNode } from 'react';
 
 /**
  * Analytics configs interface
@@ -61,7 +61,7 @@ export class AnalyticsManager {
   }
 }
 
-export * from "./google-analytics";
-export * from "./plausible";
-export * from "./open-panel";
-export * from "./vercel-analytics";
+export * from './google-analytics';
+export * from './plausible';
+export * from './open-panel';
+export * from './vercel-analytics';

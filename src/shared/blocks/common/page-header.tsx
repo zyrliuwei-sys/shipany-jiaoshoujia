@@ -1,7 +1,8 @@
-import { cn } from "@/shared/lib/utils";
-import { Button } from "@/shared/components/ui/button";
-import { Link } from "@/core/i18n/navigation";
-import { SmartIcon } from "./smart-icon";
+import { Link } from '@/core/i18n/navigation';
+import { Button } from '@/shared/components/ui/button';
+import { cn } from '@/shared/lib/utils';
+
+import { SmartIcon } from './smart-icon';
 
 export function PageHeader({
   title,
@@ -15,13 +16,13 @@ export function PageHeader({
     title?: string;
     url?: string;
     target?: string;
-    variant?: "default" | "outline" | "ghost" | "link" | "destructive";
+    variant?: 'default' | 'outline' | 'ghost' | 'link' | 'destructive';
     icon?: string;
   }[];
   className?: string;
 }) {
   return (
-    <section className={cn("py-16 md:py-32", className)}>
+    <section className={cn('py-16 md:py-32', className)}>
       <div className="mx-auto max-w-6xl px-6">
         <div className="mx-auto max-w-4xl space-y-6 text-center">
           <h1 className="text-center text-4xl font-semibold lg:text-5xl">
@@ -31,7 +32,7 @@ export function PageHeader({
           <div className="flex justify-center">
             {buttons?.map((button, idx) => (
               <Button key={idx} {...button} asChild>
-                <Link href={button.url || ""} target={button.target || "_self"}>
+                <Link href={button.url || ''} target={button.target || '_self'}>
                   {button.icon && <SmartIcon name={button.icon} />}
                   {button.title}
                 </Link>

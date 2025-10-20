@@ -1,12 +1,15 @@
-"use client";
+'use client';
 
+import { useTranslations } from 'next-intl';
+
+import { Button } from '@/shared/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/shared/components/ui/dialog";
+} from '@/shared/components/ui/dialog';
 import {
   Drawer,
   DrawerClose,
@@ -15,14 +18,12 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-} from "@/shared/components/ui/drawer";
+} from '@/shared/components/ui/drawer';
+import { useAppContext } from '@/shared/contexts/app';
+import { useMediaQuery } from '@/shared/hooks/use-media-query';
+import { PricingItem } from '@/shared/types/blocks/pricing';
 
-import { Button } from "@/shared/components/ui/button";
-import { useAppContext } from "@/shared/contexts/app";
-import { useMediaQuery } from "@/shared/hooks/use-media-query";
-import { useTranslations } from "next-intl";
-import { PaymentProviders } from "./payment-providers";
-import { PricingItem } from "@/shared/types/blocks/pricing";
+import { PaymentProviders } from './payment-providers';
 
 export function PaymentModal({
   isLoading,
@@ -33,23 +34,23 @@ export function PaymentModal({
   pricingItem: PricingItem | null;
   onCheckout: (item: PricingItem, paymentProvider?: string) => void;
 }) {
-  const t = useTranslations("common.payment");
+  const t = useTranslations('common.payment');
   const { isShowPaymentModal, setIsShowPaymentModal } = useAppContext();
   const { configs } = useAppContext();
 
   // todo: dynamic set callbackURL
-  const callbackURL = "/";
+  const callbackURL = '/';
 
-  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const isDesktop = useMediaQuery('(min-width: 768px)');
 
   if (isDesktop) {
     return (
       <Dialog open={isShowPaymentModal} onOpenChange={setIsShowPaymentModal}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>{t("choose_payment_method")}</DialogTitle>
+            <DialogTitle>{t('choose_payment_method')}</DialogTitle>
             <DialogDescription>
-              {t("choose_payment_method_description")}
+              {t('choose_payment_method_description')}
             </DialogDescription>
           </DialogHeader>
           <PaymentProviders
@@ -69,9 +70,9 @@ export function PaymentModal({
     <Drawer open={isShowPaymentModal} onOpenChange={setIsShowPaymentModal}>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>{t("choose_payment_method")}</DrawerTitle>
+          <DrawerTitle>{t('choose_payment_method')}</DrawerTitle>
           <DrawerDescription>
-            {t("choose_payment_method_description")}
+            {t('choose_payment_method_description')}
           </DrawerDescription>
         </DrawerHeader>
         <PaymentProviders
@@ -85,7 +86,7 @@ export function PaymentModal({
         />
         <DrawerFooter className="pt-4">
           <DrawerClose asChild>
-            <Button variant="outline">{t("cancel_title")}</Button>
+            <Button variant="outline">{t('cancel_title')}</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

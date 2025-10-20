@@ -1,31 +1,34 @@
-import { credit, order, subscription } from "@/config/db/schema";
-import { db } from "@/core/db";
-import { and, count, desc, eq, inArray } from "drizzle-orm";
-import { NewSubscription, UpdateSubscription } from "./subscription";
-import { NewCredit } from "./credit";
-import { appendUserToResult, User } from "./user";
-import { PaymentType } from "@/extensions/payment";
+import { and, count, desc, eq, inArray } from 'drizzle-orm';
+
+import { db } from '@/core/db';
+import { credit, order, subscription } from '@/config/db/schema';
+import { PaymentType } from '@/extensions/payment';
+
+import { NewCredit } from './credit';
 import {
-  updateSubscriptionBySubscriptionNo,
+  NewSubscription,
+  UpdateSubscription,
   updateSubscriptionById,
-} from "./subscription";
+  updateSubscriptionBySubscriptionNo,
+} from './subscription';
+import { appendUserToResult, User } from './user';
 
 export type Order = typeof order.$inferSelect & {
   user?: User;
 };
 export type NewOrder = typeof order.$inferInsert;
 export type UpdateOrder = Partial<
-  Omit<NewOrder, "id" | "orderNo" | "createdAt">
+  Omit<NewOrder, 'id' | 'orderNo' | 'createdAt'>
 >;
 
 export enum OrderStatus {
   // processing status
-  PENDING = "pending", // order saved, waiting for checkout
-  CREATED = "created", // checkout success
+  PENDING = 'pending', // order saved, waiting for checkout
+  CREATED = 'created', // checkout success
   // final status
-  COMPLETED = "completed", // checkout completed, but failed
-  PAID = "paid", // order paid success
-  FAILED = "failed", // order paid, but failed
+  COMPLETED = 'completed', // checkout completed, but failed
+  PAID = 'paid', // order paid success
+  FAILED = 'failed', // order paid, but failed
 }
 
 /**
@@ -167,7 +170,7 @@ export async function updateOrderInTransaction({
   newCredit?: NewCredit;
 }) {
   if (!orderNo || !updateOrder) {
-    throw new Error("orderNo and updateOrder are required");
+    throw new Error('orderNo and updateOrder are required');
   }
 
   // only update order, no need transaction
@@ -262,7 +265,7 @@ export async function updateSubscriptionInTransaction({
   newCredit?: NewCredit;
 }) {
   if (!subscriptionNo || !updateSubscription) {
-    throw new Error("subscriptionNo and updateSubscription are required");
+    throw new Error('subscriptionNo and updateSubscription are required');
   }
 
   // only update order, no need transaction

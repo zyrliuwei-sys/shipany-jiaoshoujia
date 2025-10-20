@@ -1,12 +1,13 @@
-import { Empty } from "@/shared/blocks/common";
+import { redirect } from 'next/navigation';
+
+import { Empty } from '@/shared/blocks/common';
 import {
   findOrderByOrderNo,
   Order,
   updateOrderByOrderNo,
-} from "@/shared/services/order";
-import { getPaymentService } from "@/shared/services/payment";
-import { getUserInfo } from "@/shared/services/user";
-import { redirect } from "next/navigation";
+} from '@/shared/services/order';
+import { getPaymentService } from '@/shared/services/payment';
+import { getUserInfo } from '@/shared/services/user';
 
 export default async function RetrieveInvoicePage({
   params,
@@ -46,7 +47,7 @@ export default async function RetrieveInvoicePage({
     return <Empty message="payment provider not found" />;
   }
 
-  let invoiceUrl = "";
+  let invoiceUrl = '';
 
   try {
     const invoice = await paymentProvider.getPaymentInvoice?.({
@@ -62,7 +63,7 @@ export default async function RetrieveInvoicePage({
       invoiceUrl: invoiceUrl,
     });
   } catch (error: any) {
-    return <Empty message={error.message || "get invoice failed"} />;
+    return <Empty message={error.message || 'get invoice failed'} />;
   }
 
   if (!invoiceUrl) {

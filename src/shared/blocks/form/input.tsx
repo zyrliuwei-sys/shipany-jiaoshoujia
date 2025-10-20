@@ -1,6 +1,7 @@
-import { FormField } from "@/shared/types/blocks/form";
-import { ControllerRenderProps } from "react-hook-form";
-import { Input as InputComponent } from "@/shared/components/ui/input";
+import { ControllerRenderProps } from 'react-hook-form';
+
+import { Input as InputComponent } from '@/shared/components/ui/input';
+import { FormField } from '@/shared/types/blocks/form';
 
 export function Input({
   field,
@@ -15,9 +16,9 @@ export function Input({
     <InputComponent
       value={formField.value as string}
       onChange={formField.onChange}
-      type={field.type || "text"}
+      type={field.type || 'text'}
       placeholder={field.placeholder}
-      className="bg-background rounded-md placeholder:text-base-content/50"
+      className="bg-background placeholder:text-base-content/50 rounded-md"
       {...field.attributes}
     />
   );

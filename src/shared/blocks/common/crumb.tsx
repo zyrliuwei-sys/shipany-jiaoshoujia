@@ -1,25 +1,26 @@
-import { ChevronRight } from "lucide-react";
-import { Link } from "@/core/i18n/navigation";
-import { NavItem } from "@/shared/types/blocks/common";
+import { ChevronRight } from 'lucide-react';
+
+import { Link } from '@/core/i18n/navigation';
+import { NavItem } from '@/shared/types/blocks/common';
 
 export function Crumb({ items }: { items: NavItem[] }) {
   return (
-    <nav className="md:px-3 flex items-center text-sm text-muted-foreground">
+    <nav className="text-muted-foreground flex items-center text-sm md:px-3">
       {items.map((item, index) => {
         const isActive = item.is_active;
         return (
           <div key={index} className="flex items-center">
             <Link
-              href={item.url || ""}
-              className={`min-w-8 line-clamp-1 hover:text-foreground transition-colors ${
-                isActive ? "text-primary font-medium hover:text-primary" : ""
+              href={item.url || ''}
+              className={`hover:text-foreground line-clamp-1 min-w-8 transition-colors ${
+                isActive ? 'text-primary hover:text-primary font-medium' : ''
               }`}
             >
               {item.title}
             </Link>
 
             {!isActive && (
-              <ChevronRight className="h-4 w-4 mx-2 text-muted-foreground/40" />
+              <ChevronRight className="text-muted-foreground/40 mx-2 h-4 w-4" />
             )}
           </div>
         );

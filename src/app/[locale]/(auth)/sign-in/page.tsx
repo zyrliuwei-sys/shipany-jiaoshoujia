@@ -1,8 +1,9 @@
-import { envConfigs } from "@/config";
-import { defaultLocale } from "@/config/locale";
-import { SignIn } from "@/shared/blocks/sign/sign-in";
-import { getConfigs } from "@/shared/services/config";
-import { getTranslations } from "next-intl/server";
+import { getTranslations } from 'next-intl/server';
+
+import { envConfigs } from '@/config';
+import { defaultLocale } from '@/config/locale';
+import { SignIn } from '@/shared/blocks/sign/sign-in';
+import { getConfigs } from '@/shared/services/config';
 
 export async function generateMetadata({
   params,
@@ -11,10 +12,10 @@ export async function generateMetadata({
 }) {
   const { locale } = await params;
 
-  const t = await getTranslations("common");
+  const t = await getTranslations('common');
 
   return {
-    title: `${t("sign.sign_in_title")} - ${t("metadata.title")}`,
+    title: `${t('sign.sign_in_title')} - ${t('metadata.title')}`,
     alternates: {
       canonical:
         locale !== defaultLocale
@@ -33,5 +34,5 @@ export default async function SignInPage({
 
   const configs = await getConfigs();
 
-  return <SignIn configs={configs} callbackUrl={callbackUrl || "/"} />;
+  return <SignIn configs={configs} callbackUrl={callbackUrl || '/'} />;
 }

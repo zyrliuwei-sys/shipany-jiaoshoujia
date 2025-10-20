@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import type { JSX } from "react";
+import type { JSX } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import {
   Pagination as PaginationComponent,
   PaginationContent,
+  PaginationEllipsis,
   PaginationItem,
+  PaginationLink,
   PaginationNext,
   PaginationPrevious,
-  PaginationLink,
-  PaginationEllipsis,
-} from "@/shared/components/ui/pagination";
+} from '@/shared/components/ui/pagination';
 
 type PaginatorProps = {
   total?: number;
@@ -34,13 +34,13 @@ function Paginator({
 }: PaginatorProps) {
   return (
     <PaginationComponent className={className}>
-      <PaginationContent className="w-full flex justify-center">
-        <div className="text-sm text-muted-foreground">
+      <PaginationContent className="flex w-full justify-center">
+        <div className="text-muted-foreground text-sm">
           Total: {total}, Page: {currentPage} / {totalPages}
         </div>
         <div className="flex-1"></div>
         {showPreviousNext && totalPages && currentPage - 1 >= 1 ? (
-          <PaginationItem className="cursor-pointer" key={"prev"}>
+          <PaginationItem className="cursor-pointer" key={'prev'}>
             <PaginationPrevious
               onClick={() => {
                 if (currentPage - 1 >= 1) {
@@ -54,7 +54,7 @@ function Paginator({
         ) : null}
         {generatePaginationLinks(currentPage, totalPages, onPageChange)}
         {showPreviousNext && totalPages && currentPage + 1 <= totalPages ? (
-          <PaginationItem className="cursor-pointer" key={"next"}>
+          <PaginationItem className="cursor-pointer" key={'next'}>
             <PaginationNext
               onClick={() => {
                 if (currentPage + 1 <= totalPages) {
@@ -105,9 +105,9 @@ const generatePaginationLinks = (
       );
     }
     if (2 < currentPage && currentPage < totalPages - 1) {
-      pages.push(<PaginationEllipsis key={"ellipsis-1"} />);
+      pages.push(<PaginationEllipsis key={'ellipsis-1'} />);
       pages.push(
-        <PaginationItem key={"page-current"}>
+        <PaginationItem key={'page-current'}>
           <PaginationLink
             onClick={() => onPageChange(currentPage)}
             isActive={true}
@@ -118,7 +118,7 @@ const generatePaginationLinks = (
         </PaginationItem>
       );
     }
-    pages.push(<PaginationEllipsis key={"ellipsis-2"} />);
+    pages.push(<PaginationEllipsis key={'ellipsis-2'} />);
     for (let i = totalPages - 1; i <= totalPages; i++) {
       pages.push(
         <PaginationItem key={`page-${i}`}>
@@ -159,7 +159,7 @@ export function Pagination({
 
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(searchParams);
-    params.set("page", page.toString());
+    params.set('page', page.toString());
     router.push(`${pathname}?${params.toString()}`);
   };
 

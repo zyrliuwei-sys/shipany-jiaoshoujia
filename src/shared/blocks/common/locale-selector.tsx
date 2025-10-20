@@ -1,22 +1,23 @@
-"use client";
+'use client';
 
+import { useEffect, useState } from 'react';
+import { Check, Globe, Languages } from 'lucide-react';
+import { useLocale } from 'next-intl';
+
+import { usePathname, useRouter } from '@/core/i18n/navigation';
+import { localeNames } from '@/config/locale';
+import { Button } from '@/shared/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/shared/components/ui/dropdown-menu";
-import { localeNames } from "@/config/locale";
-import { Globe, Languages, Check } from "lucide-react";
-import { useLocale } from "next-intl";
-import { usePathname, useRouter } from "@/core/i18n/navigation";
-import { Button } from "@/shared/components/ui/button";
-import { useEffect, useState } from "react";
+} from '@/shared/components/ui/dropdown-menu';
 
 export function LocaleSelector({
-  type = "icon",
+  type = 'icon',
 }: {
-  type?: "icon" | "button";
+  type?: 'icon' | 'button';
 }) {
   const currentLocale = useLocale();
   const router = useRouter();
@@ -30,7 +31,7 @@ export function LocaleSelector({
   const handleSwitchLanguage = (value: string) => {
     if (value !== currentLocale) {
       // Update localStorage to sync with locale detector
-      localStorage.setItem("locale", value);
+      localStorage.setItem('locale', value);
       router.push(pathname, {
         locale: value,
       });
@@ -41,14 +42,14 @@ export function LocaleSelector({
   if (!mounted) {
     return (
       <Button
-        variant={type === "icon" ? "ghost" : "outline"}
-        size={type === "icon" ? "icon" : "sm"}
+        variant={type === 'icon' ? 'ghost' : 'outline'}
+        size={type === 'icon' ? 'icon' : 'sm'}
         className={
-          type === "icon" ? "h-auto w-auto p-0" : "hover:bg-primary/10"
+          type === 'icon' ? 'h-auto w-auto p-0' : 'hover:bg-primary/10'
         }
         disabled
       >
-        {type === "icon" ? (
+        {type === 'icon' ? (
           <Languages size={18} />
         ) : (
           <>
@@ -63,7 +64,7 @@ export function LocaleSelector({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        {type === "icon" ? (
+        {type === 'icon' ? (
           <Button variant="ghost" size="icon" className="h-auto w-auto p-0">
             <Languages size={18} />
           </Button>

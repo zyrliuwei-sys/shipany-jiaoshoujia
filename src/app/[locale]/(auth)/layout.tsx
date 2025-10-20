@@ -1,9 +1,9 @@
-import { envConfigs } from "@/config";
+import { envConfigs } from '@/config';
 import {
   BrandLogo,
   LocaleSelector,
   ThemeToggler,
-} from "@/shared/blocks/common";
+} from '@/shared/blocks/common';
 
 export default function AuthLayout({
   children,
@@ -11,18 +11,18 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
+    <div className="flex h-screen w-screen items-center justify-center">
       <div className="absolute top-4 left-4">
         <BrandLogo
           brand={{
             title: envConfigs.app_name,
             logo: {
-              src: "/logo.png",
+              src: '/logo.png',
               alt: envConfigs.app_name,
             },
-            url: "/",
-            target: "_self",
-            className: "",
+            url: '/',
+            target: '_self',
+            className: '',
           }}
         />
       </div>

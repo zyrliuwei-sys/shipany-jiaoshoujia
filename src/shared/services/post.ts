@@ -1,21 +1,22 @@
-import { post } from "@/config/db/schema";
-import { db } from "@/core/db";
-import { and, count, desc, eq, inArray, like } from "drizzle-orm";
+import { and, count, desc, eq, inArray, like } from 'drizzle-orm';
+
+import { db } from '@/core/db';
+import { post } from '@/config/db/schema';
 
 export type Post = typeof post.$inferSelect;
 export type NewPost = typeof post.$inferInsert;
-export type UpdatePost = Partial<Omit<NewPost, "id" | "createdAt">>;
+export type UpdatePost = Partial<Omit<NewPost, 'id' | 'createdAt'>>;
 
 export enum PostType {
-  ARTICLE = "article",
-  PAGE = "page",
+  ARTICLE = 'article',
+  PAGE = 'page',
 }
 
 export enum PostStatus {
-  PUBLISHED = "published", // published and visible to the public
-  PENDING = "pending", // pending review by admin
-  DRAFT = "draft", // draft and not visible to the public
-  ARCHIVED = "archived", // archived means deleted
+  PUBLISHED = 'published', // published and visible to the public
+  PENDING = 'pending', // pending review by admin
+  DRAFT = 'draft', // draft and not visible to the public
+  ARCHIVED = 'archived', // archived means deleted
 }
 
 export async function addPost(data: NewPost) {

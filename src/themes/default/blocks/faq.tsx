@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
 import {
   Accordion,
-  AccordionTrigger,
   AccordionContent,
   AccordionItem,
-} from "@/shared/components/ui/accordion";
-import { FAQ as FAQType } from "@/shared/types/blocks/landing";
-import { ScrollAnimation } from "@/shared/components/ui/scroll-animation";
+  AccordionTrigger,
+} from '@/shared/components/ui/accordion';
+import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
+import { FAQ as FAQType } from '@/shared/types/blocks/landing';
 
 export function FAQ({ faq, className }: { faq: FAQType; className?: string }) {
   return (
     <section id={faq.id} className={`py-16 md:py-24 ${className}`}>
-      <div className={`max-w-full md:max-w-3xl mx-auto px-4 md:px-8`}>
+      <div className={`mx-auto max-w-full px-4 md:max-w-3xl md:px-8`}>
         <ScrollAnimation>
-          <div className="mx-auto max-w-2xl text-balance text-center">
+          <div className="mx-auto max-w-2xl text-center text-balance">
             <h2 className="text-foreground mb-4 text-3xl font-semibold tracking-tight md:text-4xl">
               {faq.title}
             </h2>
@@ -34,14 +34,14 @@ export function FAQ({ faq, className }: { faq: FAQType; className?: string }) {
               {faq.items?.map((item, idx) => (
                 <div className="group" key={idx}>
                   <AccordionItem
-                    value={item.question ?? ""}
+                    value={item.question ?? ''}
                     className="data-[state=open]:bg-card dark:data-[state=open]:bg-muted peer rounded-xl border-none px-7 py-1 data-[state=open]:border-none data-[state=open]:shadow-sm"
                   >
                     <AccordionTrigger className="cursor-pointer text-base hover:no-underline">
-                      {item.question ?? ""}
+                      {item.question ?? ''}
                     </AccordionTrigger>
                     <AccordionContent>
-                      <p className="text-base">{item.answer ?? ""}</p>
+                      <p className="text-base">{item.answer ?? ''}</p>
                     </AccordionContent>
                   </AccordionItem>
                   <hr className="mx-7 border-dashed group-last:hidden peer-data-[state=open]:opacity-0" />
@@ -51,7 +51,7 @@ export function FAQ({ faq, className }: { faq: FAQType; className?: string }) {
 
             <p
               className="text-muted-foreground mt-6 px-8"
-              dangerouslySetInnerHTML={{ __html: faq.tip ?? "" }}
+              dangerouslySetInnerHTML={{ __html: faq.tip ?? '' }}
             />
           </div>
         </ScrollAnimation>

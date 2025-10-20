@@ -1,4 +1,4 @@
-import { cn } from "@/shared/lib/utils";
+import { cn } from '@/shared/lib/utils';
 
 export function SectionHeader({
   title,
@@ -12,7 +12,7 @@ export function SectionHeader({
   return (
     <div
       className={cn(
-        "py-16 md:py-24 container space-y-6 text-center",
+        'container space-y-6 py-16 text-center md:py-24',
         className
       )}
     >

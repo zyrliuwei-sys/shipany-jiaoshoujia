@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { ReactNode, useState } from "react";
-import { SmartIcon } from "@/shared/blocks/common/smart-icon";
-import { Nav } from "@/shared/types/blocks/common";
-import { Link } from "@/core/i18n/navigation";
-import { usePathname } from "@/core/i18n/navigation";
+import { ReactNode, useState } from 'react';
+
+import { Link, usePathname } from '@/core/i18n/navigation';
+import { SmartIcon } from '@/shared/blocks/common/smart-icon';
+import { Nav } from '@/shared/types/blocks/common';
 
 export function ConsoleLayout({
   title,
@@ -22,27 +22,27 @@ export function ConsoleLayout({
   children: ReactNode;
 }) {
   const pathname = usePathname();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const filteredItems = nav?.items.filter((item) =>
     item.title?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <div className={`min-h-screen bg-background ${className}`}>
+    <div className={`bg-background min-h-screen ${className}`}>
       {/* Top Navigation */}
       {topNav && (
-        <div className="border-b border-border">
+        <div className="border-border border-b">
           <div className="container">
             <nav className="flex items-center gap-4 text-sm">
               {topNav.items.map((item, idx) => (
                 <Link
                   key={idx}
-                  href={item.url || ""}
+                  href={item.url || ''}
                   className={`text-muted-foreground hover:bg-foreground/10 flex items-center gap-2 px-3 py-2 ${
                     item.is_active || pathname === item.url
-                      ? "border-b-2 border-primary text-muted-foreground"
-                      : ""
-                  } duration-200 ease-linear hover:text-foreground`}
+                      ? 'border-primary text-muted-foreground border-b-2'
+                      : ''
+                  } hover:text-foreground duration-200 ease-linear`}
                 >
                   {item.icon && (
                     <SmartIcon name={item.icon as string} size={16} />
@@ -56,10 +56,10 @@ export function ConsoleLayout({
       )}
 
       {/* Page Header */}
-      <div className="border-b border-border">
+      <div className="border-border border-b">
         <div className="container">
           <div className="py-8">
-            <h1 className="text-3xl font-semibold text-foreground">{title}</h1>
+            <h1 className="text-foreground text-3xl font-semibold">{title}</h1>
           </div>
         </div>
       </div>
@@ -90,13 +90,13 @@ export function ConsoleLayout({
               {filteredItems?.map((item, idx) => (
                 <Link
                   key={idx}
-                  href={item.url || ""}
-                  className={`flex items-center space-x-3 px-3 py-2 text-sm rounded-md transition-colors ${
+                  href={item.url || ''}
+                  className={`flex items-center space-x-3 rounded-md px-3 py-2 text-sm transition-colors ${
                     item.is_active ||
                     pathname.endsWith(item.url as string) ||
                     item.url?.endsWith(pathname)
-                      ? "bg-secondary text-secondary-foreground font-medium"
-                      : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                      ? 'bg-secondary text-secondary-foreground font-medium'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50'
                   }`}
                 >
                   <SmartIcon name={item.icon as string} size={16} />
@@ -107,7 +107,7 @@ export function ConsoleLayout({
           </div>
 
           {/* Right Content Area */}
-          <div className="flex-1 min-w-0">{children}</div>
+          <div className="min-w-0 flex-1">{children}</div>
         </div>
       </div>
     </div>

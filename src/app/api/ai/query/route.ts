@@ -1,14 +1,14 @@
-import { respData, respErr } from "@/shared/lib/resp";
-import { getAIService } from "@/shared/services/ai";
+import { respData, respErr } from '@/shared/lib/resp';
+import { getAIService } from '@/shared/services/ai';
 
 export async function POST(req: Request) {
   try {
     const { taskId } = await req.json();
     if (!taskId) {
-      return respErr("invalid params");
+      return respErr('invalid params');
     }
 
-    const provider = "kie";
+    const provider = 'kie';
 
     const aiService = await getAIService();
 
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
 
     return respData(result);
   } catch (e: any) {
-    console.log("query failed");
+    console.log('query failed');
     return respErr(e.message);
   }
 }

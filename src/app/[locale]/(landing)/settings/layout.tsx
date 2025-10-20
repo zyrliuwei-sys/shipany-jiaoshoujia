@@ -1,29 +1,30 @@
-import { ConsoleLayout } from "@/shared/blocks/console/layout";
-import { Nav } from "@/shared/types/blocks/common";
-import { ReactNode } from "react";
-import { getPathname } from "@/shared/lib/browser";
-import { getTranslations } from "next-intl/server";
+import { ReactNode } from 'react';
+import { getTranslations } from 'next-intl/server';
+
+import { ConsoleLayout } from '@/shared/blocks/console/layout';
+import { getPathname } from '@/shared/lib/browser';
+import { Nav } from '@/shared/types/blocks/common';
 
 export default async function SettingsLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-  const t = await getTranslations("settings.sidebar");
+  const t = await getTranslations('settings.sidebar');
 
   // settings title
-  const title = t("title");
+  const title = t('title');
 
   const pathname = await getPathname();
 
   // settings nav
   const nav: Nav = {
-    title: t("title"),
+    title: t('title'),
     items: [
       {
-        title: t("nav.profile"),
-        url: "/settings/profile",
-        icon: "User",
+        title: t('nav.profile'),
+        url: '/settings/profile',
+        icon: 'User',
       },
       // {
       //   title: t("nav.security"),
@@ -31,24 +32,24 @@ export default async function SettingsLayout({
       //   icon: "Lock",
       // },
       {
-        title: t("nav.billing"),
-        url: "/settings/billing",
-        icon: "CreditCard",
+        title: t('nav.billing'),
+        url: '/settings/billing',
+        icon: 'CreditCard',
       },
       {
-        title: t("nav.payments"),
-        url: "/settings/payments",
-        icon: "DollarSign",
+        title: t('nav.payments'),
+        url: '/settings/payments',
+        icon: 'DollarSign',
       },
       {
-        title: t("nav.credits"),
-        url: "/settings/credits",
-        icon: "Coins",
+        title: t('nav.credits'),
+        url: '/settings/credits',
+        icon: 'Coins',
       },
       {
-        title: t("nav.apikeys"),
-        url: "/settings/apikeys",
-        icon: "RiKeyLine",
+        title: t('nav.apikeys'),
+        url: '/settings/apikeys',
+        icon: 'RiKeyLine',
       },
     ],
   };
@@ -56,14 +57,14 @@ export default async function SettingsLayout({
   const topNav: Nav = {
     items: [
       {
-        title: "Activity",
-        url: "/activity",
-        icon: "Activity",
+        title: 'Activity',
+        url: '/activity',
+        icon: 'Activity',
       },
       {
-        title: "Settings",
-        url: "/settings",
-        icon: "Settings",
+        title: 'Settings',
+        url: '/settings',
+        icon: 'Settings',
         is_active: true,
       },
     ],

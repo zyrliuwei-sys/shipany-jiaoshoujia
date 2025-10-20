@@ -1,10 +1,11 @@
 // components/MarkdownPreview.tsx
-"use client";
+'use client';
 
-import { useMemo } from "react";
-import MarkdownIt from "markdown-it";
-import "github-markdown-css/github-markdown-light.css";
-import "./markdown.css";
+import { useMemo } from 'react';
+import MarkdownIt from 'markdown-it';
+
+import 'github-markdown-css/github-markdown-light.css';
+import './markdown.css';
 
 export interface TocItem {
   id: string;
@@ -24,8 +25,8 @@ export function getTocItems(content: string): TocItem[] {
     const text = match[2].trim();
     const id = text
       .toLowerCase()
-      .replace(/[^a-z0-9\u4e00-\u9fff]+/g, "-")
-      .replace(/(^-|-$)/g, "");
+      .replace(/[^a-z0-9\u4e00-\u9fff]+/g, '-')
+      .replace(/(^-|-$)/g, '');
 
     toc.push({ id, text, level });
   }
@@ -36,8 +37,8 @@ export function getTocItems(content: string): TocItem[] {
 function generateHeadingId(text: string): string {
   return text
     .toLowerCase()
-    .replace(/[^a-z0-9\u4e00-\u9fff]+/g, "-")
-    .replace(/(^-|-$)/g, "");
+    .replace(/[^a-z0-9\u4e00-\u9fff]+/g, '-')
+    .replace(/(^-|-$)/g, '');
 }
 
 const md = new MarkdownIt({
@@ -52,7 +53,7 @@ md.renderer.rules.heading_open = function (tokens, idx) {
   const level = token.markup.length;
   const nextToken = tokens[idx + 1];
 
-  if (nextToken && nextToken.type === "inline") {
+  if (nextToken && nextToken.type === 'inline') {
     const headingText = nextToken.content;
     const id = generateHeadingId(headingText);
     return `<h${level} id="${id}">`;
@@ -64,15 +65,15 @@ md.renderer.rules.heading_open = function (tokens, idx) {
 // Custom renderer for links with nofollow
 md.renderer.rules.link_open = function (tokens, idx, options, env, renderer) {
   const token = tokens[idx];
-  const hrefIndex = token.attrIndex("href");
+  const hrefIndex = token.attrIndex('href');
 
   if (hrefIndex >= 0) {
-    const href = token.attrGet("href");
+    const href = token.attrGet('href');
     // Add nofollow to all links
-    token.attrSet("rel", "nofollow");
+    token.attrSet('rel', 'nofollow');
     // Optionally add target="_blank" for external links
-    if (href && (href.startsWith("http://") || href.startsWith("https://"))) {
-      token.attrSet("target", "_blank");
+    if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
+      token.attrSet('target', '_blank');
     }
   }
 
@@ -85,7 +86,7 @@ interface MarkdownPreviewProps {
 
 export function MarkdownPreview({ content }: MarkdownPreviewProps) {
   const html = useMemo(() => {
-    return content ? md.render(content) : "";
+    return content ? md.render(content) : '';
   }, [content]);
 
   return (

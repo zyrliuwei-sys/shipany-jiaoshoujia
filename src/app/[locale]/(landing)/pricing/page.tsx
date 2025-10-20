@@ -1,18 +1,18 @@
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
-import { getUserInfo } from "@/shared/services/user";
-import { getCurrentSubscription } from "@/shared/services/subscription";
-import { getThemePage } from "@/core/theme";
-import { Pricing as PricingType } from "@/shared/types/blocks/pricing";
+import { getThemePage } from '@/core/theme';
+import { getMetadata } from '@/shared/lib/seo';
+import { getCurrentSubscription } from '@/shared/services/subscription';
+import { getUserInfo } from '@/shared/services/user';
 import {
   FAQ as FAQType,
   Testimonials as TestimonialsType,
-} from "@/shared/types/blocks/landing";
-import { getMetadata } from "@/shared/lib/seo";
+} from '@/shared/types/blocks/landing';
+import { Pricing as PricingType } from '@/shared/types/blocks/pricing';
 
 export const generateMetadata = getMetadata({
-  metadataKey: "pricing.metadata",
-  canonicalUrl: "/pricing",
+  metadataKey: 'pricing.metadata',
+  canonicalUrl: '/pricing',
 });
 
 export default async function PricingPage({
@@ -24,9 +24,9 @@ export default async function PricingPage({
   setRequestLocale(locale);
 
   // load landing data
-  const tl = await getTranslations("landing");
+  const tl = await getTranslations('landing');
   // loading pricing data
-  const t = await getTranslations("pricing");
+  const t = await getTranslations('pricing');
 
   // get current subscription
   let currentSubscription;
@@ -36,16 +36,16 @@ export default async function PricingPage({
       currentSubscription = await getCurrentSubscription(user.id);
     }
   } catch (error) {
-    console.log("getting current subscription failed:", error);
+    console.log('getting current subscription failed:', error);
   }
 
   // load page component
-  const Page = await getThemePage("pricing");
+  const Page = await getThemePage('pricing');
 
   // build sections
-  const pricing: PricingType = t.raw("pricing");
-  const faq: FAQType = tl.raw("faq");
-  const testimonials: TestimonialsType = tl.raw("testimonials");
+  const pricing: PricingType = t.raw('pricing');
+  const faq: FAQType = tl.raw('faq');
+  const testimonials: TestimonialsType = tl.raw('testimonials');
 
   return (
     <Page

@@ -1,5 +1,6 @@
-import { envConfigs } from "@/config";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+
+import { envConfigs } from '@/config';
 
 // get metadata for page component
 export function getMetadata(
@@ -46,8 +47,8 @@ export function getMetadata(
 
     // canonical url
     const canonicalUrl = await getCanonicalUrl(
-      options.canonicalUrl || "",
-      locale || ""
+      options.canonicalUrl || '',
+      locale || ''
     );
 
     const title =
@@ -58,8 +59,8 @@ export function getMetadata(
       defaultMetadata.description;
 
     // image url
-    let imageUrl = options.imageUrl || "/logo.png";
-    if (imageUrl.startsWith("http")) {
+    let imageUrl = options.imageUrl || '/logo.png';
+    if (imageUrl.startsWith('http')) {
       imageUrl = imageUrl;
     } else {
       imageUrl = `${envConfigs.app_url}${imageUrl}`;
@@ -68,7 +69,7 @@ export function getMetadata(
     // app name
     let appName = options.appName;
     if (!appName) {
-      appName = envConfigs.app_name || "";
+      appName = envConfigs.app_name || '';
     }
 
     return {
@@ -89,7 +90,7 @@ export function getMetadata(
       },
 
       openGraph: {
-        type: "website",
+        type: 'website',
         locale: locale,
         url: canonicalUrl,
         title,
@@ -99,7 +100,7 @@ export function getMetadata(
       },
 
       twitter: {
-        card: "summary_large_image",
+        card: 'summary_large_image',
         title,
         description,
         images: [imageUrl.toString()],
@@ -114,38 +115,38 @@ export function getMetadata(
   };
 }
 
-const defaultMetadataKey = "common.metadata";
+const defaultMetadataKey = 'common.metadata';
 
 async function getTranslatedMetadata(metadataKey: string, locale: string) {
   setRequestLocale(locale);
   const t = await getTranslations(metadataKey);
 
   return {
-    title: t.has("title") ? t("title") : "",
-    description: t.has("description") ? t("description") : "",
-    keywords: t.has("keywords") ? t("keywords") : "",
+    title: t.has('title') ? t('title') : '',
+    description: t.has('description') ? t('description') : '',
+    keywords: t.has('keywords') ? t('keywords') : '',
   };
 }
 
 async function getCanonicalUrl(canonicalUrl: string, locale: string) {
   if (!canonicalUrl) {
-    canonicalUrl = "/";
+    canonicalUrl = '/';
   }
 
-  if (canonicalUrl.startsWith("http")) {
+  if (canonicalUrl.startsWith('http')) {
     // full url
     canonicalUrl = canonicalUrl;
   } else {
     // relative path
-    if (!canonicalUrl.startsWith("/")) {
+    if (!canonicalUrl.startsWith('/')) {
       canonicalUrl = `/${canonicalUrl}`;
     }
 
     canonicalUrl = `${envConfigs.app_url}${
-      !locale || locale === "en" ? "" : `/${locale}`
+      !locale || locale === 'en' ? '' : `/${locale}`
     }${canonicalUrl}`;
 
-    if (locale !== "en" && canonicalUrl.endsWith("/")) {
+    if (locale !== 'en' && canonicalUrl.endsWith('/')) {
       canonicalUrl = canonicalUrl.slice(0, -1);
     }
   }

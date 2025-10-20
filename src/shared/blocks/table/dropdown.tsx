@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
+import { MoreHorizontal } from 'lucide-react';
+
+import { Link } from '@/core/i18n/navigation';
+import { SmartIcon } from '@/shared/blocks/common/smart-icon';
+import { Button } from '@/shared/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/shared/components/ui/dropdown-menu";
-
-import { Button } from "@/shared/components/ui/button";
-import { SmartIcon } from "@/shared/blocks/common/smart-icon";
-import { Link } from "@/core/i18n/navigation";
-import { MoreHorizontal } from "lucide-react";
-import { NavItem } from "@/shared/types/blocks/common";
+} from '@/shared/components/ui/dropdown-menu';
+import { NavItem } from '@/shared/types/blocks/common';
 
 export function Dropdown({
   value,
@@ -33,7 +33,7 @@ export function Dropdown({
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+          className="data-[state=open]:bg-muted flex h-8 w-8 p-0"
         >
           <MoreHorizontal />
           <span className="sr-only">Open menu</span>
@@ -44,12 +44,12 @@ export function Dropdown({
           return (
             <DropdownMenuItem key={item.title}>
               <Link
-                href={item.url || ""}
-                target={item.target || "_self"}
-                className="flex items-center gap-2 w-full"
+                href={item.url || ''}
+                target={item.target || '_self'}
+                className="flex w-full items-center gap-2"
               >
                 {item.icon && (
-                  <SmartIcon name={item.icon as string} className="w-4 h-4" />
+                  <SmartIcon name={item.icon as string} className="h-4 w-4" />
                 )}
                 {item.title}
               </Link>

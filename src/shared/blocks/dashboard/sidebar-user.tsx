@@ -1,13 +1,18 @@
-"use client";
+'use client';
 
+import { Fragment, useEffect, useState } from 'react';
+import { ChevronsUpDown, Loader2, LogOut } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
+import { signOut, useSession } from '@/core/auth/client';
+import { Link, useRouter } from '@/core/i18n/navigation';
+import { SmartIcon } from '@/shared/blocks/common';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/shared/components/ui/avatar";
-import { ChevronsUpDown, Loader2, LogOut } from "lucide-react";
-import { Link, useRouter } from "@/core/i18n/navigation";
-import { signOut, useSession } from "@/core/auth/client";
+} from '@/shared/components/ui/avatar';
+import { Button } from '@/shared/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,24 +21,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/shared/components/ui/dropdown-menu";
+} from '@/shared/components/ui/dropdown-menu';
 import {
-  useSidebar,
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
-} from "@/shared/components/ui/sidebar";
-
-import { Button } from "@/shared/components/ui/button";
-import { Fragment, useEffect, useState } from "react";
-import { NavItem } from "@/shared/types/blocks/common";
-import { SidebarUser as SidebarUserType } from "@/shared/types/blocks/dashboard";
-import { useTranslations } from "next-intl";
-import { SmartIcon } from "@/shared/blocks/common";
+  SidebarMenuItem,
+  useSidebar,
+} from '@/shared/components/ui/sidebar';
+import { NavItem } from '@/shared/types/blocks/common';
+import { SidebarUser as SidebarUserType } from '@/shared/types/blocks/dashboard';
 
 // SSR/CSR hydration bug fix: Avoid rendering session-dependent UI until mounted on client
 export function SidebarUser({ user }: { user: SidebarUserType }) {
-  const t = useTranslations("common.sign");
+  const t = useTranslations('common.sign');
   const { data: session, isPending } = useSession();
   const { isMobile, open } = useSidebar();
   const router = useRouter();
@@ -46,13 +46,13 @@ export function SidebarUser({ user }: { user: SidebarUserType }) {
 
   const handleSignOut = async () => {
     await signOut();
-    router.push(user.signout_callback || "/sign-in");
+    router.push(user.signout_callback || '/sign-in');
   };
 
   // If not mounted, render placeholder to avoid hydration mismatch
   if (!hasMounted) {
     return (
-      <div className="flex justify-center items-center h-full px-4 py-4">
+      <div className="flex h-full items-center justify-center px-4 py-4">
         <Loader2 className="animate-spin" />
       </div>
     );
@@ -68,9 +68,9 @@ export function SidebarUser({ user }: { user: SidebarUserType }) {
                 size="lg"
                 className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               >
-                <Avatar className="rounded-lg h-8 w-8">
+                <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
-                    src={session?.user?.image || ""}
+                    src={session?.user?.image || ''}
                     alt={session?.user?.name}
                   />
                   <AvatarFallback className="rounded-lg">
@@ -91,8 +91,8 @@ export function SidebarUser({ user }: { user: SidebarUserType }) {
               </SidebarMenuButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg bg-background"
-              side={isMobile ? "bottom" : "right"}
+              className="bg-background w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+              side={isMobile ? 'bottom' : 'right'}
               align="end"
               sideOffset={4}
             >
@@ -100,11 +100,11 @@ export function SidebarUser({ user }: { user: SidebarUserType }) {
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage
-                      src={session?.user?.image || ""}
+                      src={session?.user?.image || ''}
                       alt={session?.user?.name}
                     />
                     <AvatarFallback className="rounded-lg">
-                      {session?.user?.name?.charAt(0) || "U"}
+                      {session?.user?.name?.charAt(0) || 'U'}
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
@@ -125,12 +125,12 @@ export function SidebarUser({ user }: { user: SidebarUserType }) {
                   <Fragment key={item?.title || item?.url}>
                     <DropdownMenuItem className="cursor-pointer">
                       <Link
-                        href={item?.url || ""}
+                        href={item?.url || ''}
                         target={item?.target}
-                        className="w-full flex items-center gap-2"
+                        className="flex w-full items-center gap-2"
                       >
                         {item?.icon && <SmartIcon name={item.icon as string} />}
-                        {item?.title || ""}
+                        {item?.title || ''}
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
@@ -141,7 +141,7 @@ export function SidebarUser({ user }: { user: SidebarUserType }) {
                   onClick={handleSignOut}
                 >
                   <LogOut />
-                  {t("sign_out_title")}
+                  {t('sign_out_title')}
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>
@@ -155,9 +155,9 @@ export function SidebarUser({ user }: { user: SidebarUserType }) {
   return (
     <>
       {open ? (
-        <div className="flex justify-center items-center h-full px-4 py-4">
+        <div className="flex h-full items-center justify-center px-4 py-4">
           {isPending ? (
-            <div className="w-full flex justify-center items-center">
+            <div className="flex w-full items-center justify-center">
               <Loader2 className="animate-spin" />
             </div>
           ) : (

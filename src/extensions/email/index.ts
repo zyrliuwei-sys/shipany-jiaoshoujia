@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 /**
  * Email attachment interface
@@ -22,7 +22,7 @@ export interface EmailMessage {
   html?: string;
   attachments?: EmailAttachment[];
   replyTo?: string;
-  priority?: "high" | "normal" | "low";
+  priority?: 'high' | 'normal' | 'low';
   tags?: string[];
   headers?: Record<string, string>;
   react?: ReactNode;
@@ -88,7 +88,7 @@ export class EmailManager {
     }
 
     if (!this.defaultProvider) {
-      throw new Error("No email provider configured");
+      throw new Error('No email provider configured');
     }
 
     return this.defaultProvider.sendEmail(email);
@@ -116,4 +116,4 @@ export class EmailManager {
 export const emailManager = new EmailManager();
 
 // Export all providers
-export * from "./resend";
+export * from './resend';

@@ -1,6 +1,7 @@
-import { AnalyticsConfigs, AnalyticsProvider } from ".";
-import { ReactNode } from "react";
-import Script from "next/script";
+import { ReactNode } from 'react';
+import Script from 'next/script';
+
+import { AnalyticsConfigs, AnalyticsProvider } from '.';
 
 /**
  * Google analytics configs
@@ -15,7 +16,7 @@ export interface GoogleAnalyticsConfigs extends AnalyticsConfigs {
  * @website https://marketingplatform.google.com/about/analytics/
  */
 export class GoogleAnalyticsProvider implements AnalyticsProvider {
-  readonly name = "google-analytics";
+  readonly name = 'google-analytics';
 
   configs: GoogleAnalyticsConfigs;
 

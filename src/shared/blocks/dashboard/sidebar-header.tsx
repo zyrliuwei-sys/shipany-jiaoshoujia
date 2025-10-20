@@ -1,14 +1,15 @@
+import Image from 'next/image';
+
+import { Link } from '@/core/i18n/navigation';
 import {
+  SidebarHeader as SidebarHeaderComponent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarHeader as SidebarHeaderComponent,
   SidebarTrigger,
   useSidebar,
-} from "@/shared/components/ui/sidebar";
-import { Link } from "@/core/i18n/navigation";
-import Image from "next/image";
-import { SidebarHeader as SidebarHeaderType } from "@/shared/types/blocks/dashboard";
+} from '@/shared/components/ui/sidebar';
+import { SidebarHeader as SidebarHeaderType } from '@/shared/types/blocks/dashboard';
 
 export function SidebarHeader({ header }: { header: SidebarHeaderType }) {
   const { open } = useSidebar();
@@ -22,11 +23,11 @@ export function SidebarHeader({ header }: { header: SidebarHeaderType }) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               {header.brand && (
-                <Link href={header.brand.url || ""}>
+                <Link href={header.brand.url || ''}>
                   {header.brand.logo && (
                     <Image
                       src={header.brand.logo.src}
-                      alt={header.brand.logo.alt || ""}
+                      alt={header.brand.logo.alt || ''}
                       width={80}
                       height={80}
                       className="h-6 w-auto"

@@ -1,13 +1,13 @@
-import { Header, Main, MainHeader } from "@/shared/blocks/dashboard";
-import { FormCard } from "@/shared/blocks/form";
-import { Crumb, Tab } from "@/shared/types/blocks/common";
-import { Form as FormType } from "@/shared/types/blocks/form";
-import { saveConfigs } from "@/shared/services/config";
-import { getConfigs } from "@/shared/services/config";
-import { getSettingGroups, getSettings } from "@/shared/services/settings";
-import { getUserInfo } from "@/shared/services/user";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { PERMISSIONS, requireAllPermissions } from "@/core/rbac";
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+
+import { PERMISSIONS, requireAllPermissions } from '@/core/rbac';
+import { Header, Main, MainHeader } from '@/shared/blocks/dashboard';
+import { FormCard } from '@/shared/blocks/form';
+import { getConfigs, saveConfigs } from '@/shared/services/config';
+import { getSettingGroups, getSettings } from '@/shared/services/settings';
+import { getUserInfo } from '@/shared/services/user';
+import { Crumb, Tab } from '@/shared/types/blocks/common';
+import { Form as FormType } from '@/shared/types/blocks/form';
 
 export default async function SettingsPage({
   params,
@@ -20,7 +20,7 @@ export default async function SettingsPage({
   // Check if user has permission to read settings
   await requireAllPermissions({
     codes: [PERMISSIONS.SETTINGS_READ, PERMISSIONS.SETTINGS_WRITE],
-    redirectUrl: "/admin/no-permission",
+    redirectUrl: '/admin/no-permission',
     locale,
   });
 
@@ -29,66 +29,66 @@ export default async function SettingsPage({
   const settingGroups = await getSettingGroups();
   const settings = await getSettings();
 
-  const t = await getTranslations("admin.settings");
+  const t = await getTranslations('admin.settings');
 
   const crumbs: Crumb[] = [
-    { title: t("edit.crumbs.admin"), url: "/admin" },
-    { title: t("edit.crumbs.settings"), is_active: true },
+    { title: t('edit.crumbs.admin'), url: '/admin' },
+    { title: t('edit.crumbs.settings'), is_active: true },
   ];
 
   const tabs: Tab[] = [
     {
-      name: "auth",
-      title: t("edit.tabs.auth"),
-      url: "/admin/settings/auth",
-      is_active: tab === "auth",
+      name: 'auth',
+      title: t('edit.tabs.auth'),
+      url: '/admin/settings/auth',
+      is_active: tab === 'auth',
     },
     {
-      name: "payment",
-      title: t("edit.tabs.payment"),
-      url: "/admin/settings/payment",
-      is_active: tab === "payment",
+      name: 'payment',
+      title: t('edit.tabs.payment'),
+      url: '/admin/settings/payment',
+      is_active: tab === 'payment',
     },
     {
-      name: "email",
-      title: t("edit.tabs.email"),
-      url: "/admin/settings/email",
-      is_active: tab === "email",
+      name: 'email',
+      title: t('edit.tabs.email'),
+      url: '/admin/settings/email',
+      is_active: tab === 'email',
     },
     {
-      name: "storage",
-      title: t("edit.tabs.storage"),
-      url: "/admin/settings/storage",
-      is_active: tab === "storage",
+      name: 'storage',
+      title: t('edit.tabs.storage'),
+      url: '/admin/settings/storage',
+      is_active: tab === 'storage',
     },
 
     {
-      name: "ai",
-      title: t("edit.tabs.ai"),
-      url: "/admin/settings/ai",
-      is_active: tab === "ai",
+      name: 'ai',
+      title: t('edit.tabs.ai'),
+      url: '/admin/settings/ai',
+      is_active: tab === 'ai',
     },
     {
-      name: "analytics",
-      title: t("edit.tabs.analytics"),
-      url: "/admin/settings/analytics",
-      is_active: tab === "analytics",
+      name: 'analytics',
+      title: t('edit.tabs.analytics'),
+      url: '/admin/settings/analytics',
+      is_active: tab === 'analytics',
     },
     {
-      name: "ads",
-      title: t("edit.tabs.ads"),
-      url: "/admin/settings/ads",
-      is_active: tab === "ads",
+      name: 'ads',
+      title: t('edit.tabs.ads'),
+      url: '/admin/settings/ads',
+      is_active: tab === 'ads',
     },
   ];
 
   const handleSubmit = async (data: FormData, passby: any) => {
-    "use server";
+    'use server';
 
     const user = await getUserInfo();
 
     if (!user) {
-      throw new Error("no auth");
+      throw new Error('no auth');
     }
 
     data.forEach((value, name) => {
@@ -98,8 +98,8 @@ export default async function SettingsPage({
     await saveConfigs(configs);
 
     return {
-      status: "success",
-      message: "Settings updated",
+      status: 'success',
+      message: 'Settings updated',
     };
   };
 
@@ -132,7 +132,7 @@ export default async function SettingsPage({
       data: configs,
       submit: {
         button: {
-          title: t("edit.buttons.submit"),
+          title: t('edit.buttons.submit'),
         },
         handler: handleSubmit as any,
       },
@@ -143,13 +143,13 @@ export default async function SettingsPage({
     <>
       <Header crumbs={crumbs} />
       <Main>
-        <MainHeader title={t("edit.title")} tabs={tabs} />
+        <MainHeader title={t('edit.title')} tabs={tabs} />
         {forms.map((form) => (
           <FormCard
             key={form.title}
             title={form.title}
             form={form}
-            className="md:max-w-xl mb-8"
+            className="mb-8 md:max-w-xl"
           />
         ))}
       </Main>

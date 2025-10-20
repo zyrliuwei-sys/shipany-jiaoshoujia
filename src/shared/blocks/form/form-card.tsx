@@ -1,5 +1,15 @@
-import { Form as FormType } from "@/shared/types/blocks/form";
-import { Form } from "@/shared/blocks/form";
+import { Fragment } from 'react';
+
+import { Link } from '@/core/i18n/navigation';
+import { Form } from '@/shared/blocks/form';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/shared/components/ui/breadcrumb';
 import {
   Card,
   CardContent,
@@ -7,17 +17,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/shared/components/ui/card";
-import { cn } from "@/shared/lib/utils";
-import { Crumb } from "@/shared/types/blocks/common";
-import { Fragment } from "react";
-import { Breadcrumb } from "@/shared/components/ui/breadcrumb";
-import { BreadcrumbList } from "@/shared/components/ui/breadcrumb";
-import { BreadcrumbItem } from "@/shared/components/ui/breadcrumb";
-import { BreadcrumbLink } from "@/shared/components/ui/breadcrumb";
-import { BreadcrumbSeparator } from "@/shared/components/ui/breadcrumb";
-import { BreadcrumbPage } from "@/shared/components/ui/breadcrumb";
-import { Link } from "@/core/i18n/navigation";
+} from '@/shared/components/ui/card';
+import { cn } from '@/shared/lib/utils';
+import { Crumb } from '@/shared/types/blocks/common';
+import { Form as FormType } from '@/shared/types/blocks/form';
 
 export function FormCard({
   title,
@@ -43,7 +46,7 @@ export function FormCard({
                   {crumb.is_active ? (
                     <BreadcrumbPage>{crumb.title}</BreadcrumbPage>
                   ) : (
-                    <Link href={crumb.url || ""}>{crumb.title}</Link>
+                    <Link href={crumb.url || ''}>{crumb.title}</Link>
                   )}
                 </BreadcrumbItem>
                 {index < crumbs.length - 1 && (

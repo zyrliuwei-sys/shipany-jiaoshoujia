@@ -1,17 +1,17 @@
-import { Landing } from "@/shared/types/blocks/landing";
+import { Landing } from '@/shared/types/blocks/landing';
 import {
+  CTA,
+  FAQ,
+  Features,
+  FeaturesAccordion,
+  FeaturesList,
+  FeaturesStep,
   Hero,
   Logos,
-  FeaturesList,
-  FeaturesAccordion,
-  FeaturesStep,
-  Features,
   Stats,
-  Testimonials,
   Subscribe,
-  FAQ,
-  CTA,
-} from "@/themes/default/blocks";
+  Testimonials,
+} from '@/themes/default/blocks';
 
 export default async function LandingPage({
   locale,

@@ -1,10 +1,11 @@
-"use client";
+'use client';
 
-import { ArrowBigRight } from "lucide-react";
-import { Features as FeaturesType } from "@/shared/types/blocks/landing";
-import { SmartIcon } from "@/shared/blocks/common/smart-icon";
-import { cn } from "@/shared/lib/utils";
-import { ScrollAnimation } from "@/shared/components/ui/scroll-animation";
+import { ArrowBigRight } from 'lucide-react';
+
+import { SmartIcon } from '@/shared/blocks/common/smart-icon';
+import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
+import { cn } from '@/shared/lib/utils';
+import { Features as FeaturesType } from '@/shared/types/blocks/landing';
 
 export function FeaturesStep({
   features,
@@ -16,7 +17,7 @@ export function FeaturesStep({
   return (
     <section
       id={features.id}
-      className={cn("py-16 md:py-24", features.className, className)}
+      className={cn('py-16 md:py-24', features.className, className)}
     >
       <div className="m-4 rounded-[2rem]">
         <div className="@container relative container">
@@ -26,14 +27,14 @@ export function FeaturesStep({
               <h2 className="text-foreground mt-4 text-4xl font-semibold">
                 {features.title}
               </h2>
-              <p className="text-muted-foreground mt-4 text-balance text-lg">
+              <p className="text-muted-foreground mt-4 text-lg text-balance">
                 {features.description}
               </p>
             </div>
           </ScrollAnimation>
 
           <ScrollAnimation delay={0.2}>
-            <div className="@3xl:grid-cols-4 mt-20 grid gap-12">
+            <div className="mt-20 grid gap-12 @3xl:grid-cols-4">
               {features.items?.map((item, idx) => (
                 <div className="space-y-6" key={idx}>
                   <div className="text-center">
@@ -47,7 +48,7 @@ export function FeaturesStep({
                         )}
                       </div>
                       {idx < (features.items?.length ?? 0) - 1 && (
-                        <ArrowBigRight className="mt-1 @3xl:block fill-muted stroke-primary absolute inset-y-0 right-0 my-auto hidden translate-x-[150%] drop-shadow" />
+                        <ArrowBigRight className="fill-muted stroke-primary absolute inset-y-0 right-0 my-auto mt-1 hidden translate-x-[150%] drop-shadow @3xl:block" />
                       )}
                     </div>
                     <h3 className="text-foreground mb-4 text-lg font-semibold">

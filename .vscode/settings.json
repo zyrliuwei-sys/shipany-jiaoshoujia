@@ -1,11 +1,5 @@
 {
+  "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "i18n-ally.localesPaths": [
-    "src/config/locale",
-    "src/config/locale/messages",
-    "src/config/locale/landing"
-  ]
+  "i18n-ally.localesPaths": ["src/config/locale/messages"]
 }

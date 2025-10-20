@@ -1,4 +1,4 @@
-import { Button } from "./common";
+import { Button } from './common';
 
 type ValidationRule = {
   required?: boolean;
@@ -12,20 +12,20 @@ export interface FormField {
   name?: string;
   title?: string;
   type?:
-    | "text"
-    | "textarea"
-    | "number"
-    | "email"
-    | "password"
-    | "select"
-    | "url"
-    | "editor"
-    | "code_editor"
-    | "richtext_editor"
-    | "markdown_editor"
-    | "switch"
-    | "checkbox"
-    | "upload_image";
+    | 'text'
+    | 'textarea'
+    | 'number'
+    | 'email'
+    | 'password'
+    | 'select'
+    | 'url'
+    | 'editor'
+    | 'code_editor'
+    | 'richtext_editor'
+    | 'markdown_editor'
+    | 'switch'
+    | 'checkbox'
+    | 'upload_image';
   placeholder?: string;
   group?: string;
   options?: {
@@ -47,7 +47,7 @@ export interface FormSubmit {
     passby?: any
   ) => Promise<
     | {
-        status: "success" | "error";
+        status: 'success' | 'error';
         message: string;
         redirect_url?: string;
       }

@@ -1,11 +1,13 @@
-import { Header, Main, MainHeader } from "@/shared/blocks/dashboard";
-import { TableCard } from "@/shared/blocks/table";
-import { type Table } from "@/shared/types/blocks/table";
-import { Crumb, Tab } from "@/shared/types/blocks/common";
-import { getOrders, getOrdersCount } from "@/shared/services/order";
-import { PaymentType } from "@/extensions/payment";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { PERMISSIONS, requirePermission } from "@/core/rbac";
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+
+import { PERMISSIONS, requirePermission } from '@/core/rbac';
+import { PaymentType } from '@/extensions/payment';
+import { Header, Main, MainHeader } from '@/shared/blocks/dashboard';
+import { TableCard } from '@/shared/blocks/table';
+import { getOrders, getOrdersCount } from '@/shared/services/order';
+import { Crumb, Tab } from '@/shared/types/blocks/common';
+import { type Table } from '@/shared/types/blocks/table';
+
 export default async function PaymentsPage({
   params,
   searchParams,
@@ -23,39 +25,39 @@ export default async function PaymentsPage({
   // Check if user has permission to read payments
   await requirePermission({
     code: PERMISSIONS.PAYMENTS_READ,
-    redirectUrl: "/admin/no-permission",
+    redirectUrl: '/admin/no-permission',
     locale,
   });
 
-  const t = await getTranslations("admin.payments");
+  const t = await getTranslations('admin.payments');
 
   const { page: pageNum, pageSize, type } = await searchParams;
   const page = pageNum || 1;
   const limit = pageSize || 30;
 
   const crumbs: Crumb[] = [
-    { title: t("list.crumbs.admin"), url: "/admin" },
-    { title: t("list.crumbs.payments"), is_active: true },
+    { title: t('list.crumbs.admin'), url: '/admin' },
+    { title: t('list.crumbs.payments'), is_active: true },
   ];
 
   const tabs: Tab[] = [
     {
-      name: "all",
-      title: t("list.tabs.all"),
-      url: "/admin/payments",
-      is_active: !type || type === "all",
+      name: 'all',
+      title: t('list.tabs.all'),
+      url: '/admin/payments',
+      is_active: !type || type === 'all',
     },
     {
-      name: "subscription",
-      title: t("list.tabs.subscription"),
-      url: "/admin/payments?type=subscription",
-      is_active: type === "subscription",
+      name: 'subscription',
+      title: t('list.tabs.subscription'),
+      url: '/admin/payments?type=subscription',
+      is_active: type === 'subscription',
     },
     {
-      name: "one-time",
-      title: t("list.tabs.one-time"),
-      url: "/admin/payments?type=one-time",
-      is_active: type === "one-time",
+      name: 'one-time',
+      title: t('list.tabs.one-time'),
+      url: '/admin/payments?type=one-time',
+      is_active: type === 'one-time',
     },
   ];
 
@@ -72,10 +74,10 @@ export default async function PaymentsPage({
 
   const table: Table = {
     columns: [
-      { name: "orderNo", title: t("fields.order_no"), type: "copy" },
-      { name: "user", title: t("fields.user"), type: "user" },
+      { name: 'orderNo', title: t('fields.order_no'), type: 'copy' },
+      { name: 'user', title: t('fields.user'), type: 'user' },
       {
-        title: t("fields.amount"),
+        title: t('fields.amount'),
         callback: (item) => {
           return (
             <div className="text-primary">{`${item.amount / 100} ${
@@ -83,28 +85,28 @@ export default async function PaymentsPage({
             }`}</div>
           );
         },
-        type: "copy",
+        type: 'copy',
       },
-      { name: "status", title: t("fields.status"), type: "label" },
+      { name: 'status', title: t('fields.status'), type: 'label' },
       {
-        name: "paymentType",
-        title: t("fields.type"),
-        type: "label",
-        placeholder: "-",
+        name: 'paymentType',
+        title: t('fields.type'),
+        type: 'label',
+        placeholder: '-',
       },
       {
-        name: "productId",
-        title: t("fields.product"),
-        type: "label",
-        placeholder: "-",
+        name: 'productId',
+        title: t('fields.product'),
+        type: 'label',
+        placeholder: '-',
       },
-      { name: "description", title: t("fields.description"), placeholder: "-" },
+      { name: 'description', title: t('fields.description'), placeholder: '-' },
       {
-        name: "paymentProvider",
-        title: t("fields.provider"),
-        type: "label",
+        name: 'paymentProvider',
+        title: t('fields.provider'),
+        type: 'label',
       },
-      { name: "createdAt", title: t("fields.created_at"), type: "time" },
+      { name: 'createdAt', title: t('fields.created_at'), type: 'time' },
     ],
     data: payments,
     pagination: {
@@ -118,7 +120,7 @@ export default async function PaymentsPage({
     <>
       <Header crumbs={crumbs} />
       <Main>
-        <MainHeader title={t("list.title")} tabs={tabs} />
+        <MainHeader title={t('list.title')} tabs={tabs} />
         <TableCard table={table} />
       </Main>
     </>

@@ -1,17 +1,18 @@
-"use client";
+'use client';
 
-import { useEffect, useState, useRef, useCallback } from "react";
-import { useLocale } from "next-intl";
-import { useRouter, usePathname } from "@/core/i18n/navigation";
-import { locales, localeNames } from "@/config/locale";
-import { X } from "lucide-react";
-import { Button } from "@/shared/components/ui/button";
-import { cacheGet, cacheSet } from "@/shared/lib/cache";
-import { getTimestamp } from "@/shared/lib/time";
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { X } from 'lucide-react';
+import { useLocale } from 'next-intl';
 
-const DISMISSED_KEY = "locale-suggestion-dismissed";
+import { usePathname, useRouter } from '@/core/i18n/navigation';
+import { localeNames, locales } from '@/config/locale';
+import { Button } from '@/shared/components/ui/button';
+import { cacheGet, cacheSet } from '@/shared/lib/cache';
+import { getTimestamp } from '@/shared/lib/time';
+
+const DISMISSED_KEY = 'locale-suggestion-dismissed';
 const DISMISSED_EXPIRY_DAYS = 1; // Expiry in days
-const PREFERRED_LOCALE_KEY = "locale";
+const PREFERRED_LOCALE_KEY = 'locale';
 
 export function LocaleDetector() {
   const currentLocale = useLocale();
@@ -23,10 +24,10 @@ export function LocaleDetector() {
   const hasCheckedRef = useRef(false);
 
   const detectBrowserLocale = (): string | null => {
-    if (typeof window === "undefined") return null;
+    if (typeof window === 'undefined') return null;
 
     const browserLang = navigator.language || (navigator as any).userLanguage;
-    const langCode = browserLang.split("-")[0].toLowerCase();
+    const langCode = browserLang.split('-')[0].toLowerCase();
 
     // Check if the detected language is in our supported locales
     if (locales.includes(langCode)) {
@@ -45,7 +46,7 @@ export function LocaleDetector() {
 
   const setDismissed = () => {
     const expiresAt = getTimestamp() + DISMISSED_EXPIRY_DAYS * 24 * 60 * 60;
-    cacheSet(DISMISSED_KEY, "true", expiresAt);
+    cacheSet(DISMISSED_KEY, 'true', expiresAt);
   };
 
   const switchToLocale = useCallback(
@@ -97,7 +98,7 @@ export function LocaleDetector() {
   useEffect(() => {
     if (showBanner && bannerRef.current) {
       const bannerHeight = bannerRef.current.offsetHeight;
-      const header = document.querySelector("header");
+      const header = document.querySelector('header');
       if (header) {
         header.style.top = `${bannerHeight}px`;
       }
@@ -105,9 +106,9 @@ export function LocaleDetector() {
 
     return () => {
       // Reset header position when component unmounts or banner is hidden
-      const header = document.querySelector("header");
+      const header = document.querySelector('header');
       if (header) {
-        header.style.top = "0px";
+        header.style.top = '0px';
       }
     };
   }, [showBanner]);
@@ -122,9 +123,9 @@ export function LocaleDetector() {
     setDismissed();
     setShowBanner(false);
     // Reset header position
-    const header = document.querySelector("header");
+    const header = document.querySelector('header');
     if (header) {
-      header.style.top = "0px";
+      header.style.top = '0px';
     }
   };
 
@@ -138,32 +139,32 @@ export function LocaleDetector() {
   return (
     <div
       ref={bannerRef}
-      className="fixed top-0 left-0 right-0 z-[51] bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg"
+      className="from-primary to-primary/80 text-primary-foreground fixed top-0 right-0 left-0 z-[51] bg-gradient-to-r shadow-lg"
     >
       <div className="container py-2.5">
         <div className="flex items-center justify-between gap-4">
-          <div className="flex-1 flex items-center gap-3">
+          <div className="flex flex-1 items-center gap-3">
             <span className="text-sm">
-              {browserLocale === "zh"
+              {browserLocale === 'zh'
                 ? `检测到浏览器语言是: ${targetLocaleName}，是否切换？`
                 : `We detected your browser language is ${targetLocaleName}. Switch to it?`}
             </span>
           </div>
-          <div className="flex items-center gap-2 flex-shrink-0">
+          <div className="flex flex-shrink-0 items-center gap-2">
             <Button
               onClick={handleSwitch}
               variant="secondary"
               size="sm"
               className="bg-background text-xs"
             >
-              {browserLocale === "zh" ? "切换到中文" : "Switch"}
+              {browserLocale === 'zh' ? '切换到中文' : 'Switch'}
             </Button>
             <button
               onClick={handleDismiss}
-              className="p-1 bg-primary/10 rounded transition-colors flex-shrink-0"
+              className="bg-primary/10 flex-shrink-0 rounded p-1 transition-colors"
               aria-label="Close"
             >
-              <X className="w-4 h-4" />
+              <X className="h-4 w-4" />
             </button>
           </div>
         </div>

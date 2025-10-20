@@ -1,4 +1,4 @@
-import { Brand, Nav } from "./common";
+import { Brand, Nav } from './common';
 
 export interface Dashboard {
   sidebar?: Sidebar;
@@ -28,6 +28,6 @@ export interface Sidebar {
   bottom_nav?: Nav;
   user?: SidebarUser;
   footer?: SidebarFooter;
-  variant?: "inset" | "sidebar" | "floating";
-  collapsible?: "offcanvas" | "icon" | "none";
+  variant?: 'inset' | 'sidebar' | 'floating';
+  collapsible?: 'offcanvas' | 'icon' | 'none';
 }

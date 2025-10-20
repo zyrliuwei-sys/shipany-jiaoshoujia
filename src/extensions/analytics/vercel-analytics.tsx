@@ -1,6 +1,7 @@
-import { AnalyticsConfigs, AnalyticsProvider } from ".";
-import { ReactNode } from "react";
-import { Analytics } from "@vercel/analytics/next";
+import { ReactNode } from 'react';
+import { Analytics } from '@vercel/analytics/next';
+
+import { AnalyticsConfigs, AnalyticsProvider } from '.';
 
 /**
  * Vercel analytics configs
@@ -16,7 +17,7 @@ export interface VercelAnalyticsConfigs extends AnalyticsConfigs {
  * @website https://vercel.com/
  */
 export class VercelAnalyticsProvider implements AnalyticsProvider {
-  readonly name = "vercel-analytics";
+  readonly name = 'vercel-analytics';
 
   configs: VercelAnalyticsConfigs;
 

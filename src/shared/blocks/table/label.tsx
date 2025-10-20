@@ -1,4 +1,4 @@
-import { Badge } from "@/shared/components/ui/badge";
+import { Badge } from '@/shared/components/ui/badge';
 
 export function Label({
   value,
@@ -20,7 +20,7 @@ export function Label({
   }
 
   return (
-    <Badge variant={metadata?.variant ?? "secondary"} className={className}>
+    <Badge variant={metadata?.variant ?? 'secondary'} className={className}>
       {value.toString()}
     </Badge>
   );

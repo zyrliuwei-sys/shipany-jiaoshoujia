@@ -1,12 +1,13 @@
-import { Empty } from "@/shared/blocks/common";
-import { getPaymentService } from "@/shared/services/payment";
+import { redirect } from 'next/navigation';
+
+import { envConfigs } from '@/config';
+import { Empty } from '@/shared/blocks/common';
+import { getPaymentService } from '@/shared/services/payment';
 import {
   findSubscriptionBySubscriptionNo,
   updateSubscriptionBySubscriptionNo,
-} from "@/shared/services/subscription";
-import { getUserInfo } from "@/shared/services/user";
-import { redirect } from "next/navigation";
-import { envConfigs } from "@/config";
+} from '@/shared/services/subscription';
+import { getUserInfo } from '@/shared/services/user';
 
 export default async function RetrieveBillingPage({
   params,
@@ -48,7 +49,7 @@ export default async function RetrieveBillingPage({
     return <Empty message="payment provider not found" />;
   }
 
-  let billingUrl = "";
+  let billingUrl = '';
 
   try {
     const billing = await paymentProvider.getPaymentBilling?.({
@@ -65,7 +66,7 @@ export default async function RetrieveBillingPage({
       billingUrl: billing.billingUrl,
     });
   } catch (error: any) {
-    return <Empty message={error.message || "get billing failed"} />;
+    return <Empty message={error.message || 'get billing failed'} />;
   }
 
   if (!billingUrl) {

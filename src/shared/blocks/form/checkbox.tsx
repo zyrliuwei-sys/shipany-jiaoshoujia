@@ -1,7 +1,8 @@
-import { Checkbox as CheckboxComponent } from "@/shared/components/ui/checkbox";
-import { Label } from "@/shared/components/ui/label";
-import { FormField } from "@/shared/types/blocks/form";
-import { ControllerRenderProps } from "react-hook-form";
+import { ControllerRenderProps } from 'react-hook-form';
+
+import { Checkbox as CheckboxComponent } from '@/shared/components/ui/checkbox';
+import { Label } from '@/shared/components/ui/label';
+import { FormField } from '@/shared/types/blocks/form';
 
 export function Checkbox({
   field,
@@ -29,7 +30,7 @@ export function Checkbox({
   };
 
   return (
-    <div className="py-2 flex flex-col gap-4">
+    <div className="flex flex-col gap-4 py-2">
       {field.options?.map((option: any) => (
         <div key={option.value} className="flex items-start gap-4">
           <CheckboxComponent

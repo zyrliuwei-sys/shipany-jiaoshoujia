@@ -1,7 +1,8 @@
-import { ConsoleLayout } from "@/shared/blocks/console/layout";
-import { Nav } from "@/shared/types/blocks/common";
-import { ReactNode } from "react";
-import { getPathname } from "@/shared/lib/browser";
+import { ReactNode } from 'react';
+
+import { ConsoleLayout } from '@/shared/blocks/console/layout';
+import { getPathname } from '@/shared/lib/browser';
+import { Nav } from '@/shared/types/blocks/common';
 
 export default async function ActivityLayout({
   children,
@@ -9,31 +10,31 @@ export default async function ActivityLayout({
   children: ReactNode;
 }) {
   // settings title
-  const title = "Activity";
+  const title = 'Activity';
 
   const pathname = await getPathname();
 
   // settings nav
   const nav: Nav = {
-    title: "Activity",
+    title: 'Activity',
     items: [
       {
-        title: "Tasks",
-        url: "/activity/tasks",
-        icon: "Task",
-        is_active: pathname === "/activity/tasks",
+        title: 'Tasks',
+        url: '/activity/tasks',
+        icon: 'Task',
+        is_active: pathname === '/activity/tasks',
       },
       {
-        title: "Chats",
-        url: "/activity/chats",
-        icon: "Chat",
-        is_active: pathname === "/activity/chats",
+        title: 'Chats',
+        url: '/activity/chats',
+        icon: 'Chat',
+        is_active: pathname === '/activity/chats',
       },
       {
-        title: "Feedbacks",
-        url: "/activity/feedbacks",
-        icon: "Feedback",
-        is_active: pathname === "/activity/feedbacks",
+        title: 'Feedbacks',
+        url: '/activity/feedbacks',
+        icon: 'Feedback',
+        is_active: pathname === '/activity/feedbacks',
       },
     ],
   };
@@ -41,15 +42,15 @@ export default async function ActivityLayout({
   const topNav: Nav = {
     items: [
       {
-        title: "Activity",
-        url: "/activity",
-        icon: "Activity",
+        title: 'Activity',
+        url: '/activity',
+        icon: 'Activity',
         is_active: true,
       },
       {
-        title: "Settings",
-        url: "/settings",
-        icon: "Settings",
+        title: 'Settings',
+        url: '/settings',
+        icon: 'Settings',
         is_active: false,
       },
     ],

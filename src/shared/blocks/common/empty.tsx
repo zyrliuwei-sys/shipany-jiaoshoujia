@@ -1,6 +1,6 @@
 export function Empty({ message }: { message: string }) {
   return (
-    <div className="flex flex-col items-center justify-center w-full h-[50vh]">
+    <div className="flex h-[50vh] w-full flex-col items-center justify-center">
       <p>{message}</p>
     </div>
   );

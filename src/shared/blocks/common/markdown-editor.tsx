@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from 'react';
 // @ts-ignore
-import { OverType } from "overtype";
+import { OverType } from 'overtype';
 
 export function MarkdownEditor({
   value,
@@ -41,9 +41,9 @@ export function MarkdownEditor({
 
   return (
     <div
-      className="border rounded-md overflow-hidden"
+      className="overflow-hidden rounded-md border"
       ref={ref}
-      style={{ height: "400px" }}
+      style={{ height: '400px' }}
     />
   );
 }

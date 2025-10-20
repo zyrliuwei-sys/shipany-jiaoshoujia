@@ -1,8 +1,9 @@
+import { ReactNode } from 'react';
+
 import {
-  Header as HeaderType,
   Footer as FooterType,
-} from "@/shared/types/blocks/landing";
-import { ReactNode } from "react";
+  Header as HeaderType,
+} from '@/shared/types/blocks/landing';
 
 export default async function LandingLayout({
   children,

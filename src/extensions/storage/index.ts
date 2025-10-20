@@ -7,7 +7,7 @@ export interface StorageUploadOptions {
   contentType?: string;
   bucket?: string;
   onProgress?: (progress: number) => void;
-  disposition?: "inline" | "attachment";
+  disposition?: 'inline' | 'attachment';
 }
 
 /**
@@ -18,7 +18,7 @@ export interface StorageDownloadUploadOptions {
   key: string;
   bucket?: string;
   contentType?: string;
-  disposition?: "inline" | "attachment";
+  disposition?: 'inline' | 'attachment';
 }
 
 /**
@@ -92,7 +92,7 @@ export class StorageManager {
     }
 
     if (!this.defaultProvider) {
-      throw new Error("No storage provider configured");
+      throw new Error('No storage provider configured');
     }
 
     return this.defaultProvider.uploadFile(options);
@@ -120,7 +120,7 @@ export class StorageManager {
     }
 
     if (!this.defaultProvider) {
-      throw new Error("No storage provider configured");
+      throw new Error('No storage provider configured');
     }
 
     return this.defaultProvider.downloadAndUpload(options);
@@ -148,5 +148,5 @@ export class StorageManager {
 export const storageManager = new StorageManager();
 
 // Export all providers
-export * from "./s3";
-export * from "./r2";
+export * from './s3';
+export * from './r2';

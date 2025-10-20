@@ -1,4 +1,4 @@
-import { getTimestamp } from "./time";
+import { getTimestamp } from './time';
 
 // get data from cache
 export const cacheGet = (key: string): string | null => {
@@ -7,7 +7,7 @@ export const cacheGet = (key: string): string | null => {
     return null;
   }
 
-  let valueArr = valueWithExpires.split(":");
+  let valueArr = valueWithExpires.split(':');
   if (!valueArr || valueArr.length < 2) {
     return null;
   }
@@ -22,8 +22,8 @@ export const cacheGet = (key: string): string | null => {
     return null;
   }
 
-  const searchStr = valueArr[0] + ":";
-  const value = valueWithExpires.replace(searchStr, "");
+  const searchStr = valueArr[0] + ':';
+  const value = valueWithExpires.replace(searchStr, '');
 
   return value;
 };
@@ -31,7 +31,7 @@ export const cacheGet = (key: string): string | null => {
 // set data to cache
 // expiresAt: absolute timestamp, -1 means no expire
 export const cacheSet = (key: string, value: string, expiresAt: number) => {
-  const valueWithExpires = expiresAt + ":" + value;
+  const valueWithExpires = expiresAt + ':' + value;
 
   localStorage.setItem(key, valueWithExpires);
 };

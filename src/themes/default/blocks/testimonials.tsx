@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { Testimonials as TestimonialsType } from "@/shared/types/blocks/landing";
-import { Image as ImageType } from "@/shared/types/blocks/common";
-import { ScrollAnimation } from "@/shared/components/ui/scroll-animation";
+import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
+import { Image as ImageType } from '@/shared/types/blocks/common';
+import { Testimonials as TestimonialsType } from '@/shared/types/blocks/landing';
 
 export function Testimonials({
   testimonials,
@@ -23,15 +23,15 @@ export function Testimonials({
     quote?: string;
   }) => {
     return (
-      <div className="bg-card/25 rounded-(--radius) ring-foreground/[0.07] flex flex-col justify-end gap-6 border border-transparent p-8 ring-1">
+      <div className="bg-card/25 ring-foreground/[0.07] flex flex-col justify-end gap-6 rounded-(--radius) border border-transparent p-8 ring-1">
         <p className='text-foreground self-end text-balance before:mr-1 before:content-["\201C"] after:ml-1 after:content-["\201D"]'>
           {quote}
         </p>
         <div className="flex items-center gap-3">
-          <div className="ring-foreground/10 aspect-square size-9 overflow-hidden rounded-lg border border-transparent shadow-md shadow-black/15 ring-1">
+          <div className="ring-foreground/10 aspect-square size-9 overflow-hidden rounded-lg border border-transparent shadow-md ring-1 shadow-black/15">
             <img
-              src={image?.src ?? ""}
-              alt={image?.alt ?? ""}
+              src={image?.src ?? ''}
+              alt={image?.alt ?? ''}
               className="h-full w-full object-cover"
               width={460}
               height={460}
@@ -57,7 +57,7 @@ export function Testimonials({
     >
       <div className="container">
         <ScrollAnimation>
-          <div className="mx-auto max-w-2xl text-balance text-center">
+          <div className="mx-auto max-w-2xl text-center text-balance">
             <h2 className="text-foreground mb-4 text-3xl font-semibold tracking-tight md:text-4xl">
               {testimonials.title}
             </h2>
@@ -67,8 +67,8 @@ export function Testimonials({
           </div>
         </ScrollAnimation>
         <ScrollAnimation delay={0.2}>
-          <div className="rounded-(--radius) border-border/50 relative">
-            <div className="lg:*:nth-4:rounded-r-none lg:*:nth-5:rounded-br-none lg:*:nth-6:rounded-b-none lg:*:nth-5:rounded-tl-none lg:*:nth-3:rounded-l-none lg:*:nth-2:rounded-tl-none lg:*:nth-2:rounded-br-none lg:*:nth-1:rounded-t-none grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-px">
+          <div className="border-border/50 relative rounded-(--radius)">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-px lg:*:nth-1:rounded-t-none lg:*:nth-2:rounded-tl-none lg:*:nth-2:rounded-br-none lg:*:nth-3:rounded-l-none lg:*:nth-4:rounded-r-none lg:*:nth-5:rounded-tl-none lg:*:nth-5:rounded-br-none lg:*:nth-6:rounded-b-none">
               {testimonials.items?.map((item, index) => (
                 <TestimonialCard key={index} {...item} />
               ))}

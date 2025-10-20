@@ -1,18 +1,19 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Image from "next/image";
+import { useState } from 'react';
+import Image from 'next/image';
+import { AnimatePresence, motion } from 'motion/react';
+
+import { SmartIcon } from '@/shared/blocks/common/smart-icon';
+import { BorderBeam } from '@/shared/components/magicui/border-beam';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/shared/components/ui/accordion";
-import { motion, AnimatePresence } from "motion/react";
-import { BorderBeam } from "@/shared/components/magicui/border-beam";
-import { Features as FeaturesType } from "@/shared/types/blocks/landing";
-import { SmartIcon } from "@/shared/blocks/common/smart-icon";
-import { ScrollAnimation } from "@/shared/components/ui/scroll-animation";
+} from '@/shared/components/ui/accordion';
+import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
+import { Features as FeaturesType } from '@/shared/types/blocks/landing';
 
 export function FeaturesAccordion({
   features,
@@ -21,24 +22,24 @@ export function FeaturesAccordion({
   features: FeaturesType;
   className?: string;
 }) {
-  const [activeItem, setActiveItem] = useState<string>("item-1");
+  const [activeItem, setActiveItem] = useState<string>('item-1');
 
   const images: any = {};
   features.items?.forEach((item, idx) => {
     images[`item-${idx + 1}`] = {
-      image: item.image?.src ?? "",
-      alt: item.image?.alt || item.title || "",
+      image: item.image?.src ?? '',
+      alt: item.image?.alt || item.title || '',
     };
   });
 
   return (
     // overflow-x-hidden to prevent horizontal scroll
-    <section className={`py-16 md:py-24 overflow-x-hidden ${className}`}>
-      <div className="bg-linear-to-b absolute inset-0 -z-10 sm:inset-6 sm:rounded-b-3xl dark:block dark:to-[color-mix(in_oklab,var(--color-zinc-900)_75%,var(--color-background))]"></div>
+    <section className={`overflow-x-hidden py-16 md:py-24 ${className}`}>
+      <div className="absolute inset-0 -z-10 bg-linear-to-b sm:inset-6 sm:rounded-b-3xl dark:block dark:to-[color-mix(in_oklab,var(--color-zinc-900)_75%,var(--color-background))]"></div>
       {/* add overflow-x-hidden to container */}
-      <div className="container space-y-8 px-2 sm:px-6 md:space-y-16 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)] overflow-x-hidden">
+      <div className="container space-y-8 overflow-x-hidden px-2 sm:px-6 md:space-y-16 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
         <ScrollAnimation>
-          <div className="mx-auto max-w-4xl text-balance text-center">
+          <div className="mx-auto max-w-4xl text-center text-balance">
             <h2 className="text-foreground mb-4 text-3xl font-semibold tracking-tight md:text-4xl">
               {features.title}
             </h2>
@@ -49,7 +50,7 @@ export function FeaturesAccordion({
         </ScrollAnimation>
 
         {/* grid: clamp min-w-0 and fix px padding/breakpoints */}
-        <div className="grid gap-12 min-w-0 sm:px-6 md:grid-cols-2 lg:gap-20 lg:px-0">
+        <div className="grid min-w-0 gap-12 sm:px-6 md:grid-cols-2 lg:gap-20 lg:px-0">
           <ScrollAnimation delay={0.1} direction="left">
             <Accordion
               type="single"
@@ -75,9 +76,9 @@ export function FeaturesAccordion({
 
           <ScrollAnimation delay={0.2} direction="right">
             {/* min-w-0/flex-shrink to prevent overflow */}
-            <div className="bg-background relative flex overflow-hidden rounded-3xl border p-2 min-w-0 flex-shrink">
-              <div className="w-15 absolute inset-0 right-0 ml-auto border-l bg-[repeating-linear-gradient(-45deg,var(--color-border),var(--color-border)_1px,transparent_1px,transparent_8px)]"></div>
-              <div className="aspect-76/59 bg-background relative w-full sm:w-[calc(3/4*100%+3rem)] rounded-2xl min-w-0">
+            <div className="bg-background relative flex min-w-0 flex-shrink overflow-hidden rounded-3xl border p-2">
+              <div className="absolute inset-0 right-0 ml-auto w-15 border-l bg-[repeating-linear-gradient(-45deg,var(--color-border),var(--color-border)_1px,transparent_1px,transparent_8px)]"></div>
+              <div className="bg-background relative aspect-76/59 w-full min-w-0 rounded-2xl sm:w-[calc(3/4*100%+3rem)]">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={`${activeItem}-id`}
@@ -94,7 +95,7 @@ export function FeaturesAccordion({
                       width={1207}
                       height={929}
                       // prevent img from exceeding parent
-                      style={{ maxWidth: "100%", height: "auto" }}
+                      style={{ maxWidth: '100%', height: 'auto' }}
                     />
                   </motion.div>
                 </AnimatePresence>

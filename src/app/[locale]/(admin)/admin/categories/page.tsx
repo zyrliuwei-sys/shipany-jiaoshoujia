@@ -1,15 +1,16 @@
-import { Header, Main, MainHeader } from "@/shared/blocks/dashboard";
-import { TableCard } from "@/shared/blocks/table";
-import { type Table } from "@/shared/types/blocks/table";
-import { Button, Crumb } from "@/shared/types/blocks/common";
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+
+import { PERMISSIONS, requirePermission } from '@/core/rbac';
+import { Header, Main, MainHeader } from '@/shared/blocks/dashboard';
+import { TableCard } from '@/shared/blocks/table';
 import {
   getTaxonomies,
   getTaxonomiesCount,
   TaxonomyType,
   type Taxonomy,
-} from "@/shared/services/taxonomy";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { PERMISSIONS, requirePermission } from "@/core/rbac";
+} from '@/shared/services/taxonomy';
+import { Button, Crumb } from '@/shared/types/blocks/common';
+import { type Table } from '@/shared/types/blocks/table';
 
 export default async function CategoriesPage({
   params,
@@ -24,19 +25,19 @@ export default async function CategoriesPage({
   // Check if user has permission to read categories
   await requirePermission({
     code: PERMISSIONS.CATEGORIES_READ,
-    redirectUrl: "/admin/no-permission",
+    redirectUrl: '/admin/no-permission',
     locale,
   });
 
-  const t = await getTranslations("admin.categories");
+  const t = await getTranslations('admin.categories');
 
   const { page: pageNum, pageSize } = await searchParams;
   const page = pageNum || 1;
   const limit = pageSize || 30;
 
   const crumbs: Crumb[] = [
-    { title: t("list.crumbs.admin"), url: "/admin" },
-    { title: t("list.crumbs.categories"), is_active: true },
+    { title: t('list.crumbs.admin'), url: '/admin' },
+    { title: t('list.crumbs.categories'), is_active: true },
   ];
 
   const total = await getTaxonomiesCount({
@@ -51,30 +52,30 @@ export default async function CategoriesPage({
   const table: Table = {
     columns: [
       {
-        name: "slug",
-        title: t("fields.slug"),
-        type: "copy",
-        metadata: { message: "Copied" },
+        name: 'slug',
+        title: t('fields.slug'),
+        type: 'copy',
+        metadata: { message: 'Copied' },
       },
-      { name: "title", title: t("fields.title") },
+      { name: 'title', title: t('fields.title') },
       {
-        name: "status",
-        title: t("fields.status"),
-        type: "label",
-        metadata: { variant: "outline" },
+        name: 'status',
+        title: t('fields.status'),
+        type: 'label',
+        metadata: { variant: 'outline' },
       },
-      { name: "createdAt", title: t("fields.created_at"), type: "time" },
-      { name: "updatedAt", title: t("fields.updated_at"), type: "time" },
+      { name: 'createdAt', title: t('fields.created_at'), type: 'time' },
+      { name: 'updatedAt', title: t('fields.updated_at'), type: 'time' },
       {
-        name: "action",
-        title: "",
-        type: "dropdown",
+        name: 'action',
+        title: '',
+        type: 'dropdown',
         callback: (item: Taxonomy) => {
           return [
             {
-              id: "edit",
-              title: t("list.buttons.edit"),
-              icon: "RiEditLine",
+              id: 'edit',
+              title: t('list.buttons.edit'),
+              icon: 'RiEditLine',
               url: `/admin/categories/${item.id}/edit`,
             },
           ];
@@ -83,10 +84,10 @@ export default async function CategoriesPage({
     ],
     actions: [
       {
-        id: "edit",
-        title: t("list.buttons.edit"),
-        icon: "RiEditLine",
-        url: "/admin/categories/[id]/edit",
+        id: 'edit',
+        title: t('list.buttons.edit'),
+        icon: 'RiEditLine',
+        url: '/admin/categories/[id]/edit',
       },
     ],
     data,
@@ -99,10 +100,10 @@ export default async function CategoriesPage({
 
   const actions: Button[] = [
     {
-      id: "add",
-      title: t("list.buttons.add"),
-      icon: "RiAddLine",
-      url: "/admin/categories/add",
+      id: 'add',
+      title: t('list.buttons.add'),
+      icon: 'RiAddLine',
+      url: '/admin/categories/add',
     },
   ];
 
@@ -110,7 +111,7 @@ export default async function CategoriesPage({
     <>
       <Header crumbs={crumbs} />
       <Main>
-        <MainHeader title={t("list.title")} actions={actions} />
+        <MainHeader title={t('list.title')} actions={actions} />
         <TableCard table={table} />
       </Main>
     </>

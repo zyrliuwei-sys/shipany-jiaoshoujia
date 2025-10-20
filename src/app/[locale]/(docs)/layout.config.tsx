@@ -1,7 +1,8 @@
-import { i18n } from "@/core/docs/source";
-import { envConfigs } from "@/config";
-import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import Image from "next/image";
+import Image from 'next/image';
+import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
+
+import { i18n } from '@/core/docs/source';
+import { envConfigs } from '@/config';
 
 export function baseOptions(locale: string): BaseLayoutProps {
   return {
@@ -16,12 +17,12 @@ export function baseOptions(locale: string): BaseLayoutProps {
             height={28}
             className=""
           />
-          <span className="text-lg text-primary font-bold">
+          <span className="text-primary text-lg font-bold">
             {envConfigs.app_name}
           </span>
         </>
       ),
-      transparentMode: "top",
+      transparentMode: 'top',
     },
     i18n,
   };

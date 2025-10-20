@@ -1,15 +1,16 @@
-import { getUserInfo } from "@/shared/services/user";
-import { Empty } from "@/shared/blocks/common";
-import { Form as FormType } from "@/shared/types/blocks/form";
-import { FormCard } from "@/shared/blocks/form";
+import { getTranslations } from 'next-intl/server';
+
+import { Empty } from '@/shared/blocks/common';
+import { FormCard } from '@/shared/blocks/form';
 import {
+  ApikeyStatus,
   findApikeyById,
   updateApikey,
   UpdateApikey,
-} from "@/shared/services/apikey";
-import { ApikeyStatus } from "@/shared/services/apikey";
-import { Crumb } from "@/shared/types/blocks/common";
-import { getTranslations } from "next-intl/server";
+} from '@/shared/services/apikey';
+import { getUserInfo } from '@/shared/services/user';
+import { Crumb } from '@/shared/types/blocks/common';
+import { Form as FormType } from '@/shared/types/blocks/form';
 
 export default async function DeleteApiKeyPage({
   params,
@@ -31,26 +32,26 @@ export default async function DeleteApiKeyPage({
     return <Empty message="no permission" />;
   }
 
-  const t = await getTranslations("settings.apikeys");
+  const t = await getTranslations('settings.apikeys');
 
   const form: FormType = {
-    title: t("delete.title"),
+    title: t('delete.title'),
     fields: [
       {
-        name: "title",
-        title: t("fields.title"),
-        type: "text",
-        placeholder: "",
+        name: 'title',
+        title: t('fields.title'),
+        type: 'text',
+        placeholder: '',
         validation: { required: true },
         attributes: {
           disabled: true,
         },
       },
       {
-        name: "key",
-        title: t("fields.key"),
-        type: "text",
-        placeholder: "",
+        name: 'key',
+        title: t('fields.key'),
+        type: 'text',
+        placeholder: '',
         validation: { required: true },
         attributes: {
           disabled: true,
@@ -64,25 +65,25 @@ export default async function DeleteApiKeyPage({
     data: apikey,
     submit: {
       handler: async (data: FormData, passby: any) => {
-        "use server";
+        'use server';
 
         const { user, apikey } = passby;
 
         if (!apikey) {
-          throw new Error("apikey not found");
+          throw new Error('apikey not found');
         }
 
         if (!user) {
-          throw new Error("no auth");
+          throw new Error('no auth');
         }
 
         if (apikey.userId !== user.id) {
-          throw new Error("no permission");
+          throw new Error('no permission');
         }
 
-        const title = data.get("title") as string;
+        const title = data.get('title') as string;
         if (!title?.trim()) {
-          throw new Error("title is required");
+          throw new Error('title is required');
         }
 
         const updatedApikey: UpdateApikey = {
@@ -93,33 +94,33 @@ export default async function DeleteApiKeyPage({
         await updateApikey(apikey.id, updatedApikey);
 
         return {
-          status: "success",
-          message: "API Key deleted",
-          redirect_url: "/settings/apikeys",
+          status: 'success',
+          message: 'API Key deleted',
+          redirect_url: '/settings/apikeys',
         };
       },
       button: {
-        title: t("delete.buttons.submit"),
-        variant: "destructive",
-        icon: "RiDeleteBinLine",
+        title: t('delete.buttons.submit'),
+        variant: 'destructive',
+        icon: 'RiDeleteBinLine',
       },
     },
   };
 
   const crumbs: Crumb[] = [
     {
-      title: t("delete.crumbs.apikeys"),
-      url: "/settings/apikeys",
+      title: t('delete.crumbs.apikeys'),
+      url: '/settings/apikeys',
     },
     {
-      title: t("delete.crumbs.delete"),
+      title: t('delete.crumbs.delete'),
       is_active: true,
     },
   ];
 
   return (
     <div className="space-y-8">
-      <FormCard title={t("delete.crumbs.delete")} crumbs={crumbs} form={form} />
+      <FormCard title={t('delete.crumbs.delete')} crumbs={crumbs} form={form} />
     </div>
   );
 }

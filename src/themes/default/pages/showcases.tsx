@@ -1,8 +1,8 @@
 import {
-  Showcases as ShowcasesType,
   CTA as CTAType,
-} from "@/shared/types/blocks/landing";
-import { CTA, Showcases } from "@/themes/default/blocks";
+  Showcases as ShowcasesType,
+} from '@/shared/types/blocks/landing';
+import { CTA, Showcases } from '@/themes/default/blocks';
 
 export default async function ShowcasesPage({
   locale,

@@ -1,16 +1,17 @@
-import { Header, Main, MainHeader } from "@/shared/blocks/dashboard";
-import { FormCard } from "@/shared/blocks/form";
-import { Form } from "@/shared/types/blocks/form";
-import { Crumb } from "@/shared/types/blocks/common";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { PERMISSIONS, requirePermission } from "@/core/rbac";
-import { findUserById } from "@/shared/services/user";
-import { Empty } from "@/shared/blocks/common";
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+
+import { PERMISSIONS, requirePermission } from '@/core/rbac';
+import { Empty } from '@/shared/blocks/common';
+import { Header, Main, MainHeader } from '@/shared/blocks/dashboard';
+import { FormCard } from '@/shared/blocks/form';
 import {
   assignRolesToUser,
   getRoles,
   getUserRoles,
-} from "@/shared/services/rbac";
+} from '@/shared/services/rbac';
+import { findUserById } from '@/shared/services/user';
+import { Crumb } from '@/shared/types/blocks/common';
+import { Form } from '@/shared/types/blocks/form';
 
 export default async function UserEditRolesPage({
   params,
@@ -23,7 +24,7 @@ export default async function UserEditRolesPage({
   // Check if user has permission to edit posts
   await requirePermission({
     code: PERMISSIONS.USERS_WRITE,
-    redirectUrl: "/admin/no-permission",
+    redirectUrl: '/admin/no-permission',
     locale,
   });
 
@@ -32,12 +33,12 @@ export default async function UserEditRolesPage({
     return <Empty message="User not found" />;
   }
 
-  const t = await getTranslations("admin.users");
+  const t = await getTranslations('admin.users');
 
   const crumbs: Crumb[] = [
-    { title: t("edit_roles.crumbs.admin"), url: "/admin" },
-    { title: t("edit_roles.crumbs.users"), url: "/admin/users" },
-    { title: t("edit_roles.crumbs.edit_roles"), is_active: true },
+    { title: t('edit_roles.crumbs.admin'), url: '/admin' },
+    { title: t('edit_roles.crumbs.users'), url: '/admin/users' },
+    { title: t('edit_roles.crumbs.edit_roles'), is_active: true },
   ];
 
   const roles = await getRoles();
@@ -53,16 +54,16 @@ export default async function UserEditRolesPage({
   const form: Form = {
     fields: [
       {
-        name: "email",
-        type: "text",
-        title: t("fields.email"),
+        name: 'email',
+        type: 'text',
+        title: t('fields.email'),
         validation: { required: true },
         attributes: { disabled: true },
       },
       {
-        name: "roles",
-        type: "checkbox",
-        title: t("fields.roles"),
+        name: 'roles',
+        type: 'checkbox',
+        title: t('fields.roles'),
         options: rolesOptions,
         validation: { required: true },
       },
@@ -76,32 +77,32 @@ export default async function UserEditRolesPage({
     },
     submit: {
       button: {
-        title: t("edit_roles.buttons.submit"),
+        title: t('edit_roles.buttons.submit'),
       },
       handler: async (data, passby) => {
-        "use server";
+        'use server';
 
         const { user } = passby;
 
         if (!user) {
-          throw new Error("no auth");
+          throw new Error('no auth');
         }
 
-        let roles = data.get("roles") as unknown as string[];
-        if (typeof roles === "string") {
+        let roles = data.get('roles') as unknown as string[];
+        if (typeof roles === 'string') {
           try {
             roles = JSON.parse(roles);
           } catch (error) {
-            throw new Error("invalid roles");
+            throw new Error('invalid roles');
           }
         }
 
         await assignRolesToUser(user.id as string, roles);
 
         return {
-          status: "success",
-          message: "roles updated",
-          redirect_url: "/admin/users",
+          status: 'success',
+          message: 'roles updated',
+          redirect_url: '/admin/users',
         };
       },
     },
@@ -111,7 +112,7 @@ export default async function UserEditRolesPage({
     <>
       <Header crumbs={crumbs} />
       <Main>
-        <MainHeader title={t("edit_roles.title")} />
+        <MainHeader title={t('edit_roles.title')} />
         <FormCard form={form} className="md:max-w-xl" />
       </Main>
     </>

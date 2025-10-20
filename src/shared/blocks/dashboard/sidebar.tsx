@@ -1,17 +1,18 @@
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 
 import {
   Sidebar as SidebarComponent,
   SidebarContent,
   SidebarFooter as SidebarFooterComponent,
-} from "@/shared/components/ui/sidebar";
-import { type Sidebar as SidebarType } from "@/shared/types/blocks/dashboard";
-import { Nav } from "./nav";
-import { SidebarUser } from "./sidebar-user";
-import { SidebarHeader } from "./sidebar-header";
-import { SidebarFooter } from "./sidebar-footer";
+} from '@/shared/components/ui/sidebar';
+import { type Sidebar as SidebarType } from '@/shared/types/blocks/dashboard';
+
+import { Nav } from './nav';
+import { SidebarFooter } from './sidebar-footer';
+import { SidebarHeader } from './sidebar-header';
+import { SidebarUser } from './sidebar-user';
 
 export function Sidebar({
   sidebar,
@@ -20,7 +21,7 @@ export function Sidebar({
   sidebar: SidebarType;
 }) {
   return (
-    <SidebarComponent collapsible={sidebar.collapsible || "icon"} {...props}>
+    <SidebarComponent collapsible={sidebar.collapsible || 'icon'} {...props}>
       {sidebar.header && <SidebarHeader header={sidebar.header} />}
       <SidebarContent>
         {sidebar.main_navs &&

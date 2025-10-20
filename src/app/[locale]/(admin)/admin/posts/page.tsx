@@ -1,12 +1,17 @@
-import { Header, Main, MainHeader } from "@/shared/blocks/dashboard";
-import { TableCard } from "@/shared/blocks/table";
-import { type Table } from "@/shared/types/blocks/table";
-import { getPosts, getPostsCount, Post } from "@/shared/services/post";
-import { PostType } from "@/shared/services/post";
-import { Button, Crumb } from "@/shared/types/blocks/common";
-import { getTaxonomies } from "@/shared/services/taxonomy";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { PERMISSIONS, requirePermission } from "@/core/rbac";
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+
+import { PERMISSIONS, requirePermission } from '@/core/rbac';
+import { Header, Main, MainHeader } from '@/shared/blocks/dashboard';
+import { TableCard } from '@/shared/blocks/table';
+import {
+  getPosts,
+  getPostsCount,
+  Post,
+  PostType,
+} from '@/shared/services/post';
+import { getTaxonomies } from '@/shared/services/taxonomy';
+import { Button, Crumb } from '@/shared/types/blocks/common';
+import { type Table } from '@/shared/types/blocks/table';
 
 export default async function PostsPage({
   params,
@@ -21,7 +26,7 @@ export default async function PostsPage({
   // Check if user has permission to read posts
   await requirePermission({
     code: PERMISSIONS.POSTS_READ,
-    redirectUrl: "/admin/no-permission",
+    redirectUrl: '/admin/no-permission',
     locale,
   });
 
@@ -29,11 +34,11 @@ export default async function PostsPage({
   const page = pageNum || 1;
   const limit = pageSize || 30;
 
-  const t = await getTranslations("admin.posts");
+  const t = await getTranslations('admin.posts');
 
   const crumbs: Crumb[] = [
-    { title: t("list.crumbs.admin"), url: "/admin" },
-    { title: t("list.crumbs.posts"), is_active: true },
+    { title: t('list.crumbs.admin'), url: '/admin' },
+    { title: t('list.crumbs.posts'), is_active: true },
   ];
 
   const total = await getPostsCount({
@@ -48,48 +53,48 @@ export default async function PostsPage({
 
   const table: Table = {
     columns: [
-      { name: "title", title: t("fields.title") },
+      { name: 'title', title: t('fields.title') },
       {
-        name: "categories",
-        title: t("fields.categories"),
+        name: 'categories',
+        title: t('fields.categories'),
         callback: async (item: Post) => {
           if (!item.categories) {
-            return "-";
+            return '-';
           }
-          const categoriesIds = item.categories.split(",");
+          const categoriesIds = item.categories.split(',');
           const categories = await getTaxonomies({
             ids: categoriesIds,
           });
           if (!categories) {
-            return "-";
+            return '-';
           }
 
           const categoriesNames = categories.map((category) => {
             return category.title;
           });
 
-          return categoriesNames.join(", ");
+          return categoriesNames.join(', ');
         },
       },
-      { name: "createdAt", title: t("fields.created_at"), type: "time" },
+      { name: 'createdAt', title: t('fields.created_at'), type: 'time' },
       {
-        name: "action",
-        title: "",
-        type: "dropdown",
+        name: 'action',
+        title: '',
+        type: 'dropdown',
         callback: (item: Post) => {
           return [
             {
-              name: "edit",
-              title: t("list.buttons.edit"),
-              icon: "RiEditLine",
+              name: 'edit',
+              title: t('list.buttons.edit'),
+              icon: 'RiEditLine',
               url: `/admin/posts/${item.id}/edit`,
             },
             {
-              name: "view",
-              title: t("list.buttons.view"),
-              icon: "RiEyeLine",
+              name: 'view',
+              title: t('list.buttons.view'),
+              icon: 'RiEyeLine',
               url: `/blog/${item.slug}`,
-              target: "_blank",
+              target: '_blank',
             },
           ];
         },
@@ -105,10 +110,10 @@ export default async function PostsPage({
 
   const actions: Button[] = [
     {
-      id: "add",
-      title: t("list.buttons.add"),
-      icon: "RiAddLine",
-      url: "/admin/posts/add",
+      id: 'add',
+      title: t('list.buttons.add'),
+      icon: 'RiAddLine',
+      url: '/admin/posts/add',
     },
   ];
 
@@ -116,7 +121,7 @@ export default async function PostsPage({
     <>
       <Header crumbs={crumbs} />
       <Main>
-        <MainHeader title={t("list.title")} actions={actions} />
+        <MainHeader title={t('list.title')} actions={actions} />
         <TableCard table={table} />
       </Main>
     </>

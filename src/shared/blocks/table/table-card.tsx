@@ -1,23 +1,23 @@
-import { Table as TableType } from "@/shared/types/blocks/table";
-import { Table } from "@/shared/blocks/table";
+import { Link } from '@/core/i18n/navigation';
+import { Pagination } from '@/shared/blocks/common/pagination';
+import { SmartIcon } from '@/shared/blocks/common/smart-icon';
+import { Tabs } from '@/shared/blocks/common/tabs';
+import { Table } from '@/shared/blocks/table';
+import { Button } from '@/shared/components/ui/button';
 import {
   Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-  CardContent,
-  CardFooter,
-  CardDescription,
-} from "@/shared/components/ui/card";
-import { Pagination } from "@/shared/blocks/common/pagination";
-import { cn } from "@/shared/lib/utils";
+} from '@/shared/components/ui/card';
+import { cn } from '@/shared/lib/utils';
 import {
   Button as ButtonType,
   Tab as TabType,
-} from "@/shared/types/blocks/common";
-import { Button } from "@/shared/components/ui/button";
-import { Link } from "@/core/i18n/navigation";
-import { SmartIcon } from "@/shared/blocks/common/smart-icon";
-import { Tabs } from "@/shared/blocks/common/tabs";
+} from '@/shared/types/blocks/common';
+import { Table as TableType } from '@/shared/types/blocks/table';
 
 export function TableCard({
   title,
@@ -49,12 +49,12 @@ export function TableCard({
                 <Button
                   key={idx}
                   asChild
-                  variant={button.variant || "default"}
-                  size={button.size || "sm"}
+                  variant={button.variant || 'default'}
+                  size={button.size || 'sm'}
                 >
                   <Link
-                    href={button.url || ""}
-                    target={button.target || "_self"}
+                    href={button.url || ''}
+                    target={button.target || '_self'}
                   >
                     {button.icon && <SmartIcon name={button.icon as string} />}
                     {button.title}

@@ -1,9 +1,10 @@
-import { getAllConfigs } from "@/shared/services/config";
-import { envConfigs } from "@/config";
-import { getUuid } from "@/shared/lib/hash";
-import { db } from "@/core/db";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import * as schema from "@/config/db/schema";
+import { drizzleAdapter } from 'better-auth/adapters/drizzle';
+
+import { db } from '@/core/db';
+import { envConfigs } from '@/config';
+import * as schema from '@/config/db/schema';
+import { getUuid } from '@/shared/lib/hash';
+import { getAllConfigs } from '@/shared/services/config';
 
 // Static auth options - NO database connection
 // This ensures zero database calls during build time
@@ -41,7 +42,7 @@ export async function getAuthOptions() {
         })
       : null,
     emailAndPassword: {
-      enabled: configs.email_auth_enabled !== "false",
+      enabled: configs.email_auth_enabled !== 'false',
     },
     socialProviders: await getSocialProviders(configs),
   };
@@ -70,14 +71,14 @@ export async function getSocialProviders(configs: Record<string, string>) {
 
 export function getDatabaseProvider(
   provider: string
-): "sqlite" | "pg" | "mysql" {
+): 'sqlite' | 'pg' | 'mysql' {
   switch (provider) {
-    case "sqlite":
-      return "sqlite";
-    case "postgresql":
-      return "pg";
-    case "mysql":
-      return "mysql";
+    case 'sqlite':
+      return 'sqlite';
+    case 'postgresql':
+      return 'pg';
+    case 'mysql':
+      return 'mysql';
     default:
       throw new Error(
         `Unsupported database provider for auth: ${envConfigs.database_provider}`

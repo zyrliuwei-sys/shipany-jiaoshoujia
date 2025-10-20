@@ -1,17 +1,17 @@
 // .source folder will be generated when you run `next dev`
-import { docs } from "@/.source";
-import { loader } from "fumadocs-core/source";
-import { icons } from "lucide-react";
-import type { I18nConfig } from "fumadocs-core/i18n";
-import { createElement } from "react";
+import { createElement } from 'react';
+import { docs } from '@/.source';
+import type { I18nConfig } from 'fumadocs-core/i18n';
+import { loader } from 'fumadocs-core/source';
+import { icons } from 'lucide-react';
 
 export const i18n: I18nConfig = {
-  defaultLanguage: "en",
-  languages: ["en", "zh"],
+  defaultLanguage: 'en',
+  languages: ['en', 'zh'],
 };
 
 export const source = loader({
-  baseUrl: "/docs",
+  baseUrl: '/docs',
   source: docs.toFumadocsSource(),
   i18n,
   icon(icon) {

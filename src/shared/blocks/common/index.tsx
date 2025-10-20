@@ -1,25 +1,25 @@
-export * from "./smart-icon";
+export * from './smart-icon';
 
-export * from "./pagination";
+export * from './pagination';
 
-export * from "./brand-logo";
+export * from './brand-logo';
 
-export * from "./locale-detector";
-export * from "./locale-selector";
+export * from './locale-detector';
+export * from './locale-selector';
 
-export * from "./theme-toggler";
+export * from './theme-toggler';
 
-export * from "./social-avatars";
+export * from './social-avatars';
 
-export * from "./copyright";
-export * from "./built-with";
+export * from './copyright';
+export * from './built-with';
 
-export * from "./page-header";
-export * from "./section-header";
+export * from './page-header';
+export * from './section-header';
 
-export * from "./empty";
+export * from './empty';
 
-export * from "./markdown-preview";
-export * from "./markdown-editor";
+export * from './markdown-preview';
+export * from './markdown-editor';
 
-export * from "../sign/sign-user";
+export * from '../sign/sign-user';

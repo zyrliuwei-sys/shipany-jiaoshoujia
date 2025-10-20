@@ -1,7 +1,8 @@
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
-import { envConfigs } from "@/config";
-import { isCloudflareWorker } from "@/shared/lib/env";
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
+
+import { envConfigs } from '@/config';
+import { isCloudflareWorker } from '@/shared/lib/env';
 
 // Global database connection instance (singleton pattern)
 let dbInstance: ReturnType<typeof drizzle> | null = null;
@@ -15,22 +16,22 @@ export function db() {
   if (isCloudflareWorker) {
     const { env }: { env: any } = { env: {} };
     // Detect if set Hyperdrive
-    isHyperdrive = "HYPERDRIVE" in env;
+    isHyperdrive = 'HYPERDRIVE' in env;
 
     if (isHyperdrive) {
       const hyperdrive = env.HYPERDRIVE;
       databaseUrl = hyperdrive.connectionString;
-      console.log("using Hyperdrive connection");
+      console.log('using Hyperdrive connection');
     }
   }
 
   if (!databaseUrl) {
-    throw new Error("DATABASE_URL is not set");
+    throw new Error('DATABASE_URL is not set');
   }
 
   // In Cloudflare Workers, create new connection each time
   if (isCloudflareWorker) {
-    console.log("in Cloudflare Workers environment");
+    console.log('in Cloudflare Workers environment');
     // Workers environment uses minimal configuration
     const client = postgres(databaseUrl, {
       prepare: false,
@@ -43,7 +44,7 @@ export function db() {
   }
 
   // Singleton mode: reuse existing connection (good for traditional servers)
-  if (envConfigs.db_singleton_enabled === "true") {
+  if (envConfigs.db_singleton_enabled === 'true') {
     // Return existing instance if already initialized
     if (dbInstance) {
       return dbInstance;

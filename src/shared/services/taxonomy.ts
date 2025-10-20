@@ -1,21 +1,22 @@
-import { taxonomy } from "@/config/db/schema";
-import { db } from "@/core/db";
-import { and, count, desc, eq, inArray } from "drizzle-orm";
+import { and, count, desc, eq, inArray } from 'drizzle-orm';
+
+import { db } from '@/core/db';
+import { taxonomy } from '@/config/db/schema';
 
 export type Taxonomy = typeof taxonomy.$inferSelect;
 export type NewTaxonomy = typeof taxonomy.$inferInsert;
-export type UpdateTaxonomy = Partial<Omit<NewTaxonomy, "id" | "createdAt">>;
+export type UpdateTaxonomy = Partial<Omit<NewTaxonomy, 'id' | 'createdAt'>>;
 
 export enum TaxonomyType {
-  CATEGORY = "category",
-  TAG = "tag",
+  CATEGORY = 'category',
+  TAG = 'tag',
 }
 
 export enum TaxonomyStatus {
-  PUBLISHED = "published", // published and visible to the public
-  PENDING = "pending", // pending review by admin
-  DRAFT = "draft", // draft and not visible to the public
-  ARCHIVED = "archived", // archived means deleted
+  PUBLISHED = 'published', // published and visible to the public
+  PENDING = 'pending', // pending review by admin
+  DRAFT = 'draft', // draft and not visible to the public
+  ARCHIVED = 'archived', // archived means deleted
 }
 
 export async function addTaxonomy(data: NewTaxonomy) {

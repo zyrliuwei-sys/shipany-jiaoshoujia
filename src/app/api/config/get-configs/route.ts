@@ -1,5 +1,5 @@
-import { respData, respErr } from "@/shared/lib/resp";
-import { getPublicConfigs } from "@/shared/services/config";
+import { respData, respErr } from '@/shared/lib/resp';
+import { getPublicConfigs } from '@/shared/services/config';
 
 export async function POST(req: Request) {
   try {
@@ -7,7 +7,7 @@ export async function POST(req: Request) {
 
     return respData(configs);
   } catch (e: any) {
-    console.log("get configs failed", e);
+    console.log('get configs failed', e);
     return respErr(e.message);
   }
 }

@@ -1,10 +1,10 @@
 import type {
+  StorageConfigs,
+  StorageDownloadUploadOptions,
   StorageProvider,
   StorageUploadOptions,
   StorageUploadResult,
-  StorageDownloadUploadOptions,
-  StorageConfigs,
-} from ".";
+} from '.';
 
 /**
  * S3 storage provider configs
@@ -24,7 +24,7 @@ export interface S3Configs extends StorageConfigs {
  * @website https://aws.amazon.com/s3/
  */
 export class S3Provider implements StorageProvider {
-  readonly name = "s3";
+  readonly name = 's3';
   configs: S3Configs;
 
   constructor(configs: S3Configs) {
@@ -39,7 +39,7 @@ export class S3Provider implements StorageProvider {
       if (!uploadBucket) {
         return {
           success: false,
-          error: "Bucket is required",
+          error: 'Bucket is required',
           provider: this.name,
         };
       }
@@ -51,7 +51,7 @@ export class S3Provider implements StorageProvider {
 
       const url = `${this.configs.endpoint}/${uploadBucket}/${options.key}`;
 
-      const { AwsClient } = await import("aws4fetch");
+      const { AwsClient } = await import('aws4fetch');
 
       const client = new AwsClient({
         accessKeyId: this.configs.accessKeyId,
@@ -60,13 +60,13 @@ export class S3Provider implements StorageProvider {
       });
 
       const headers: Record<string, string> = {
-        "Content-Type": options.contentType || "application/octet-stream",
-        "Content-Disposition": options.disposition || "inline",
-        "Content-Length": bodyArray.length.toString(),
+        'Content-Type': options.contentType || 'application/octet-stream',
+        'Content-Disposition': options.disposition || 'inline',
+        'Content-Length': bodyArray.length.toString(),
       };
 
       const request = new Request(url, {
-        method: "PUT",
+        method: 'PUT',
         headers,
         body: bodyArray as any,
       });
@@ -90,14 +90,14 @@ export class S3Provider implements StorageProvider {
         location: url,
         bucket: uploadBucket,
         key: options.key,
-        filename: options.key.split("/").pop(),
+        filename: options.key.split('/').pop(),
         url: publicUrl,
         provider: this.name,
       };
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : 'Unknown error',
         provider: this.name,
       };
     }
@@ -119,7 +119,7 @@ export class S3Provider implements StorageProvider {
       if (!response.body) {
         return {
           success: false,
-          error: "No body in response",
+          error: 'No body in response',
           provider: this.name,
         };
       }
@@ -137,7 +137,7 @@ export class S3Provider implements StorageProvider {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : 'Unknown error',
         provider: this.name,
       };
     }

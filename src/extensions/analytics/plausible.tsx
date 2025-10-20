@@ -1,6 +1,7 @@
-import { AnalyticsConfigs, AnalyticsProvider } from ".";
-import { ReactNode } from "react";
-import Script from "next/script";
+import { ReactNode } from 'react';
+import Script from 'next/script';
+
+import { AnalyticsConfigs, AnalyticsProvider } from '.';
 
 /**
  * Plausible analytics configs
@@ -16,7 +17,7 @@ export interface PlausibleAnalyticsConfigs extends AnalyticsConfigs {
  * @website https://plausible.io/
  */
 export class PlausibleAnalyticsProvider implements AnalyticsProvider {
-  readonly name = "plausible";
+  readonly name = 'plausible';
 
   configs: PlausibleAnalyticsConfigs;
 

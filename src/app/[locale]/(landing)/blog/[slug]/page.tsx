@@ -1,10 +1,11 @@
-import { findPost, PostStatus } from "@/shared/services/post";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Post as PostType } from "@/shared/types/blocks/blog";
-import { Empty } from "@/shared/blocks/common";
-import { getThemePage } from "@/core/theme";
-import moment from "moment";
-import { envConfigs } from "@/config";
+import moment from 'moment';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+
+import { getThemePage } from '@/core/theme';
+import { envConfigs } from '@/config';
+import { Empty } from '@/shared/blocks/common';
+import { findPost, PostStatus } from '@/shared/services/post';
+import { Post as PostType } from '@/shared/types/blocks/blog';
 
 export async function generateMetadata({
   params,
@@ -12,7 +13,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const t = await getTranslations("blog.metadata");
+  const t = await getTranslations('blog.metadata');
 
   const canonicalUrl =
     locale !== envConfigs.locale
@@ -22,8 +23,8 @@ export async function generateMetadata({
   const post = await findPost({ slug, status: PostStatus.PUBLISHED });
   if (!post) {
     return {
-      title: `${slug} | ${t("title")}`,
-      description: t("description"),
+      title: `${slug} | ${t('title')}`,
+      description: t('description'),
       alternates: {
         canonical: canonicalUrl,
       },
@@ -31,7 +32,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${post.title} | ${t("title")}`,
+    title: `${post.title} | ${t('title')}`,
     description: post.description,
     alternates: {
       canonical: canonicalUrl,
@@ -48,7 +49,7 @@ export default async function BlogDetailPage({
   setRequestLocale(locale);
 
   // load blog data
-  const t = await getTranslations("blog");
+  const t = await getTranslations('blog');
 
   // get post data
   const postData = await findPost({ slug });
@@ -60,18 +61,18 @@ export default async function BlogDetailPage({
   const post: PostType = {
     id: postData.id,
     slug: postData.slug,
-    title: postData.title || "",
-    description: postData.description || "",
-    content: postData.content || "",
-    created_at: moment(postData.createdAt).format("MMM D, YYYY") || "",
-    author_name: postData.authorName || envConfigs.app_name || "",
-    author_image: postData.authorImage || "/logo.png",
-    author_role: "",
+    title: postData.title || '',
+    description: postData.description || '',
+    content: postData.content || '',
+    created_at: moment(postData.createdAt).format('MMM D, YYYY') || '',
+    author_name: postData.authorName || envConfigs.app_name || '',
+    author_image: postData.authorImage || '/logo.png',
+    author_role: '',
     url: `/blog/${postData.slug}`,
   };
 
   // load page component
-  const Page = await getThemePage("blog-detail");
+  const Page = await getThemePage('blog-detail');
 
   return <Page locale={locale} post={post} />;
 }

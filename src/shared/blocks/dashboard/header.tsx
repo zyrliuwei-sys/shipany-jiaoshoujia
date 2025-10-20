@@ -1,17 +1,23 @@
-import { Separator } from "@/shared/components/ui/separator";
-import { SidebarTrigger } from "@/shared/components/ui/sidebar";
-import { Crumb, Button as ButtonType } from "@/shared/types/blocks/common";
-import { Breadcrumb } from "@/shared/components/ui/breadcrumb";
-import { BreadcrumbList } from "@/shared/components/ui/breadcrumb";
-import { BreadcrumbItem } from "@/shared/components/ui/breadcrumb";
-import { BreadcrumbLink } from "@/shared/components/ui/breadcrumb";
-import { BreadcrumbSeparator } from "@/shared/components/ui/breadcrumb";
-import { BreadcrumbPage } from "@/shared/components/ui/breadcrumb";
-import { Fragment } from "react";
-import { ThemeToggler, LocaleSelector } from "@/shared/blocks/common";
-import { Button } from "@/shared/components/ui/button";
-import { SmartIcon } from "@/shared/blocks/common";
-import { Link } from "@/core/i18n/navigation";
+import { Fragment } from 'react';
+
+import { Link } from '@/core/i18n/navigation';
+import {
+  LocaleSelector,
+  SmartIcon,
+  ThemeToggler,
+} from '@/shared/blocks/common';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/shared/components/ui/breadcrumb';
+import { Button } from '@/shared/components/ui/button';
+import { Separator } from '@/shared/components/ui/separator';
+import { SidebarTrigger } from '@/shared/components/ui/sidebar';
+import { Button as ButtonType, Crumb } from '@/shared/types/blocks/common';
 
 export function Header({
   title,
@@ -45,7 +51,7 @@ export function Header({
                     {crumb.is_active ? (
                       <BreadcrumbPage>{crumb.title}</BreadcrumbPage>
                     ) : (
-                      <Link href={crumb.url || ""}>{crumb.title}</Link>
+                      <Link href={crumb.url || ''}>{crumb.title}</Link>
                     )}
                   </BreadcrumbItem>
                   {index < crumbs.length - 1 && (
@@ -62,12 +68,12 @@ export function Header({
               {buttons.map((button, idx) => (
                 <Button
                   key={idx}
-                  variant={button.variant || "outline"}
+                  variant={button.variant || 'outline'}
                   size="sm"
                 >
                   <Link
-                    href={button.url || ""}
-                    target={button.target || "_self"}
+                    href={button.url || ''}
+                    target={button.target || '_self'}
                     className="flex items-center gap-2"
                   >
                     {button.icon && <SmartIcon name={button.icon as string} />}

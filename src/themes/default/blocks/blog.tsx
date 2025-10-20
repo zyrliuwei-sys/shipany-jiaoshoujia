@@ -1,12 +1,13 @@
+import { useTranslations } from 'next-intl';
+
+import { Link } from '@/core/i18n/navigation';
+import { Tabs } from '@/shared/blocks/common/tabs';
+import { cn } from '@/shared/lib/utils';
 import {
   Blog as BlogType,
   Category as CategoryType,
-} from "@/shared/types/blocks/blog";
-import { cn } from "@/shared/lib/utils";
-import { Tab } from "@/shared/types/blocks/common";
-import { Tabs } from "@/shared/blocks/common/tabs";
-import { Link } from "@/core/i18n/navigation";
-import { useTranslations } from "next-intl";
+} from '@/shared/types/blocks/blog';
+import { Tab } from '@/shared/types/blocks/common';
 
 export function Blog({
   blog,
@@ -15,15 +16,15 @@ export function Blog({
   blog: BlogType;
   className?: string;
 }) {
-  const t = useTranslations("blog.page");
+  const t = useTranslations('blog.page');
   const tabs: Tab[] = [];
   blog.categories?.map((category: CategoryType) => {
     tabs.push({
       name: category.slug,
       title: category.title,
       url:
-        !category.slug || category.slug === "all"
-          ? "/blog"
+        !category.slug || category.slug === 'all'
+          ? '/blog'
           : `/blog/category/${category.slug}`,
       is_active: blog.currentCategory?.slug == category.slug,
     });
@@ -32,16 +33,16 @@ export function Blog({
   return (
     <section
       id={blog.id}
-      className={cn("py-24 md:py-36", blog.className, className)}
+      className={cn('py-24 md:py-36', blog.className, className)}
     >
       <div className="mx-auto mb-12 text-center">
         {blog.sr_only_title && (
           <h1 className="sr-only">{blog.sr_only_title}</h1>
         )}
-        <h2 className="mb-6 text-pretty text-3xl font-bold lg:text-4xl">
+        <h2 className="mb-6 text-3xl font-bold text-pretty lg:text-4xl">
           {blog.title}
         </h2>
-        <p className="mb-4 max-w-xl text-muted-foreground lg:max-w-none lg:text-lg">
+        <p className="text-muted-foreground mb-4 max-w-xl lg:max-w-none lg:text-lg">
           {blog.description}
         </p>
       </div>
@@ -54,20 +55,20 @@ export function Blog({
         )}
 
         {blog.posts && blog.posts.length > 0 ? (
-          <div className="w-full flex flex-wrap items-start">
+          <div className="flex w-full flex-wrap items-start">
             {blog.posts?.map((item, idx) => (
               <Link
                 key={idx}
-                href={item.url || ""}
-                target={item.target || "_self"}
-                className="w-full md:w-1/3 p-4"
+                href={item.url || ''}
+                target={item.target || '_self'}
+                className="w-full p-4 md:w-1/3"
               >
-                <div className="flex flex-col overflow-clip rounded-xl border border-border">
+                <div className="border-border flex flex-col overflow-clip rounded-xl border">
                   {item.image && (
                     <div>
                       <img
                         src={item.image}
-                        alt={item.title || ""}
+                        alt={item.title || ''}
                         className="aspect-16/9 h-full w-full object-cover object-center"
                       />
                     </div>
@@ -76,7 +77,7 @@ export function Blog({
                     <h3 className="mb-3 text-lg font-semibold md:mb-4 md:text-xl lg:mb-6">
                       {item.title}
                     </h3>
-                    <p className="mb-3 text-muted-foreground md:mb-4 lg:mb-6">
+                    <p className="text-muted-foreground mb-3 md:mb-4 lg:mb-6">
                       {item.description}
                     </p>
 
@@ -93,7 +94,7 @@ export function Blog({
           </div>
         ) : (
           <div className="text-muted-foreground text-md py-8">
-            {t("no_content")}
+            {t('no_content')}
           </div>
         )}
       </div>

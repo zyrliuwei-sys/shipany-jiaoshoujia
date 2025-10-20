@@ -1,21 +1,22 @@
-import Stripe from "stripe";
+import Stripe from 'stripe';
+
 import {
-  type PaymentProvider,
-  type PaymentConfigs,
-  type PaymentSession,
-  type PaymentEvent,
-  type PaymentOrder,
+  CheckoutSession,
+  PaymentBilling,
+  PaymentEventType,
+  PaymentInterval,
+  PaymentInvoice,
   PaymentStatus,
   PaymentType,
-  PaymentInterval,
-  PaymentEventType,
-  SubscriptionInfo,
-  CheckoutSession,
   SubscriptionCycleType,
-  PaymentInvoice,
-  PaymentBilling,
+  SubscriptionInfo,
   SubscriptionStatus,
-} from ".";
+  type PaymentConfigs,
+  type PaymentEvent,
+  type PaymentOrder,
+  type PaymentProvider,
+  type PaymentSession,
+} from '.';
 
 /**
  * Stripe payment provider configs
@@ -33,7 +34,7 @@ export interface StripeConfigs extends PaymentConfigs {
  * @website https://stripe.com/
  */
 export class StripeProvider implements PaymentProvider {
-  readonly name = "stripe";
+  readonly name = 'stripe';
   configs: StripeConfigs;
 
   private client: Stripe;
@@ -53,7 +54,7 @@ export class StripeProvider implements PaymentProvider {
     try {
       // check payment price
       if (!order.price) {
-        throw new Error("price is required");
+        throw new Error('price is required');
       }
 
       // create payment with dynamic product
@@ -64,7 +65,7 @@ export class StripeProvider implements PaymentProvider {
           currency: order.price.currency,
           unit_amount: order.price.amount, // unit: cents
           product_data: {
-            name: order.description || "",
+            name: order.description || '',
           },
         };
 
@@ -73,7 +74,7 @@ export class StripeProvider implements PaymentProvider {
 
         // check payment plan
         if (!order.plan) {
-          throw new Error("plan is required");
+          throw new Error('plan is required');
         }
 
         // build recurring data
@@ -86,7 +87,7 @@ export class StripeProvider implements PaymentProvider {
       }
 
       // set or create customer
-      let customerId = "";
+      let customerId = '';
       if (order.customer?.email) {
         const customers = await this.client.customers.list({
           email: order.customer.email,
@@ -108,7 +109,7 @@ export class StripeProvider implements PaymentProvider {
       // create payment session params
       const sessionParams: Stripe.Checkout.SessionCreateParams = {
         mode:
-          order.type === PaymentType.SUBSCRIPTION ? "subscription" : "payment",
+          order.type === PaymentType.SUBSCRIPTION ? 'subscription' : 'payment',
         line_items: [
           {
             price_data: priceData,
@@ -141,7 +142,7 @@ export class StripeProvider implements PaymentProvider {
 
       const session = await this.client.checkout.sessions.create(sessionParams);
       if (!session.id || !session.url) {
-        throw new Error("create payment failed");
+        throw new Error('create payment failed');
       }
 
       return {
@@ -169,7 +170,7 @@ export class StripeProvider implements PaymentProvider {
   }): Promise<PaymentSession> {
     try {
       if (!sessionId) {
-        throw new Error("sessionId is required");
+        throw new Error('sessionId is required');
       }
 
       const session = await this.client.checkout.sessions.retrieve(sessionId);
@@ -186,14 +187,14 @@ export class StripeProvider implements PaymentProvider {
   async getPaymentEvent({ req }: { req: Request }): Promise<PaymentEvent> {
     try {
       const rawBody = await req.text();
-      const signature = req.headers.get("stripe-signature") as string;
+      const signature = req.headers.get('stripe-signature') as string;
 
       if (!rawBody || !signature) {
-        throw new Error("Invalid webhook request");
+        throw new Error('Invalid webhook request');
       }
 
       if (!this.configs.signingSecret) {
-        throw new Error("Signing Secret not configured");
+        throw new Error('Signing Secret not configured');
       }
 
       const event = this.client.webhooks.constructEvent(
@@ -225,7 +226,7 @@ export class StripeProvider implements PaymentProvider {
       }
 
       if (!paymentSession) {
-        throw new Error("Invalid webhook event");
+        throw new Error('Invalid webhook event');
       }
 
       return {
@@ -246,7 +247,7 @@ export class StripeProvider implements PaymentProvider {
     try {
       const invoice = await this.client.invoices.retrieve(invoiceId);
       if (!invoice.id) {
-        throw new Error("Invoice not found");
+        throw new Error('Invoice not found');
       }
 
       return {
@@ -274,7 +275,7 @@ export class StripeProvider implements PaymentProvider {
       });
 
       if (!billing.url) {
-        throw new Error("get billing url failed");
+        throw new Error('get billing url failed');
       }
 
       return {
@@ -287,15 +288,15 @@ export class StripeProvider implements PaymentProvider {
 
   private mapStripeEventType(eventType: string): PaymentEventType {
     switch (eventType) {
-      case "checkout.session.completed":
+      case 'checkout.session.completed':
         return PaymentEventType.CHECKOUT_SUCCESS;
-      case "invoice.payment_succeeded":
+      case 'invoice.payment_succeeded':
         return PaymentEventType.PAYMENT_SUCCESS;
-      case "invoice.payment_failed":
+      case 'invoice.payment_failed':
         return PaymentEventType.PAYMENT_FAILED;
-      case "customer.subscription.updated":
+      case 'customer.subscription.updated':
         return PaymentEventType.SUBSCRIBE_UPDATED;
-      case "customer.subscription.deleted":
+      case 'customer.subscription.deleted':
         return PaymentEventType.SUBSCRIBE_CANCELED;
       default:
         throw new Error(`Unknown Stripe event type: ${eventType}`);
@@ -306,16 +307,16 @@ export class StripeProvider implements PaymentProvider {
     session: Stripe.Response<Stripe.Checkout.Session>
   ): PaymentStatus {
     switch (session.status) {
-      case "complete":
+      case 'complete':
         // session complete, check payment status
         switch (session.payment_status) {
-          case "paid":
+          case 'paid':
             // payment success
             return PaymentStatus.SUCCESS;
-          case "unpaid":
+          case 'unpaid':
             // payment failed
             return PaymentStatus.PROCESSING;
-          case "no_payment_required":
+          case 'no_payment_required':
             // means payment not required, should be success
             return PaymentStatus.SUCCESS;
           default:
@@ -323,10 +324,10 @@ export class StripeProvider implements PaymentProvider {
               `Unknown Stripe payment status: ${session.payment_status}`
             );
         }
-      case "expired":
+      case 'expired':
         // payment canceled
         return PaymentStatus.CANCELED;
-      case "open":
+      case 'open':
         return PaymentStatus.PROCESSING;
       default:
         throw new Error(`Unknown Stripe status: ${session.status}`);
@@ -339,7 +340,7 @@ export class StripeProvider implements PaymentProvider {
   ): Promise<PaymentSession> {
     let subscription: Stripe.Response<Stripe.Subscription> | undefined =
       undefined;
-    let billingUrl = "";
+    let billingUrl = '';
 
     if (session.subscription) {
       subscription = await this.client.subscriptions.retrieve(
@@ -352,22 +353,22 @@ export class StripeProvider implements PaymentProvider {
       paymentStatus: this.mapStripeStatus(session),
       paymentInfo: {
         transactionId: session.id,
-        discountCode: "",
+        discountCode: '',
         discountAmount: undefined,
         discountCurrency: undefined,
         paymentAmount: session.amount_total || 0,
-        paymentCurrency: session.currency || "",
+        paymentCurrency: session.currency || '',
         paymentEmail:
           session.customer_email ||
           session.customer_details?.email ||
           undefined,
-        paymentUserName: session.customer_details?.name || "",
+        paymentUserName: session.customer_details?.name || '',
         paymentUserId: session.customer
           ? (session.customer as string)
           : undefined,
         paidAt: session.created ? new Date(session.created * 1000) : undefined,
         invoiceId: session.invoice ? (session.invoice as string) : undefined,
-        invoiceUrl: "",
+        invoiceUrl: '',
       },
       paymentResult: session,
       metadata: session.metadata,
@@ -388,7 +389,7 @@ export class StripeProvider implements PaymentProvider {
   ): Promise<PaymentSession> {
     let subscription: Stripe.Response<Stripe.Subscription> | undefined =
       undefined;
-    let billingUrl = "";
+    let billingUrl = '';
 
     if (invoice.lines.data.length > 0 && invoice.lines.data[0].subscription) {
       subscription = await this.client.subscriptions.retrieve(
@@ -402,23 +403,23 @@ export class StripeProvider implements PaymentProvider {
       paymentStatus: PaymentStatus.SUCCESS,
       paymentInfo: {
         transactionId: invoice.id,
-        discountCode: "",
+        discountCode: '',
         discountAmount: undefined,
         discountCurrency: undefined,
         paymentAmount: invoice.amount_paid,
         paymentCurrency: invoice.currency,
-        paymentEmail: invoice.customer_email || "",
-        paymentUserName: invoice.customer_name || "",
+        paymentEmail: invoice.customer_email || '',
+        paymentUserName: invoice.customer_name || '',
         paymentUserId: invoice.customer
           ? (invoice.customer as string)
           : undefined,
         paidAt: invoice.created ? new Date(invoice.created * 1000) : undefined,
         invoiceId: invoice.id,
-        invoiceUrl: invoice.hosted_invoice_url || "",
+        invoiceUrl: invoice.hosted_invoice_url || '',
         subscriptionCycleType:
-          invoice.billing_reason === "subscription_create"
+          invoice.billing_reason === 'subscription_create'
             ? SubscriptionCycleType.CREATE
-            : invoice.billing_reason === "subscription_cycle"
+            : invoice.billing_reason === 'subscription_cycle'
               ? SubscriptionCycleType.RENEWAL
               : undefined,
       },
@@ -463,7 +464,7 @@ export class StripeProvider implements PaymentProvider {
       subscriptionId: subscription.id,
       productId: data.price.product as string,
       planId: data.price.id,
-      description: "",
+      description: '',
       amount: data.price.unit_amount || 0,
       currency: data.price.currency,
       currentPeriodStart: new Date(data.current_period_start * 1000),
@@ -473,7 +474,7 @@ export class StripeProvider implements PaymentProvider {
       metadata: subscription.metadata,
     };
 
-    if (subscription.status === "active") {
+    if (subscription.status === 'active') {
       if (subscription.cancel_at) {
         subscriptionInfo.status = SubscriptionStatus.PENDING_CANCEL;
         // cancel apply at
@@ -485,22 +486,22 @@ export class StripeProvider implements PaymentProvider {
           subscription.cancel_at * 1000
         );
         subscriptionInfo.canceledReason =
-          subscription.cancellation_details?.comment || "";
+          subscription.cancellation_details?.comment || '';
         subscriptionInfo.canceledReasonType =
-          subscription.cancellation_details?.feedback || "";
+          subscription.cancellation_details?.feedback || '';
       } else {
         subscriptionInfo.status = SubscriptionStatus.ACTIVE;
       }
-    } else if (subscription.status === "canceled") {
+    } else if (subscription.status === 'canceled') {
       // subscription canceled
       subscriptionInfo.status = SubscriptionStatus.CANCELED;
       subscriptionInfo.canceledAt = new Date(
         (subscription.canceled_at || 0) * 1000
       );
       subscriptionInfo.canceledReason =
-        subscription.cancellation_details?.comment || "";
+        subscription.cancellation_details?.comment || '';
       subscriptionInfo.canceledReasonType =
-        subscription.cancellation_details?.feedback || "";
+        subscription.cancellation_details?.feedback || '';
     } else {
       throw new Error(
         `Unknown Stripe subscription status: ${subscription.status}`

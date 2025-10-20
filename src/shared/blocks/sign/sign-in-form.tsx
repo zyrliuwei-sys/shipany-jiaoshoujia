@@ -1,45 +1,46 @@
-"use client";
+'use client';
 
-import { Button } from "@/shared/components/ui/button";
-import { Input } from "@/shared/components/ui/input";
-import { Label } from "@/shared/components/ui/label";
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
-import { signIn } from "@/core/auth/client";
-import { Link } from "@/core/i18n/navigation";
-import { useRouter } from "@/core/i18n/navigation";
-import { SocialProviders } from "./social-providers";
-import { useAppContext } from "@/shared/contexts/app";
-import { useLocale, useTranslations } from "next-intl";
-import { toast } from "sonner";
-import { defaultLocale } from "@/config/locale";
+import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
+import { toast } from 'sonner';
+
+import { signIn } from '@/core/auth/client';
+import { Link, useRouter } from '@/core/i18n/navigation';
+import { defaultLocale } from '@/config/locale';
+import { Button } from '@/shared/components/ui/button';
+import { Input } from '@/shared/components/ui/input';
+import { Label } from '@/shared/components/ui/label';
+import { useAppContext } from '@/shared/contexts/app';
+
+import { SocialProviders } from './social-providers';
 
 export function SignInForm({
-  callbackUrl = "/",
+  callbackUrl = '/',
   className,
 }: {
   callbackUrl: string;
   className?: string;
 }) {
-  const t = useTranslations("common.sign");
+  const t = useTranslations('common.sign');
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const { configs } = useAppContext();
 
-  const isGoogleAuthEnabled = configs.google_auth_enabled === "true";
-  const isGithubAuthEnabled = configs.github_auth_enabled === "true";
+  const isGoogleAuthEnabled = configs.google_auth_enabled === 'true';
+  const isGithubAuthEnabled = configs.github_auth_enabled === 'true';
   const isEmailAuthEnabled =
-    configs.email_auth_enabled !== "false" ||
+    configs.email_auth_enabled !== 'false' ||
     (!isGoogleAuthEnabled && !isGithubAuthEnabled); // no social providers enabled, auto enable email auth
 
   if (callbackUrl) {
     const locale = useLocale();
     if (
       locale !== defaultLocale &&
-      callbackUrl.startsWith("/") &&
+      callbackUrl.startsWith('/') &&
       !callbackUrl.startsWith(`/${locale}`)
     ) {
       callbackUrl = `/${locale}${callbackUrl}`;
@@ -52,7 +53,7 @@ export function SignInForm({
     }
 
     if (!email || !password) {
-      toast.error("email and password are required");
+      toast.error('email and password are required');
       return;
     }
 
@@ -73,13 +74,13 @@ export function SignInForm({
           },
           onSuccess: (ctx) => {},
           onError: (e: any) => {
-            toast.error(e?.error?.message || "sign in failed");
+            toast.error(e?.error?.message || 'sign in failed');
             setLoading(false);
           },
         }
       );
     } catch (e: any) {
-      toast.error(e.message || "sign in failed");
+      toast.error(e.message || 'sign in failed');
     } finally {
       setLoading(false);
     }
@@ -91,11 +92,11 @@ export function SignInForm({
         {isEmailAuthEnabled && (
           <>
             <div className="grid gap-2">
-              <Label htmlFor="email">{t("email_title")}</Label>
+              <Label htmlFor="email">{t('email_title')}</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder={t("email_placeholder")}
+                placeholder={t('email_placeholder')}
                 required
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -115,7 +116,7 @@ export function SignInForm({
               <Input
                 id="password"
                 type="password"
-                placeholder={t("password_placeholder")}
+                placeholder={t('password_placeholder')}
                 autoComplete="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -142,7 +143,7 @@ export function SignInForm({
               {loading ? (
                 <Loader2 size={16} className="animate-spin" />
               ) : (
-                <p> {t("sign_in_title")} </p>
+                <p> {t('sign_in_title')} </p>
               )}
             </Button>
           </>
@@ -150,18 +151,18 @@ export function SignInForm({
 
         <SocialProviders
           configs={configs}
-          callbackUrl={callbackUrl || "/"}
+          callbackUrl={callbackUrl || '/'}
           loading={loading}
           setLoading={setLoading}
         />
       </div>
       {isEmailAuthEnabled && (
-        <div className="flex justify-center w-full border-t py-4">
+        <div className="flex w-full justify-center border-t py-4">
           <p className="text-center text-xs text-neutral-500">
-            {t("no_account")}
+            {t('no_account')}
             <Link href="/sign-up" className="underline">
-              <span className="dark:text-white/70 cursor-pointer">
-                {t("sign_up_title")}
+              <span className="cursor-pointer dark:text-white/70">
+                {t('sign_up_title')}
               </span>
             </Link>
           </p>

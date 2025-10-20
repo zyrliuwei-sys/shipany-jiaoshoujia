@@ -1,21 +1,23 @@
-import { subscription } from "@/config/db/schema";
-import { db } from "@/core/db";
-import { and, count, desc, eq, inArray } from "drizzle-orm";
-import { appendUserToResult, User } from "./user";
+import { and, count, desc, eq, inArray } from 'drizzle-orm';
+
+import { db } from '@/core/db';
+import { subscription } from '@/config/db/schema';
+
+import { appendUserToResult, User } from './user';
 
 export type Subscription = typeof subscription.$inferSelect & {
   user?: User;
 };
 export type NewSubscription = typeof subscription.$inferInsert;
 export type UpdateSubscription = Partial<
-  Omit<NewSubscription, "id" | "subscriptionNo" | "createdAt">
+  Omit<NewSubscription, 'id' | 'subscriptionNo' | 'createdAt'>
 >;
 
 export enum SubscriptionStatus {
-  PENDING = "pending",
-  ACTIVE = "active",
-  CANCELED = "canceled",
-  PENDING_CANCEL = "pending_cancel",
+  PENDING = 'pending',
+  ACTIVE = 'active',
+  CANCELED = 'canceled',
+  PENDING_CANCEL = 'pending_cancel',
 }
 
 /**

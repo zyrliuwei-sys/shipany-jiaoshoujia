@@ -1,14 +1,14 @@
-import { lazy, Suspense, ComponentType } from "react";
+import { ComponentType, lazy, Suspense } from 'react';
 
 const iconCache: { [key: string]: ComponentType<any> } = {};
 
 // Function to automatically detect icon library
-function detectIconLibrary(name: string): "ri" | "lucide" {
-  if (name && name.startsWith("Ri")) {
-    return "ri";
+function detectIconLibrary(name: string): 'ri' | 'lucide' {
+  if (name && name.startsWith('Ri')) {
+    return 'ri';
   }
 
-  return "lucide";
+  return 'lucide';
 }
 
 export function SmartIcon({
@@ -26,11 +26,11 @@ export function SmartIcon({
   const cacheKey = `${library}-${name}`;
 
   if (!iconCache[cacheKey]) {
-    if (library === "ri") {
+    if (library === 'ri') {
       // React Icons (Remix Icons)
       iconCache[cacheKey] = lazy(async () => {
         try {
-          const module = await import("react-icons/ri");
+          const module = await import('react-icons/ri');
           const IconComponent = module[name as keyof typeof module];
           if (IconComponent) {
             return { default: IconComponent as ComponentType<any> };
@@ -42,7 +42,7 @@ export function SmartIcon({
           }
         } catch (error) {
           console.error(`Failed to load react-icons/ri:`, error);
-          const fallbackModule = await import("react-icons/ri");
+          const fallbackModule = await import('react-icons/ri');
           return {
             default: fallbackModule.RiQuestionLine as ComponentType<any>,
           };
@@ -52,7 +52,7 @@ export function SmartIcon({
       // Lucide React (default)
       iconCache[cacheKey] = lazy(async () => {
         try {
-          const module = await import("lucide-react");
+          const module = await import('lucide-react');
           const IconComponent = module[name as keyof typeof module];
           if (IconComponent) {
             return { default: IconComponent as ComponentType<any> };
@@ -64,7 +64,7 @@ export function SmartIcon({
           }
         } catch (error) {
           console.error(`Failed to load lucide-react:`, error);
-          const fallbackModule = await import("lucide-react");
+          const fallbackModule = await import('lucide-react');
           return { default: fallbackModule.HelpCircle as ComponentType<any> };
         }
       });

@@ -1,10 +1,12 @@
-import { user } from "@/config/db/schema";
-import { db } from "@/core/db";
-import { desc, eq, inArray } from "drizzle-orm";
-import { headers } from "next/headers";
-import { getAuth } from "@/core/auth";
-import { getRemainingCredits } from "./credit";
-import { getUserRoles, getUserPermissions, Role, Permission } from "./rbac";
+import { headers } from 'next/headers';
+import { desc, eq, inArray } from 'drizzle-orm';
+
+import { getAuth } from '@/core/auth';
+import { db } from '@/core/db';
+import { user } from '@/config/db/schema';
+
+import { getRemainingCredits } from './credit';
+import { getUserPermissions, getUserRoles, Permission, Role } from './rbac';
 
 export interface UserCredits {
   remainingCredits: number;
@@ -17,7 +19,7 @@ export type User = typeof user.$inferSelect & {
   permissions?: Permission[];
 };
 export type NewUser = typeof user.$inferInsert;
-export type UpdateUser = Partial<Omit<NewUser, "id" | "createdAt" | "email">>;
+export type UpdateUser = Partial<Omit<NewUser, 'id' | 'createdAt' | 'email'>>;
 
 export async function updateUser(userId: string, updatedUser: UpdateUser) {
   const [result] = await db()

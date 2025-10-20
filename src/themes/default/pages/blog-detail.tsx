@@ -1,5 +1,5 @@
-import { Post as PostType } from "@/shared/types/blocks/blog";
-import { BlogDetail } from "@/themes/default/blocks";
+import { Post as PostType } from '@/shared/types/blocks/blog';
+import { BlogDetail } from '@/themes/default/blocks';
 
 export default async function BlogDetailPage({
   locale,

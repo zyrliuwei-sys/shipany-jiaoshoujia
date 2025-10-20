@@ -1,13 +1,14 @@
-import { source } from "@/core/docs/source";
+import { notFound } from 'next/navigation';
+import { getMDXComponents } from '@/mdx-components';
+import { createRelativeLink } from 'fumadocs-ui/mdx';
 import {
-  DocsPage,
   DocsBody,
   DocsDescription,
+  DocsPage,
   DocsTitle,
-} from "fumadocs-ui/page";
-import { notFound } from "next/navigation";
-import { createRelativeLink } from "fumadocs-ui/mdx";
-import { getMDXComponents } from "@/mdx-components";
+} from 'fumadocs-ui/page';
+
+import { source } from '@/core/docs/source';
 
 export default async function DocsContentPage(props: {
   params: Promise<{ slug?: string[]; locale?: string }>;
@@ -24,7 +25,7 @@ export default async function DocsContentPage(props: {
       toc={page.data.toc}
       full={page.data.full}
       tableOfContent={{
-        style: "clerk",
+        style: 'clerk',
       }}
     >
       <DocsTitle>{page.data.title}</DocsTitle>
@@ -42,7 +43,7 @@ export default async function DocsContentPage(props: {
 }
 
 export async function generateStaticParams() {
-  return source.generateParams("slug", "locale");
+  return source.generateParams('slug', 'locale');
 }
 
 export async function generateMetadata(props: {

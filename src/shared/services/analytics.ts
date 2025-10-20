@@ -1,11 +1,11 @@
-import { Configs, getAllConfigs } from "@/shared/services/config";
 import {
   AnalyticsManager,
   GoogleAnalyticsProvider,
   OpenPanelAnalyticsProvider,
   PlausibleAnalyticsProvider,
   VercelAnalyticsProvider,
-} from "@/extensions/analytics";
+} from '@/extensions/analytics';
+import { Configs, getAllConfigs } from '@/shared/services/config';
 
 /**
  * get analytics manager with configs
@@ -42,7 +42,7 @@ export function getAnalyticsManagerWithConfigs(configs: Configs) {
   // vercel analytics
   // TODO: read config from db
   if (true) {
-    analytics.addProvider(new VercelAnalyticsProvider({ mode: "auto" }));
+    analytics.addProvider(new VercelAnalyticsProvider({ mode: 'auto' }));
   }
 
   return analytics;

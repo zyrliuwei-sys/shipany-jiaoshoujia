@@ -1,8 +1,8 @@
-import { Button as ButtonType, Tab } from "@/shared/types/blocks/common";
-import { Link } from "@/core/i18n/navigation";
-import { Button } from "@/shared/components/ui/button";
-import { SmartIcon } from "@/shared/blocks/common/smart-icon";
-import { Tabs } from "@/shared/blocks/common/tabs";
+import { Link } from '@/core/i18n/navigation';
+import { SmartIcon } from '@/shared/blocks/common/smart-icon';
+import { Tabs } from '@/shared/blocks/common/tabs';
+import { Button } from '@/shared/components/ui/button';
+import { Button as ButtonType, Tab } from '@/shared/types/blocks/common';
 
 export function MainHeader({
   title,
@@ -17,22 +17,22 @@ export function MainHeader({
 }) {
   return (
     <div className="flex flex-col">
-      <div className="flex items-center justify-between mb-6">
+      <div className="mb-6 flex items-center justify-between">
         <div className="flex flex-col gap-2">
-          <h2 className="text-2xl font-bold tracking-tight">{title || ""}</h2>
-          <p className="text-muted-foreground">{description || ""}</p>
+          <h2 className="text-2xl font-bold tracking-tight">{title || ''}</h2>
+          <p className="text-muted-foreground">{description || ''}</p>
         </div>
         <div>
           {actions?.map((action, idx) => (
             <Link
               key={idx}
-              href={action.url || ""}
-              target={action.target || "_self"}
+              href={action.url || ''}
+              target={action.target || '_self'}
             >
               <Button
                 onClick={action.onClick}
-                variant={action.variant || "default"}
-                size={action.size || "sm"}
+                variant={action.variant || 'default'}
+                size={action.size || 'sm'}
               >
                 {action.icon && <SmartIcon name={action.icon as string} />}
                 {action.title}

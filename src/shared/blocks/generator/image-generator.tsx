@@ -1,18 +1,19 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { Card, CardContent } from "@/shared/components/ui/card";
-import { Button } from "@/shared/components/ui/button";
-import { Textarea } from "@/shared/components/ui/textarea";
-import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
-import { cn } from "@/shared/lib/utils";
+import { useEffect, useState } from 'react';
 import {
-  IconUpload,
-  IconX,
   IconChevronLeft,
   IconChevronRight,
-} from "@tabler/icons-react";
-import { useAppContext } from "@/shared/contexts/app";
+  IconUpload,
+  IconX,
+} from '@tabler/icons-react';
+
+import { Button } from '@/shared/components/ui/button';
+import { Card, CardContent } from '@/shared/components/ui/card';
+import { Tabs, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
+import { Textarea } from '@/shared/components/ui/textarea';
+import { useAppContext } from '@/shared/contexts/app';
+import { cn } from '@/shared/lib/utils';
 
 interface ImageGeneratorProps {
   allowMultipleImages?: boolean;
@@ -23,8 +24,8 @@ export function ImageGenerator({
   allowMultipleImages = false,
   maxImages = 8,
 }: ImageGeneratorProps = {}) {
-  const [activeTab, setActiveTab] = useState("image-to-image");
-  const [prompt, setPrompt] = useState("What do you want to create?");
+  const [activeTab, setActiveTab] = useState('image-to-image');
+  const [prompt, setPrompt] = useState('What do you want to create?');
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [currentPreviewIndex, setCurrentPreviewIndex] = useState(0);
@@ -32,14 +33,14 @@ export function ImageGenerator({
   const { user } = useAppContext();
 
   useEffect(() => {
-    console.log("user", user);
+    console.log('user', user);
   }, [user]);
 
   // Sample preview images
   const sampleImages = [
-    "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop",
+    'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop',
+    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop',
+    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop',
   ];
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +61,7 @@ export function ImageGenerator({
     const urlToRemove = previewUrls[index];
 
     // Revoke the object URL to prevent memory leaks
-    if (urlToRemove && urlToRemove.startsWith("blob:")) {
+    if (urlToRemove && urlToRemove.startsWith('blob:')) {
       URL.revokeObjectURL(urlToRemove);
     }
 
@@ -79,13 +80,13 @@ export function ImageGenerator({
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 max-w-7xl mx-auto">
+    <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 p-6 lg:grid-cols-2">
       {/* Left Panel */}
       <Card className="bg-background border">
         <CardContent className="p-6">
           {/* Header */}
           <div className="mb-6">
-            <h2 className="font-semibold text-foreground mb-1">
+            <h2 className="text-foreground mb-1 font-semibold">
               Image to Image AI
             </h2>
           </div>
@@ -100,19 +101,19 @@ export function ImageGenerator({
 
           {/* Model Section */}
           <div className="mb-6">
-            <h3 className="font-medium text-foreground mb-3">Model</h3>
-            <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+            <h3 className="text-foreground mb-3 font-medium">Model</h3>
+            <div className="bg-muted flex items-center justify-between rounded-lg p-3">
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
+                <div className="bg-primary flex h-6 w-6 items-center justify-center rounded-full">
                   <span className="text-primary-foreground text-xs font-bold">
                     G
                   </span>
                 </div>
                 <div>
-                  <div className="font-medium text-foreground">
+                  <div className="text-foreground font-medium">
                     Google Nano Banana
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-muted-foreground text-sm">
                     Ultra-high character consistency
                   </div>
                 </div>
@@ -128,9 +129,9 @@ export function ImageGenerator({
 
           {/* Images Upload */}
           <div className="mb-6">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-medium text-foreground">Images</h3>
-              <span className="text-sm text-muted-foreground">
+            <div className="mb-3 flex items-center justify-between">
+              <h3 className="text-foreground font-medium">Images</h3>
+              <span className="text-muted-foreground text-sm">
                 {uploadedImages.length}/{allowMultipleImages ? maxImages : 1}
               </span>
             </div>
@@ -138,23 +139,23 @@ export function ImageGenerator({
             {/* Uploaded Images Preview */}
             {uploadedImages.length > 0 && (
               <div
-                className={`grid gap-2 mb-4 ${
+                className={`mb-4 grid gap-2 ${
                   allowMultipleImages
-                    ? "grid-cols-2 sm:grid-cols-3"
-                    : "grid-cols-1"
+                    ? 'grid-cols-2 sm:grid-cols-3'
+                    : 'grid-cols-1'
                 }`}
               >
                 {previewUrls.map((url, index) => (
-                  <div key={index} className="relative group">
+                  <div key={index} className="group relative">
                     <img
                       src={url}
                       alt={`Upload ${index + 1}`}
-                      className="w-full h-20 object-cover rounded-lg border"
+                      className="h-20 w-full rounded-lg border object-cover"
                     />
                     <Button
                       size="sm"
                       variant="destructive"
-                      className="absolute top-1 right-1 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="absolute top-1 right-1 h-6 w-6 p-0 opacity-0 transition-opacity group-hover:opacity-100"
                       onClick={() => removeImage(index)}
                     >
                       <IconX className="h-3 w-3" />
@@ -175,8 +176,8 @@ export function ImageGenerator({
                   uploadedImages.length >= (allowMultipleImages ? maxImages : 1)
                 }
               />
-              <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-muted-foreground/50 transition-colors cursor-pointer">
-                <IconUpload className="h-6 w-6 text-muted-foreground mx-auto mb-2" />
+              <div className="border-border hover:border-muted-foreground/50 cursor-pointer rounded-lg border-2 border-dashed p-6 text-center transition-colors">
+                <IconUpload className="text-muted-foreground mx-auto mb-2 h-6 w-6" />
                 <div className="text-foreground font-medium">Add</div>
               </div>
             </label>
@@ -184,28 +185,28 @@ export function ImageGenerator({
 
           {/* Prompt */}
           <div className="mb-6">
-            <h3 className="font-medium text-foreground mb-3">Prompt</h3>
+            <h3 className="text-foreground mb-3 font-medium">Prompt</h3>
             <div className="relative">
               <Textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                className="min-h-[100px] bg-background border resize-none"
+                className="bg-background min-h-[100px] resize-none border"
                 placeholder="What do you want to create?"
               />
-              <div className="flex items-center justify-between mt-2 text-sm text-muted-foreground">
+              <div className="text-muted-foreground mt-2 flex items-center justify-between text-sm">
                 <span>0 / 2000</span>
               </div>
             </div>
           </div>
 
           {/* Credits */}
-          <div className="flex items-center justify-between mb-6 text-sm">
+          <div className="mb-6 flex items-center justify-between text-sm">
             <span className="text-destructive">🎫 Credits required:</span>
-            <span className="font-medium text-foreground">4 Credits</span>
+            <span className="text-foreground font-medium">4 Credits</span>
           </div>
 
           {/* Generate Button */}
-          <Button className="w-full bg-background border hover:bg-muted text-foreground">
+          <Button className="bg-background hover:bg-muted text-foreground w-full border">
             ✨ Create
           </Button>
         </CardContent>
@@ -216,23 +217,23 @@ export function ImageGenerator({
         <CardContent className="p-6">
           {/* Header */}
           <div className="mb-6">
-            <h2 className="font-semibold text-foreground">Sample Image</h2>
+            <h2 className="text-foreground font-semibold">Sample Image</h2>
           </div>
 
           {/* Image Carousel */}
           <div className="relative">
-            <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-muted mb-4">
+            <div className="bg-muted relative mb-4 aspect-[4/3] overflow-hidden rounded-lg">
               <img
                 src={sampleImages[currentPreviewIndex]}
                 alt="Sample"
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover"
               />
 
               {/* Navigation Buttons */}
               <Button
                 size="sm"
                 variant="secondary"
-                className="absolute left-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 bg-background/80 hover:bg-background"
+                className="bg-background/80 hover:bg-background absolute top-1/2 left-2 h-8 w-8 -translate-y-1/2 transform p-0"
                 onClick={prevPreview}
               >
                 <IconChevronLeft className="h-4 w-4" />
@@ -240,7 +241,7 @@ export function ImageGenerator({
               <Button
                 size="sm"
                 variant="secondary"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 bg-background/80 hover:bg-background"
+                className="bg-background/80 hover:bg-background absolute top-1/2 right-2 h-8 w-8 -translate-y-1/2 transform p-0"
                 onClick={nextPreview}
               >
                 <IconChevronRight className="h-4 w-4" />
@@ -253,10 +254,10 @@ export function ImageGenerator({
                 <button
                   key={index}
                   className={cn(
-                    "w-2 h-2 rounded-full transition-colors",
+                    'h-2 w-2 rounded-full transition-colors',
                     index === currentPreviewIndex
-                      ? "bg-primary"
-                      : "bg-muted-foreground/30"
+                      ? 'bg-primary'
+                      : 'bg-muted-foreground/30'
                   )}
                   onClick={() => setCurrentPreviewIndex(index)}
                 />

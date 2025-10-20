@@ -1,29 +1,30 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Link } from "@/core/i18n/navigation";
-import { Button } from "@/shared/components/ui/button";
-import { SmartIcon } from "@/shared/blocks/common/smart-icon";
-import Image from "next/image";
-import { SocialAvatars } from "@/shared/blocks/common";
-import { Hero as HeroType } from "@/shared/types/blocks/landing";
-import { ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
-import { AnimatedGridPattern } from "@/shared/components/ui/animated-grid-pattern";
-import { cn } from "@/shared/lib/utils";
-import { Highlighter } from "@/shared/components/ui/highlighter";
+import React from 'react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
+
+import { Link } from '@/core/i18n/navigation';
+import { SocialAvatars } from '@/shared/blocks/common';
+import { SmartIcon } from '@/shared/blocks/common/smart-icon';
+import { AnimatedGridPattern } from '@/shared/components/ui/animated-grid-pattern';
+import { Button } from '@/shared/components/ui/button';
+import { Highlighter } from '@/shared/components/ui/highlighter';
+import { cn } from '@/shared/lib/utils';
+import { Hero as HeroType } from '@/shared/types/blocks/landing';
 
 // Create animation configuration function
 const createFadeInVariant = (delay: number) => ({
   initial: {
     opacity: 0,
     y: 20,
-    filter: "blur(6px)",
+    filter: 'blur(6px)',
   },
   animate: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
+    filter: 'blur(0px)',
   },
   transition: {
     duration: 0.6,
@@ -39,7 +40,7 @@ export function Hero({
   hero: HeroType;
   className?: string;
 }) {
-  const highlightText = hero.highlight_text ?? "";
+  const highlightText = hero.highlight_text ?? '';
   let texts = null;
   if (highlightText) {
     texts = hero.title?.split(highlightText, 2);
@@ -55,9 +56,9 @@ export function Hero({
         {hero.announcement && (
           <motion.div {...createFadeInVariant(0)}>
             <Link
-              href={hero.announcement.url || ""}
-              target={hero.announcement.target || "_self"}
-              className="mb-8 hover:bg-background dark:hover:border-t-border bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 dark:border-t-white/5 dark:shadow-zinc-950"
+              href={hero.announcement.url || ''}
+              target={hero.announcement.target || '_self'}
+              className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto mb-8 flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 dark:border-t-white/5 dark:shadow-zinc-950"
             >
               <span className="text-foreground text-sm">
                 {hero.announcement.title}
@@ -82,7 +83,7 @@ export function Hero({
           {/* 标题 - 第2个元素 */}
           <motion.div {...createFadeInVariant(0.15)}>
             {texts && texts.length > 0 ? (
-              <h1 className="text-foreground text-balance text-5xl font-semibold sm:mt-12 sm:text-7xl">
+              <h1 className="text-foreground text-5xl font-semibold text-balance sm:mt-12 sm:text-7xl">
                 {texts[0]}
                 <Highlighter action="underline" color="#FF9800">
                   {highlightText}
@@ -90,7 +91,7 @@ export function Hero({
                 {texts[1]}
               </h1>
             ) : (
-              <h1 className="text-foreground text-balance text-5xl font-semibold sm:mt-12 sm:text-7xl">
+              <h1 className="text-foreground text-5xl font-semibold text-balance sm:mt-12 sm:text-7xl">
                 {hero.title}
               </h1>
             )}
@@ -99,8 +100,8 @@ export function Hero({
           {/* 描述 - 第3个元素 */}
           <motion.p
             {...createFadeInVariant(0.3)}
-            className="text-muted-foreground mb-8 mt-8 text-balance text-lg"
-            dangerouslySetInnerHTML={{ __html: hero.description ?? "" }}
+            className="text-muted-foreground mt-8 mb-8 text-lg text-balance"
+            dangerouslySetInnerHTML={{ __html: hero.description ?? '' }}
           />
 
           {/* 按钮组 - 第4个元素 */}
@@ -112,14 +113,14 @@ export function Hero({
               {hero.buttons.map((button, idx) => (
                 <Button
                   asChild
-                  size={button.size || "default"}
-                  variant={button.variant || "default"}
+                  size={button.size || 'default'}
+                  variant={button.variant || 'default'}
                   className="px-4 text-sm"
                   key={idx}
                 >
                   <Link
-                    href={button.url ?? ""}
-                    target={button.target ?? "_self"}
+                    href={button.url ?? ''}
+                    target={button.target ?? '_self'}
                   >
                     {button.icon && <SmartIcon name={button.icon as string} />}
                     <span>{button.title}</span>
@@ -134,7 +135,7 @@ export function Hero({
             <motion.p
               {...createFadeInVariant(0.6)}
               className="text-muted-foreground mt-6 block text-center text-sm"
-              dangerouslySetInnerHTML={{ __html: hero.tip ?? "" }}
+              dangerouslySetInnerHTML={{ __html: hero.tip ?? '' }}
             />
           )}
 
@@ -165,15 +166,15 @@ export function Hero({
                 className="h-3 w-full bg-[repeating-linear-gradient(-45deg,var(--color-foreground),var(--color-foreground)_1px,transparent_1px,transparent_4px)] opacity-5"
               />
               <Image
-                className="z-2 border-border/25 relative hidden border dark:block"
-                src={hero.image_invert?.src || hero.image?.src || ""}
+                className="border-border/25 relative z-2 hidden border dark:block"
+                src={hero.image_invert?.src || hero.image?.src || ''}
                 alt="app screen"
                 width={2796}
                 height={2008}
               />
               <Image
-                className="z-2 border-border/25 relative border dark:hidden"
-                src={hero.image?.src || hero.image_invert?.src || ""}
+                className="border-border/25 relative z-2 border dark:hidden"
+                src={hero.image?.src || hero.image_invert?.src || ''}
                 alt="app screen"
                 width={2796}
                 height={2008}
@@ -189,8 +190,8 @@ export function Hero({
         duration={3}
         repeatDelay={1}
         className={cn(
-          "[mask-image:radial-gradient(600px_circle_at_center,white,transparent)]",
-          "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12"
+          '[mask-image:radial-gradient(600px_circle_at_center,white,transparent)]',
+          'inset-x-0 inset-y-[-30%] h-[200%] skew-y-12'
         )}
       />
     </>

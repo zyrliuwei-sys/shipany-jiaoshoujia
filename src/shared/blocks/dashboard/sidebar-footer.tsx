@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useSidebar } from "@/shared/components/ui/sidebar";
+import { Link } from '@/core/i18n/navigation';
+import { SmartIcon } from '@/shared/blocks/common/smart-icon';
+import { Separator } from '@/shared/components/ui/separator';
+import { useSidebar } from '@/shared/components/ui/sidebar';
+import { NavItem } from '@/shared/types/blocks/common';
+import { SidebarFooter as SidebarFooterType } from '@/shared/types/blocks/dashboard';
 
-import { Link } from "@/core/i18n/navigation";
-import { SidebarFooter as SidebarFooterType } from "@/shared/types/blocks/dashboard";
-import { NavItem } from "@/shared/types/blocks/common";
-import { SmartIcon } from "@/shared/blocks/common/smart-icon";
-import { Separator } from "@/shared/components/ui/separator";
-import { LocaleSelector, ThemeToggler } from "../common";
+import { LocaleSelector, ThemeToggler } from '../common';
 
 export function SidebarFooter({ footer }: { footer: SidebarFooterType }) {
   const { open } = useSidebar();
@@ -15,10 +15,10 @@ export function SidebarFooter({ footer }: { footer: SidebarFooterType }) {
   return (
     <>
       {open ? (
-        <div className="w-full flex items-center justify-start mx-auto gap-x-4 px-4 py-3 border-t border-gray-200">
+        <div className="mx-auto flex w-full items-center justify-start gap-x-4 border-t border-gray-200 px-4 py-3">
           {footer.nav?.items?.map((item: NavItem, idx: number) => (
-            <div className="cursor-pointer hover:text-primary" key={idx}>
-              <Link href={item.url || ""} target={item.target || "_self"}>
+            <div className="hover:text-primary cursor-pointer" key={idx}>
+              <Link href={item.url || ''} target={item.target || '_self'}>
                 {item.icon && (
                   <SmartIcon
                     name={item.icon as string}

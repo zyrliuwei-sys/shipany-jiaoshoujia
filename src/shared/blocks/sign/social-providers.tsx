@@ -1,15 +1,16 @@
-"use client";
+'use client';
 
-import { Button } from "@/shared/components/ui/button";
-import { cn } from "@/shared/lib/utils";
-import { signIn } from "@/core/auth/client";
-import { useRouter } from "@/core/i18n/navigation";
-import { Button as ButtonType } from "@/shared/types/blocks/common";
-import { RiGithubFill, RiGoogleFill } from "react-icons/ri";
-import { useAppContext } from "@/shared/contexts/app";
-import { useLocale, useTranslations } from "next-intl";
-import { toast } from "sonner";
-import { defaultLocale } from "@/config/locale";
+import { useLocale, useTranslations } from 'next-intl';
+import { RiGithubFill, RiGoogleFill } from 'react-icons/ri';
+import { toast } from 'sonner';
+
+import { signIn } from '@/core/auth/client';
+import { useRouter } from '@/core/i18n/navigation';
+import { defaultLocale } from '@/config/locale';
+import { Button } from '@/shared/components/ui/button';
+import { useAppContext } from '@/shared/contexts/app';
+import { cn } from '@/shared/lib/utils';
+import { Button as ButtonType } from '@/shared/types/blocks/common';
 
 export function SocialProviders({
   configs,
@@ -22,7 +23,7 @@ export function SocialProviders({
   loading: boolean;
   setLoading: (loading: boolean) => void;
 }) {
-  const t = useTranslations("common.sign");
+  const t = useTranslations('common.sign');
   const router = useRouter();
 
   const { setIsShowSignModal } = useAppContext();
@@ -31,7 +32,7 @@ export function SocialProviders({
     const locale = useLocale();
     if (
       locale !== defaultLocale &&
-      callbackUrl.startsWith("/") &&
+      callbackUrl.startsWith('/') &&
       !callbackUrl.startsWith(`/${locale}`)
     ) {
       callbackUrl = `/${locale}${callbackUrl}`;
@@ -54,7 +55,7 @@ export function SocialProviders({
         },
         onSuccess: (ctx) => {},
         onError: (e: any) => {
-          toast.error(e?.error?.message || "sign in failed");
+          toast.error(e?.error?.message || 'sign in failed');
           setLoading(false);
         },
       }
@@ -63,36 +64,36 @@ export function SocialProviders({
 
   const providers: ButtonType[] = [];
 
-  if (configs.google_auth_enabled === "true") {
+  if (configs.google_auth_enabled === 'true') {
     providers.push({
-      name: "google",
-      title: t("google_sign_in_title"),
+      name: 'google',
+      title: t('google_sign_in_title'),
       icon: <RiGoogleFill />,
-      onClick: () => handleSignIn({ provider: "google" }),
+      onClick: () => handleSignIn({ provider: 'google' }),
     });
   }
 
-  if (configs.github_auth_enabled === "true") {
+  if (configs.github_auth_enabled === 'true') {
     providers.push({
-      name: "github",
-      title: t("github_sign_in_title"),
+      name: 'github',
+      title: t('github_sign_in_title'),
       icon: <RiGithubFill />,
-      onClick: () => handleSignIn({ provider: "github" }),
+      onClick: () => handleSignIn({ provider: 'github' }),
     });
   }
 
   return (
     <div
       className={cn(
-        "w-full gap-2 flex items-center",
-        "justify-between flex-col"
+        'flex w-full items-center gap-2',
+        'flex-col justify-between'
       )}
     >
       {providers.map((provider) => (
         <Button
           key={provider.name}
           variant="outline"
-          className={cn("w-full gap-2")}
+          className={cn('w-full gap-2')}
           disabled={loading}
           onClick={provider.onClick}
         >

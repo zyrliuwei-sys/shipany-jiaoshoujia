@@ -1,16 +1,17 @@
-import { type Post as PostType } from "@/shared/types/blocks/blog";
-import { Crumb } from "@/shared/blocks/common/crumb";
-import { NavItem } from "@/shared/types/blocks/common";
-import { getTranslations } from "next-intl/server";
-import { MarkdownPreview } from "@/shared/blocks/common";
+import { getTranslations } from 'next-intl/server';
+
+import { MarkdownPreview } from '@/shared/blocks/common';
+import { Crumb } from '@/shared/blocks/common/crumb';
+import { type Post as PostType } from '@/shared/types/blocks/blog';
+import { NavItem } from '@/shared/types/blocks/common';
 
 export async function PageDetail({ post }: { post: PostType }) {
-  const t = await getTranslations("blog");
+  const t = await getTranslations('blog');
 
   const crumbItems: NavItem[] = [
     {
-      title: t("title"),
-      url: "/blog",
+      title: t('title'),
+      url: '/blog',
       is_active: false,
     },
     {
@@ -23,20 +24,20 @@ export async function PageDetail({ post }: { post: PostType }) {
   return (
     <section id={post.id}>
       <div className="py-16 md:py-32">
-        <div className="w-full max-w-4xl mx-auto px-6 md:px-8">
+        <div className="mx-auto w-full max-w-4xl px-6 md:px-8">
           <Crumb items={crumbItems} />
 
-          <div className="mt-8 ring-foreground/5 relative rounded-3xl border border-transparent p-8 shadow ring-1 sm:p-12 sm:pb-10">
+          <div className="ring-foreground/5 relative mt-8 rounded-3xl border border-transparent p-8 shadow ring-1 sm:p-12 sm:pb-10">
             <div>
-              <h1 className="text-2xl font-bold mb-2">{post.title}</h1>
+              <h1 className="mb-2 text-2xl font-bold">{post.title}</h1>
               <h2 className="sr-only">{post.description}</h2>
 
-              <p className="text-muted-foreground text-sm mb-4">
+              <p className="text-muted-foreground mb-4 text-sm">
                 {post.created_at}
               </p>
 
               {post.content && (
-                <div className="my-8 text-muted-foreground space-y-4 text-lg *:leading-relaxed">
+                <div className="text-muted-foreground my-8 space-y-4 text-lg *:leading-relaxed">
                   <MarkdownPreview content={post.content} />
                 </div>
               )}
@@ -44,7 +45,7 @@ export async function PageDetail({ post }: { post: PostType }) {
               <div className="mt-12">
                 <div className="mt-6 flex items-center gap-3 pb-2 pl-px">
                   {post.author_image && (
-                    <div className="ring-foreground/10 aspect-square size-12 overflow-hidden rounded-xl border border-transparent shadow-md shadow-black/15 ring-1">
+                    <div className="ring-foreground/10 aspect-square size-12 overflow-hidden rounded-xl border border-transparent shadow-md ring-1 shadow-black/15">
                       <img src={post.author_image} alt={post.author_name} />
                     </div>
                   )}

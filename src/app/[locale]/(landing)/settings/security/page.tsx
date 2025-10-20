@@ -1,10 +1,10 @@
-import { getUserInfo } from "@/shared/services/user";
-import { Empty } from "@/shared/blocks/common";
-import { Form as FormType } from "@/shared/types/blocks/form";
-import { UpdateUser, updateUser } from "@/shared/services/user";
-import { PanelCard } from "@/shared/blocks/panel";
-import { Button as ButtonType } from "@/shared/types/blocks/common";
-import { getTranslations } from "next-intl/server";
+import { getTranslations } from 'next-intl/server';
+
+import { Empty } from '@/shared/blocks/common';
+import { PanelCard } from '@/shared/blocks/panel';
+import { getUserInfo, UpdateUser, updateUser } from '@/shared/services/user';
+import { Button as ButtonType } from '@/shared/types/blocks/common';
+import { Form as FormType } from '@/shared/types/blocks/form';
 
 export default async function SecurityPage() {
   const user = await getUserInfo();
@@ -12,33 +12,33 @@ export default async function SecurityPage() {
     return <Empty message="no auth" />;
   }
 
-  const t = await getTranslations("settings.security");
+  const t = await getTranslations('settings.security');
 
   const form: FormType = {
     fields: [
       {
-        name: "email",
-        title: t("fields.email"),
-        type: "email",
+        name: 'email',
+        title: t('fields.email'),
+        type: 'email',
         attributes: { disabled: true },
       },
       {
-        name: "password",
-        title: t("fields.password"),
-        type: "password",
-        attributes: { type: "password" },
+        name: 'password',
+        title: t('fields.password'),
+        type: 'password',
+        attributes: { type: 'password' },
         validation: { required: true },
       },
       {
-        name: "new_password",
-        title: t("fields.new_password"),
-        type: "password",
+        name: 'new_password',
+        title: t('fields.new_password'),
+        type: 'password',
         validation: { required: true },
       },
       {
-        name: "confirm_password",
-        title: t("fields.confirm_password"),
-        type: "password",
+        name: 'confirm_password',
+        title: t('fields.confirm_password'),
+        type: 'password',
         validation: { required: true },
       },
     ],
@@ -48,16 +48,16 @@ export default async function SecurityPage() {
     },
     submit: {
       handler: async (data: FormData, passby: any) => {
-        "use server";
+        'use server';
 
         const { user } = passby;
         if (!user) {
-          throw new Error("no auth");
+          throw new Error('no auth');
         }
 
-        const password = data.get("password") as string;
+        const password = data.get('password') as string;
         if (!password?.trim()) {
-          throw new Error("password is required");
+          throw new Error('password is required');
         }
 
         const updatedUser: UpdateUser = {
@@ -69,13 +69,13 @@ export default async function SecurityPage() {
         await updateUser(user.id, updatedUser);
 
         return {
-          status: "success",
-          message: "Profile updated",
-          redirect_url: "/settings/profile",
+          status: 'success',
+          message: 'Profile updated',
+          redirect_url: '/settings/profile',
         };
       },
       button: {
-        title: t("reset_password.buttons.submit"),
+        title: t('reset_password.buttons.submit'),
       },
     },
   };
@@ -83,33 +83,33 @@ export default async function SecurityPage() {
   return (
     <div className="space-y-8">
       <PanelCard
-        title={t("reset_password.title")}
-        description={t("reset_password.description")}
-        content={t("reset_password.tip")}
+        title={t('reset_password.title')}
+        description={t('reset_password.description')}
+        content={t('reset_password.tip')}
         buttons={[
           {
-            title: t("reset_password.buttons.submit"),
-            url: "/settings/security",
-            target: "_self",
-            variant: "default",
-            size: "sm",
-            icon: "RiLockPasswordLine",
+            title: t('reset_password.buttons.submit'),
+            url: '/settings/security',
+            target: '_self',
+            variant: 'default',
+            size: 'sm',
+            icon: 'RiLockPasswordLine',
           },
         ]}
         className="max-w-md"
       />
       <PanelCard
-        title={t("delete_account.title")}
-        description={t("delete_account.description")}
-        content={t("delete_account.tip")}
+        title={t('delete_account.title')}
+        description={t('delete_account.description')}
+        content={t('delete_account.tip')}
         buttons={[
           {
-            title: t("delete_account.buttons.submit"),
-            url: "/settings/security",
-            target: "_self",
-            variant: "destructive",
-            size: "sm",
-            icon: "RiDeleteBinLine",
+            title: t('delete_account.buttons.submit'),
+            url: '/settings/security',
+            target: '_self',
+            variant: 'destructive',
+            size: 'sm',
+            icon: 'RiDeleteBinLine',
           },
         ]}
         className="max-w-md"

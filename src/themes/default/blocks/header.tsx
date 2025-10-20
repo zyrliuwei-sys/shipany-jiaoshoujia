@@ -1,7 +1,22 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
-import { Link, usePathname, useRouter } from "@/core/i18n/navigation";
+import { useEffect, useRef, useState } from 'react';
+import { Menu, X } from 'lucide-react';
+
+import { Link, usePathname, useRouter } from '@/core/i18n/navigation';
+import {
+  BrandLogo,
+  LocaleSelector,
+  SignUser,
+  SmartIcon,
+  ThemeToggler,
+} from '@/shared/blocks/common';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/shared/components/ui/accordion';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -9,25 +24,11 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger as RawNavigationMenuTrigger,
-} from "@/shared/components/ui/navigation-menu";
-import { Menu, X } from "lucide-react";
-import { useMedia } from "@/shared/hooks/use-media";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/shared/components/ui/accordion";
-import { cn } from "@/shared/lib/utils";
-import {
-  SmartIcon,
-  BrandLogo,
-  ThemeToggler,
-  LocaleSelector,
-  SignUser,
-} from "@/shared/blocks/common";
-import { Header as HeaderType } from "@/shared/types/blocks/landing";
-import { NavItem } from "@/shared/types/blocks/common";
+} from '@/shared/components/ui/navigation-menu';
+import { useMedia } from '@/shared/hooks/use-media';
+import { cn } from '@/shared/lib/utils';
+import { NavItem } from '@/shared/types/blocks/common';
+import { Header as HeaderType } from '@/shared/types/blocks/landing';
 
 // For Next.js hydration mismatch warning, conditionally render NavigationMenuTrigger only after mount to avoid inconsistency between server/client render
 function NavigationMenuTrigger(
@@ -45,7 +46,7 @@ function NavigationMenuTrigger(
 export function Header({ header }: { header: HeaderType }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const isLarge = useMedia("(min-width: 64rem)");
+  const isLarge = useMedia('(min-width: 64rem)');
   const router = useRouter();
   const pathname = usePathname();
 
@@ -54,8 +55,8 @@ export function Header({ header }: { header: HeaderType }) {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Navigation menu for large screens
@@ -75,12 +76,12 @@ export function Header({ header }: { header: HeaderType }) {
         if (openContent) {
           const height = openContent.scrollHeight;
           document.documentElement.style.setProperty(
-            "--navigation-menu-viewport-height",
+            '--navigation-menu-viewport-height',
             `${height}px`
           );
         } else {
           document.documentElement.style.removeProperty(
-            "--navigation-menu-viewport-height"
+            '--navigation-menu-viewport-height'
           );
         }
       });
@@ -90,24 +91,24 @@ export function Header({ header }: { header: HeaderType }) {
       <NavigationMenu
         ref={menuRef}
         onValueChange={handleViewportHeight}
-        className="**:data-[slot=navigation-menu-viewport]:bg-transparent **:data-[slot=navigation-menu-viewport]:rounded-none **:data-[slot=navigation-menu-viewport]:ring-0 **:data-[slot=navigation-menu-viewport]:border-0 **:data-[slot=navigation-menu-viewport]:shadow-none [--color-muted:color-mix(in_oklch,var(--color-foreground)_5%,transparent)] [--viewport-outer-px:2rem] max-lg:hidden"
+        className="[--color-muted:color-mix(in_oklch,var(--color-foreground)_5%,transparent)] [--viewport-outer-px:2rem] **:data-[slot=navigation-menu-viewport]:rounded-none **:data-[slot=navigation-menu-viewport]:border-0 **:data-[slot=navigation-menu-viewport]:bg-transparent **:data-[slot=navigation-menu-viewport]:shadow-none **:data-[slot=navigation-menu-viewport]:ring-0 max-lg:hidden"
       >
         <NavigationMenuList className="gap-3">
           {header.nav?.items?.map((item, idx) => (
-            <NavigationMenuItem key={idx} value={item.title || ""}>
+            <NavigationMenuItem key={idx} value={item.title || ''}>
               {item.children && item.children.length > 0 ? (
                 <>
                   <NavigationMenuTrigger className="flex flex-row items-center gap-2 text-sm">
                     {item.icon && (
                       <SmartIcon
                         name={item.icon as string}
-                        className="w-4 h-4"
+                        className="h-4 w-4"
                       />
                     )}
                     {item.title}
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent className="mt-4.5 origin-top pb-14 pt-5 shadow-none ring-0">
-                    <div className="min-w-6xl pr-22 divide-foreground/10 grid w-full grid-cols-4 gap-4 divide-x">
+                  <NavigationMenuContent className="mt-4.5 origin-top pt-5 pb-14 shadow-none ring-0">
+                    <div className="divide-foreground/10 grid w-full min-w-6xl grid-cols-4 gap-4 divide-x pr-22">
                       <div className="col-span-2 row-span-2 grid grid-rows-subgrid gap-1 border-r-0">
                         <span className="text-muted-foreground ml-2 text-xs">
                           {item.title}
@@ -116,9 +117,9 @@ export function Header({ header }: { header: HeaderType }) {
                           {item.children?.map((subItem: NavItem, iidx) => (
                             <ListItem
                               key={iidx}
-                              href={subItem.url || ""}
-                              title={subItem.title || ""}
-                              description={subItem.description || ""}
+                              href={subItem.url || ''}
+                              title={subItem.title || ''}
+                              description={subItem.description || ''}
                             >
                               {subItem.icon && (
                                 <SmartIcon name={subItem.icon as string} />
@@ -133,12 +134,12 @@ export function Header({ header }: { header: HeaderType }) {
               ) : (
                 <NavigationMenuLink asChild>
                   <Link
-                    href={item.url || ""}
-                    target={item.target || "_self"}
+                    href={item.url || ''}
+                    target={item.target || '_self'}
                     className={`flex flex-row items-center gap-2 text-sm ${
                       item.is_active || pathname.endsWith(item.url as string)
-                        ? "bg-muted text-muted-foreground"
-                        : ""
+                        ? 'bg-muted text-muted-foreground'
+                        : ''
                     }`}
                   >
                     {item.icon && <SmartIcon name={item.icon as string} />}
@@ -163,18 +164,18 @@ export function Header({ header }: { header: HeaderType }) {
         <Accordion
           type="single"
           collapsible
-          className="**:hover:no-underline -mx-4 mt-0.5 space-y-0.5"
+          className="-mx-4 mt-0.5 space-y-0.5 **:hover:no-underline"
         >
           {header.nav?.items?.map((item, idx) => {
             return (
               <AccordionItem
                 key={idx}
-                value={item.title || ""}
+                value={item.title || ''}
                 className="group relative border-b-0 before:pointer-events-none before:absolute before:inset-x-4 before:bottom-0 before:border-b"
               >
                 {item.children && item.children.length > 0 ? (
                   <>
-                    <AccordionTrigger className="**:!font-normal data-[state=open]:bg-muted flex items-center justify-between px-4 py-3 text-lg">
+                    <AccordionTrigger className="data-[state=open]:bg-muted flex items-center justify-between px-4 py-3 text-lg **:!font-normal">
                       {item.title}
                     </AccordionTrigger>
                     <AccordionContent className="pb-5">
@@ -182,7 +183,7 @@ export function Header({ header }: { header: HeaderType }) {
                         {item.children?.map((subItem: NavItem, iidx) => (
                           <li key={iidx}>
                             <Link
-                              href={subItem.url || ""}
+                              href={subItem.url || ''}
                               onClick={closeMenu}
                               className="grid grid-cols-[auto_1fr] items-center gap-2.5 px-4 py-2"
                             >
@@ -203,9 +204,9 @@ export function Header({ header }: { header: HeaderType }) {
                   </>
                 ) : (
                   <Link
-                    href={item.url || ""}
+                    href={item.url || ''}
                     onClick={closeMenu}
-                    className="**:!font-normal data-[state=open]:bg-muted flex items-center justify-between px-4 py-3 text-lg"
+                    className="data-[state=open]:bg-muted flex items-center justify-between px-4 py-3 text-lg **:!font-normal"
                   >
                     {item.title}
                   </Link>
@@ -225,7 +226,7 @@ export function Header({ header }: { header: HeaderType }) {
     children,
     href,
     ...props
-  }: React.ComponentPropsWithoutRef<"li"> & {
+  }: React.ComponentPropsWithoutRef<'li'> & {
     href: string;
     title: string;
     description?: string;
@@ -252,16 +253,16 @@ export function Header({ header }: { header: HeaderType }) {
   return (
     <>
       <header
-        data-state={isMobileMenuOpen ? "active" : "inactive"}
-        {...(isScrolled && { "data-scrolled": true })}
-        className="has-data-[state=open]:h-screen has-data-[state=open]:backdrop-blur has-data-[state=open]:bg-background/50 fixed inset-x-0 top-0 z-50"
+        data-state={isMobileMenuOpen ? 'active' : 'inactive'}
+        {...(isScrolled && { 'data-scrolled': true })}
+        className="has-data-[state=open]:bg-background/50 fixed inset-x-0 top-0 z-50 has-data-[state=open]:h-screen has-data-[state=open]:backdrop-blur"
       >
         <div
           className={cn(
-            "h-18 absolute inset-x-0 top-0 z-50 border-transparent ring-1 ring-transparent transition-all duration-300",
-            "in-data-scrolled:border-foreground/5 in-data-scrolled:border-b in-data-scrolled:bg-background/75 in-data-scrolled:backdrop-blur",
-            "has-data-[state=open]:ring-foreground/5 has-data-[state=open]:bg-card/75 has-data-[state=open]:shadow-lg has-data-[state=open]:backdrop-blur has-data-[state=open]:border-b has-data-[state=open]:shadow-black/10 has-data-[state=open]:h-[calc(var(--navigation-menu-viewport-height)+3.4rem)]",
-            "max-lg:in-data-[state=active]:h-screen max-lg:in-data-[state=active]:bg-background/75 max-lg:in-data-[state=active]:backdrop-blur max-lg:h-14 max-lg:overflow-hidden max-lg:border-b"
+            'absolute inset-x-0 top-0 z-50 h-18 border-transparent ring-1 ring-transparent transition-all duration-300',
+            'in-data-scrolled:border-foreground/5 in-data-scrolled:bg-background/75 in-data-scrolled:border-b in-data-scrolled:backdrop-blur',
+            'has-data-[state=open]:ring-foreground/5 has-data-[state=open]:bg-card/75 has-data-[state=open]:h-[calc(var(--navigation-menu-viewport-height)+3.4rem)] has-data-[state=open]:border-b has-data-[state=open]:shadow-lg has-data-[state=open]:shadow-black/10 has-data-[state=open]:backdrop-blur',
+            'max-lg:in-data-[state=active]:bg-background/75 max-lg:h-14 max-lg:overflow-hidden max-lg:border-b max-lg:in-data-[state=active]:h-screen max-lg:in-data-[state=active]:backdrop-blur'
           )}
         >
           <div className="container">
@@ -276,12 +277,12 @@ export function Header({ header }: { header: HeaderType }) {
                 <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                   aria-label={
-                    isMobileMenuOpen == true ? "Close Menu" : "Open Menu"
+                    isMobileMenuOpen == true ? 'Close Menu' : 'Open Menu'
                   }
                   className="relative z-20 -m-2.5 -mr-3 block cursor-pointer p-2.5 lg:hidden"
                 >
-                  <Menu className="in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 m-auto size-5 duration-200" />
-                  <X className="in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 absolute inset-0 m-auto size-5 -rotate-180 scale-0 opacity-0 duration-200" />
+                  <Menu className="m-auto size-5 duration-200 in-data-[state=active]:scale-0 in-data-[state=active]:rotate-180 in-data-[state=active]:opacity-0" />
+                  <X className="absolute inset-0 m-auto size-5 scale-0 -rotate-180 opacity-0 duration-200 in-data-[state=active]:scale-100 in-data-[state=active]:rotate-0 in-data-[state=active]:opacity-100" />
                 </button>
               </div>
 
@@ -291,8 +292,8 @@ export function Header({ header }: { header: HeaderType }) {
               )}
 
               {/* Header right section: theme toggler, locale selector, sign, buttons */}
-              <div className="max-lg:in-data-[state=active]:mt-6 in-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
-                <div className="flex items-center w-full gap-4 flex-row sm:flex-row sm:gap-6 sm:space-y-0 md:w-fit">
+              <div className="mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 in-data-[state=active]:flex max-lg:in-data-[state=active]:mt-6 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
+                <div className="flex w-full flex-row items-center gap-4 sm:flex-row sm:gap-6 sm:space-y-0 md:w-fit">
                   {header.show_theme ? <ThemeToggler /> : null}
                   {header.show_locale ? <LocaleSelector /> : null}
                   <div className="flex-1 md:hidden"></div>
@@ -304,14 +305,14 @@ export function Header({ header }: { header: HeaderType }) {
                     header.buttons.map((button, idx) => (
                       <Link
                         key={idx}
-                        href={button.url || ""}
-                        target={button.target || "_self"}
+                        href={button.url || ''}
+                        target={button.target || '_self'}
                         className={cn(
-                          "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
-                          "h-7 ring-0 px-3",
-                          button.variant === "outline"
-                            ? "shadow-sm shadow-black/15 border border-transparent bg-background ring-1 ring-foreground/10 duration-200 hover:bg-muted/50 dark:ring-foreground/15 dark:hover:bg-muted/50"
-                            : "shadow-md border-[0.5px] border-white/25 shadow-black/20 bg-primary ring-1 ring-(--ring-color) [--ring-color:color-mix(in_oklab,var(--color-foreground)15%,var(--color-primary))] text-primary-foreground hover:bg-primary/90"
+                          'focus-visible:ring-ring inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-1 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
+                          'h-7 px-3 ring-0',
+                          button.variant === 'outline'
+                            ? 'bg-background ring-foreground/10 hover:bg-muted/50 dark:ring-foreground/15 dark:hover:bg-muted/50 border border-transparent shadow-sm ring-1 shadow-black/15 duration-200'
+                            : 'bg-primary text-primary-foreground hover:bg-primary/90 border-[0.5px] border-white/25 shadow-md ring-1 shadow-black/20 ring-(--ring-color) [--ring-color:color-mix(in_oklab,var(--color-foreground)15%,var(--color-primary))]'
                         )}
                       >
                         {button.icon && (

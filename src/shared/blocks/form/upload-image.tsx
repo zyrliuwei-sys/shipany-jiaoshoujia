@@ -1,12 +1,13 @@
-"use client";
+'use client';
 
-import { FormField } from "@/shared/types/blocks/form";
-import { ControllerRenderProps } from "react-hook-form";
-import { Button } from "@/shared/components/ui/button";
-import { Upload, X, ImageIcon, Trash } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
-import { cn } from "@/shared/lib/utils";
-import { toast } from "sonner";
+import { useEffect, useRef, useState } from 'react';
+import { ImageIcon, Trash, Upload, X } from 'lucide-react';
+import { ControllerRenderProps } from 'react-hook-form';
+import { toast } from 'sonner';
+
+import { Button } from '@/shared/components/ui/button';
+import { cn } from '@/shared/lib/utils';
+import { FormField } from '@/shared/types/blocks/form';
 
 interface UploadImageProps {
   field: FormField;
@@ -22,7 +23,7 @@ export function UploadImage({
   formField,
   data,
   metadata,
-  uploadUrl = "/api/storage/upload-image",
+  uploadUrl = '/api/storage/upload-image',
   onUpload,
 }: UploadImageProps) {
   const maxImages = metadata?.max || 1;
@@ -39,9 +40,9 @@ export function UploadImage({
 
     let urls: string[] = [];
 
-    if (typeof initialValue === "string") {
-      urls = initialValue.includes(",")
-        ? initialValue.split(",").filter(Boolean)
+    if (typeof initialValue === 'string') {
+      urls = initialValue.includes(',')
+        ? initialValue.split(',').filter(Boolean)
         : [initialValue];
     } else if (Array.isArray(initialValue)) {
       urls = initialValue;
@@ -76,7 +77,7 @@ export function UploadImage({
     });
 
     if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+      fileInputRef.current.value = '';
     }
   };
 
@@ -94,7 +95,7 @@ export function UploadImage({
         maxImages === 1 ? newUploadedUrls[0] : newUploadedUrls
       );
     } else {
-      formField.onChange(maxImages === 1 ? "" : []);
+      formField.onChange(maxImages === 1 ? '' : []);
     }
   };
 
@@ -102,7 +103,7 @@ export function UploadImage({
     setPreviews([]);
     setSelectedFiles([]);
     setUploadedUrls([]);
-    formField.onChange(maxImages === 1 ? "" : []);
+    formField.onChange(maxImages === 1 ? '' : []);
   };
 
   const handleUpload = async () => {
@@ -117,22 +118,22 @@ export function UploadImage({
       } else {
         const formData = new FormData();
         selectedFiles.forEach((file) => {
-          formData.append("files", file);
+          formData.append('files', file);
         });
 
         const response = await fetch(uploadUrl, {
-          method: "POST",
+          method: 'POST',
           body: formData,
         });
 
         if (!response.ok) {
-          throw new Error("Upload failed");
+          throw new Error('Upload failed');
         }
 
         const result = await response.json();
 
         if (result.code !== 0) {
-          throw new Error(result.message || "Upload failed");
+          throw new Error(result.message || 'Upload failed');
         }
 
         newUploadedUrls = result.data.urls;
@@ -147,8 +148,8 @@ export function UploadImage({
       setUploadedUrls(allUploadedUrls);
       setSelectedFiles([]);
     } catch (error) {
-      console.error("Upload failed:", error);
-      toast.error("Upload failed");
+      console.error('Upload failed:', error);
+      toast.error('Upload failed');
     } finally {
       setUploading(false);
     }
@@ -172,18 +173,18 @@ export function UploadImage({
       />
 
       {previews.length > 0 && (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
           {previews.map((preview, index) => {
             const isUploaded = index < uploadedUrls.length;
             return (
               <div
                 key={index}
-                className="relative group aspect-square rounded-lg overflow-hidden border border-border bg-muted"
+                className="group border-border bg-muted relative aspect-square overflow-hidden rounded-lg border"
               >
                 <img
                   src={preview}
                   alt={`Preview ${index + 1}`}
-                  className="w-full h-full object-cover"
+                  className="h-full w-full object-cover"
                 />
                 {/* {isUploaded && (
                   <div className="absolute top-2 left-2 px-2 py-1 bg-green-500 text-white text-xs rounded">
@@ -193,7 +194,7 @@ export function UploadImage({
                 <button
                   type="button"
                   onClick={() => handleRemove(index)}
-                  className="absolute top-2 right-2 p-1 bg-destructive text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive/90"
+                  className="bg-destructive hover:bg-destructive/90 absolute top-2 right-2 rounded-full p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
                 >
                   <X className="size-4" />
                 </button>
@@ -205,10 +206,10 @@ export function UploadImage({
             <button
               type="button"
               onClick={handleSelectClick}
-              className="aspect-square rounded-lg border-2 border-dashed border-border bg-muted/50 hover:bg-muted transition-colors flex flex-col items-center justify-center gap-2"
+              className="border-border bg-muted/50 hover:bg-muted flex aspect-square flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed transition-colors"
             >
-              <ImageIcon className="size-8 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">
+              <ImageIcon className="text-muted-foreground size-8" />
+              <span className="text-muted-foreground text-sm">
                 {previews.length}/{maxImages}
               </span>
             </button>
@@ -220,14 +221,14 @@ export function UploadImage({
         <button
           type="button"
           onClick={handleSelectClick}
-          className="w-40 h-40 aspect-video rounded-lg border-2 border-dashed border-border bg-muted/50 hover:bg-muted transition-colors flex flex-col items-center justify-center gap-2"
+          className="border-border bg-muted/50 hover:bg-muted flex aspect-video h-40 w-40 flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed transition-colors"
         >
-          <ImageIcon className="size-8 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">
-            {field.placeholder || "upload image"}
+          <ImageIcon className="text-muted-foreground size-8" />
+          <p className="text-muted-foreground text-sm">
+            {field.placeholder || 'upload image'}
           </p>
           {maxImages > 1 && (
-            <p className="text-xs text-muted-foreground">{maxImages} images</p>
+            <p className="text-muted-foreground text-xs">{maxImages} images</p>
           )}
         </button>
       )}
@@ -254,7 +255,7 @@ export function UploadImage({
               className="w-32 text-xs"
             >
               <Upload className="size-4" />
-              {uploading ? "Uploading..." : "Upload"}
+              {uploading ? 'Uploading...' : 'Upload'}
             </Button>
           )}
         </div>

@@ -1,15 +1,16 @@
-"use client";
+'use client';
 
-import { envConfigs } from "@/config";
 import {
-  ReactNode,
   createContext,
+  ReactNode,
   useContext,
   useEffect,
   useState,
-} from "react";
-import { useSession } from "@/core/auth/client";
-import { User } from "@/shared/services/user";
+} from 'react';
+
+import { useSession } from '@/core/auth/client';
+import { envConfigs } from '@/config';
+import { User } from '@/shared/services/user';
 
 export interface ContextValue {
   user: User | null;
@@ -45,8 +46,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchConfigs = async function () {
     try {
-      const resp = await fetch("/api/config/get-configs", {
-        method: "POST",
+      const resp = await fetch('/api/config/get-configs', {
+        method: 'POST',
       });
       if (!resp.ok) {
         throw new Error(`fetch failed with status: ${resp.status}`);
@@ -58,7 +59,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 
       setConfigs(data);
     } catch (e) {
-      console.log("fetch configs failed:", e);
+      console.log('fetch configs failed:', e);
     }
   };
 
@@ -68,8 +69,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
 
-      const resp = await fetch("/api/user/get-user-credits", {
-        method: "POST",
+      const resp = await fetch('/api/user/get-user-credits', {
+        method: 'POST',
       });
       if (!resp.ok) {
         throw new Error(`fetch failed with status: ${resp.status}`);
@@ -81,7 +82,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 
       setUser({ ...user, credits: data });
     } catch (e) {
-      console.log("fetch user credits failed:", e);
+      console.log('fetch user credits failed:', e);
     }
   };
 

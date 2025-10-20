@@ -1,50 +1,52 @@
-"use client";
+'use client';
 
-import { Button } from "@/shared/components/ui/button";
+import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
+import { toast } from 'sonner';
+
+import { signIn } from '@/core/auth/client';
+import { Link, useRouter } from '@/core/i18n/navigation';
+import { defaultLocale } from '@/config/locale';
+import { Button } from '@/shared/components/ui/button';
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
   CardDescription,
   CardFooter,
-} from "@/shared/components/ui/card";
-import { Input } from "@/shared/components/ui/input";
-import { Label } from "@/shared/components/ui/label";
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
-import { signIn } from "@/core/auth/client";
-import { Link, useRouter } from "@/core/i18n/navigation";
-import { SocialProviders } from "./social-providers";
-import { useLocale, useTranslations } from "next-intl";
-import { toast } from "sonner";
-import { defaultLocale } from "@/config/locale";
+  CardHeader,
+  CardTitle,
+} from '@/shared/components/ui/card';
+import { Input } from '@/shared/components/ui/input';
+import { Label } from '@/shared/components/ui/label';
+
+import { SocialProviders } from './social-providers';
 
 export function SignIn({
   configs,
-  callbackUrl = "/",
+  callbackUrl = '/',
 }: {
   configs: Record<string, string>;
   callbackUrl: string;
 }) {
   const router = useRouter();
-  const t = useTranslations("common.sign");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const t = useTranslations('common.sign');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
-  const isGoogleAuthEnabled = configs.google_auth_enabled === "true";
-  const isGithubAuthEnabled = configs.github_auth_enabled === "true";
+  const isGoogleAuthEnabled = configs.google_auth_enabled === 'true';
+  const isGithubAuthEnabled = configs.github_auth_enabled === 'true';
   const isEmailAuthEnabled =
-    configs.email_auth_enabled !== "false" ||
+    configs.email_auth_enabled !== 'false' ||
     (!isGoogleAuthEnabled && !isGithubAuthEnabled); // no social providers enabled, auto enable email auth
 
   if (callbackUrl) {
     const locale = useLocale();
     if (
       locale !== defaultLocale &&
-      callbackUrl.startsWith("/") &&
+      callbackUrl.startsWith('/') &&
       !callbackUrl.startsWith(`/${locale}`)
     ) {
       callbackUrl = `/${locale}${callbackUrl}`;
@@ -57,7 +59,7 @@ export function SignIn({
     }
 
     if (!email || !password) {
-      toast.error("email and password are required");
+      toast.error('email and password are required');
       return;
     }
 
@@ -76,7 +78,7 @@ export function SignIn({
         },
         onSuccess: (ctx) => {},
         onError: (e: any) => {
-          toast.error(e?.error?.message || "sign in failed");
+          toast.error(e?.error?.message || 'sign in failed');
           setLoading(false);
         },
       }
@@ -84,13 +86,13 @@ export function SignIn({
   };
 
   return (
-    <Card className="w-full md:max-w-md mx-auto">
+    <Card className="mx-auto w-full md:max-w-md">
       <CardHeader>
         <CardTitle className="text-lg md:text-xl">
-          <h1>{t("sign_in_title")}</h1>
+          <h1>{t('sign_in_title')}</h1>
         </CardTitle>
         <CardDescription className="text-xs md:text-sm">
-          <h2>{t("sign_in_description")}</h2>
+          <h2>{t('sign_in_description')}</h2>
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -98,11 +100,11 @@ export function SignIn({
           {isEmailAuthEnabled && (
             <>
               <div className="grid gap-2">
-                <Label htmlFor="email">{t("email_title")}</Label>
+                <Label htmlFor="email">{t('email_title')}</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder={t("email_placeholder")}
+                  placeholder={t('email_placeholder')}
                   required
                   onChange={(e) => {
                     setEmail(e.target.value);
@@ -113,7 +115,7 @@ export function SignIn({
 
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password">{t("password_title")}</Label>
+                  <Label htmlFor="password">{t('password_title')}</Label>
                   {/* <Link
                     href="#"
                     className="ml-auto inline-block text-sm underline"
@@ -125,7 +127,7 @@ export function SignIn({
                 <Input
                   id="password"
                   type="password"
-                  placeholder={t("password_placeholder")}
+                  placeholder={t('password_placeholder')}
                   autoComplete="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -151,7 +153,7 @@ export function SignIn({
                 {loading ? (
                   <Loader2 size={16} className="animate-spin" />
                 ) : (
-                  <p> {t("sign_in_title")} </p>
+                  <p> {t('sign_in_title')} </p>
                 )}
               </Button>
             </>
@@ -159,7 +161,7 @@ export function SignIn({
 
           <SocialProviders
             configs={configs}
-            callbackUrl={callbackUrl || "/"}
+            callbackUrl={callbackUrl || '/'}
             loading={loading}
             setLoading={setLoading}
           />
@@ -167,12 +169,12 @@ export function SignIn({
       </CardContent>
       {isEmailAuthEnabled && (
         <CardFooter>
-          <div className="flex justify-center w-full border-t py-4">
+          <div className="flex w-full justify-center border-t py-4">
             <p className="text-center text-xs text-neutral-500">
-              {t("no_account")}
+              {t('no_account')}
               <Link href="/sign-up" className="underline">
-                <span className="dark:text-white/70 cursor-pointer">
-                  {t("sign_up_title")}
+                <span className="cursor-pointer dark:text-white/70">
+                  {t('sign_up_title')}
                 </span>
               </Link>
             </p>

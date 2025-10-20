@@ -1,6 +1,6 @@
-import { respData, respErr } from "@/shared/lib/resp";
-import { getEmailService } from "@/shared/services/email";
-import { VerificationCode } from "@/shared/blocks/email/verification-code";
+import { VerificationCode } from '@/shared/blocks/email/verification-code';
+import { respData, respErr } from '@/shared/lib/resp';
+import { getEmailService } from '@/shared/services/email';
 
 export async function POST(req: Request) {
   try {
@@ -11,14 +11,14 @@ export async function POST(req: Request) {
     const result = await emailService.sendEmail({
       to: emails,
       subject: subject,
-      react: VerificationCode({ code: "123455" }),
+      react: VerificationCode({ code: '123455' }),
     });
 
-    console.log("send email result", result);
+    console.log('send email result', result);
 
     return respData(result);
   } catch (e) {
-    console.log("send email failed:", e);
-    return respErr("send email failed");
+    console.log('send email failed:', e);
+    return respErr('send email failed');
   }
 }

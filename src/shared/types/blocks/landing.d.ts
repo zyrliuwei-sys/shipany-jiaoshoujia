@@ -1,13 +1,13 @@
 import {
+  AgreementNav,
   Brand,
+  Button,
   Nav,
   NavItem,
   SocialNav,
   UserNav,
-  AgreementNav,
-  Button,
-} from "./common";
-import { FormSubmit } from "./form";
+} from './common';
+import { FormSubmit } from './form';
 
 export interface SectionItem extends NavItem {}
 
@@ -24,8 +24,8 @@ export interface Section {
   image?: Image;
   image_invert?: Image;
   items?: SectionItem[];
-  image_position?: "left" | "right" | "top" | "bottom" | "center";
-  text_align?: "left" | "center" | "right";
+  image_position?: 'left' | 'right' | 'top' | 'bottom' | 'center';
+  text_align?: 'left' | 'center' | 'right';
   className?: string;
 }
 

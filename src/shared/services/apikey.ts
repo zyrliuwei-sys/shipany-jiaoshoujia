@@ -1,17 +1,19 @@
-import { apikey } from "@/config/db/schema";
-import { db } from "@/core/db";
-import { appendUserToResult, User } from "./user";
-import { and, count, desc, eq } from "drizzle-orm";
+import { and, count, desc, eq } from 'drizzle-orm';
+
+import { db } from '@/core/db';
+import { apikey } from '@/config/db/schema';
+
+import { appendUserToResult, User } from './user';
 
 export type Apikey = typeof apikey.$inferSelect & {
   user?: User;
 };
 export type NewApikey = typeof apikey.$inferInsert;
-export type UpdateApikey = Partial<Omit<NewApikey, "id" | "createdAt">>;
+export type UpdateApikey = Partial<Omit<NewApikey, 'id' | 'createdAt'>>;
 
 export enum ApikeyStatus {
-  ACTIVE = "active",
-  DELETED = "deleted",
+  ACTIVE = 'active',
+  DELETED = 'deleted',
 }
 
 export const createApikey = async (newApikey: NewApikey): Promise<Apikey> => {

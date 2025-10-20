@@ -1,9 +1,9 @@
-import { Pagination } from "./common";
+import { Pagination } from './common';
 
 export interface TableColumn {
   name?: string;
   title?: string;
-  type?: "copy" | "image" | "time" | "label" | "dropdown" | "user";
+  type?: 'copy' | 'image' | 'time' | 'label' | 'dropdown' | 'user';
   placeholder?: string;
   metadata?: any;
   className?: string;

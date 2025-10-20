@@ -1,15 +1,16 @@
-"use client";
+'use client';
 
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { ReactNode, useEffect } from "react";
-import { useLocale } from "next-intl";
-import { envConfigs } from "@/config";
+import { ReactNode, useEffect } from 'react';
+import { useLocale } from 'next-intl';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
+
+import { envConfigs } from '@/config';
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const locale = useLocale();
 
   useEffect(() => {
-    if (typeof document !== "undefined" && locale) {
+    if (typeof document !== 'undefined' && locale) {
       document.documentElement.lang = locale;
     }
   }, [locale]);

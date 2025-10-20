@@ -1,6 +1,8 @@
-import { betterAuth } from "better-auth";
-import { getAuthOptions } from "./config";
-import { isCloudflareWorker } from "@/shared/lib/env";
+import { betterAuth } from 'better-auth';
+
+import { isCloudflareWorker } from '@/shared/lib/env';
+
+import { getAuthOptions } from './config';
 
 // global auth instance
 let authInstance: Awaited<ReturnType<typeof getAuth>> | null = null;

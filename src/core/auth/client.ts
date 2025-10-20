@@ -1,5 +1,6 @@
-import { createAuthClient } from "better-auth/react";
-import { envConfigs } from "@/config";
+import { createAuthClient } from 'better-auth/react';
+
+import { envConfigs } from '@/config';
 
 // auth client for client-side use
 export const authClient = createAuthClient({

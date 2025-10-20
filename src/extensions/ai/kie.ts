@@ -5,7 +5,7 @@ import {
   AIProvider,
   AIQueryRequest,
   AIQueryResult,
-} from ".";
+} from '.';
 
 /**
  * Kie configs
@@ -21,12 +21,12 @@ export interface KieConfigs extends AIConfigs {
  */
 export class KieProvider implements AIProvider {
   // provider name
-  readonly name = "kie";
+  readonly name = 'kie';
   // provider configs
   configs: AIConfigs;
 
   // api base url
-  private baseUrl = "https://api.kie.ai/api/v1";
+  private baseUrl = 'https://api.kie.ai/api/v1';
 
   // init provider
   constructor(configs: AIConfigs) {
@@ -54,7 +54,7 @@ export class KieProvider implements AIProvider {
   async generate(request: AIGenerateRequest): Promise<AIGenerateResult> {
     const apiUrl = `${this.baseUrl}/generate`;
     const headers = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${this.configs.apiKey}`,
     };
 
@@ -88,7 +88,7 @@ export class KieProvider implements AIProvider {
     // };
 
     const resp = await fetch(apiUrl, {
-      method: "POST",
+      method: 'POST',
       headers,
       body: JSON.stringify(params),
     });
@@ -108,7 +108,7 @@ export class KieProvider implements AIProvider {
 
     return {
       success: true,
-      error: "",
+      error: '',
       taskId: data.taskId,
       provider: this.name,
       providerResult: data,
@@ -119,12 +119,12 @@ export class KieProvider implements AIProvider {
   async query(request: AIQueryRequest): Promise<AIGenerateResult> {
     const apiUrl = `${this.baseUrl}/generate/record-info?taskId=${request.taskId}`;
     const headers = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${this.configs.apiKey}`,
     };
 
     const resp = await fetch(apiUrl, {
-      method: "GET",
+      method: 'GET',
       headers,
     });
     if (!resp.ok) {
@@ -137,7 +137,7 @@ export class KieProvider implements AIProvider {
       throw new Error(msg);
     }
 
-    console.log("queru data", data);
+    console.log('queru data', data);
 
     if (!data || !data.status) {
       throw new Error(`query failed`);
@@ -145,7 +145,7 @@ export class KieProvider implements AIProvider {
 
     return {
       success: true,
-      error: "",
+      error: '',
       status: data.status,
       taskId: data.taskId,
       provider: this.name,

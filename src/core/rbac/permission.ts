@@ -1,69 +1,69 @@
-import { redirect } from "@/core/i18n/navigation";
-import { getSignUser } from "@/shared/services/user";
+import { redirect } from '@/core/i18n/navigation';
 import {
-  hasPermission,
-  hasAnyPermission,
   hasAllPermissions,
-  hasRole,
+  hasAnyPermission,
   hasAnyRole,
-} from "@/shared/services/rbac";
+  hasPermission,
+  hasRole,
+} from '@/shared/services/rbac';
+import { getSignUser } from '@/shared/services/user';
 
 // Permission constants
 export const PERMISSIONS = {
   // Admin access
-  ADMIN_ACCESS: "admin.access",
+  ADMIN_ACCESS: 'admin.access',
 
   // Users
-  USERS_READ: "admin.users.read",
-  USERS_WRITE: "admin.users.write",
-  USERS_DELETE: "admin.users.delete",
+  USERS_READ: 'admin.users.read',
+  USERS_WRITE: 'admin.users.write',
+  USERS_DELETE: 'admin.users.delete',
 
   // Posts
-  POSTS_READ: "admin.posts.read",
-  POSTS_WRITE: "admin.posts.write",
-  POSTS_DELETE: "admin.posts.delete",
+  POSTS_READ: 'admin.posts.read',
+  POSTS_WRITE: 'admin.posts.write',
+  POSTS_DELETE: 'admin.posts.delete',
 
   // Categories
-  CATEGORIES_READ: "admin.categories.read",
-  CATEGORIES_WRITE: "admin.categories.write",
-  CATEGORIES_DELETE: "admin.categories.delete",
+  CATEGORIES_READ: 'admin.categories.read',
+  CATEGORIES_WRITE: 'admin.categories.write',
+  CATEGORIES_DELETE: 'admin.categories.delete',
 
   // Payments
-  PAYMENTS_READ: "admin.payments.read",
+  PAYMENTS_READ: 'admin.payments.read',
 
   // Subscriptions
-  SUBSCRIPTIONS_READ: "admin.subscriptions.read",
+  SUBSCRIPTIONS_READ: 'admin.subscriptions.read',
 
   // Credits
-  CREDITS_READ: "admin.credits.read",
-  CREDITS_WRITE: "admin.credits.write",
+  CREDITS_READ: 'admin.credits.read',
+  CREDITS_WRITE: 'admin.credits.write',
 
   // API Keys
-  APIKEYS_READ: "admin.apikeys.read",
-  APIKEYS_WRITE: "admin.apikeys.write",
-  APIKEYS_DELETE: "admin.apikeys.delete",
+  APIKEYS_READ: 'admin.apikeys.read',
+  APIKEYS_WRITE: 'admin.apikeys.write',
+  APIKEYS_DELETE: 'admin.apikeys.delete',
 
   // Settings
-  SETTINGS_READ: "admin.settings.read",
-  SETTINGS_WRITE: "admin.settings.write",
+  SETTINGS_READ: 'admin.settings.read',
+  SETTINGS_WRITE: 'admin.settings.write',
 
   // Roles & Permissions
-  ROLES_READ: "admin.roles.read",
-  ROLES_WRITE: "admin.roles.write",
-  ROLES_DELETE: "admin.roles.delete",
+  ROLES_READ: 'admin.roles.read',
+  ROLES_WRITE: 'admin.roles.write',
+  ROLES_DELETE: 'admin.roles.delete',
 
-  PERMISSIONS_READ: "admin.permissions.read",
-  PERMISSIONS_WRITE: "admin.permissions.write",
-  PERMISSIONS_DELETE: "admin.permissions.delete",
+  PERMISSIONS_READ: 'admin.permissions.read',
+  PERMISSIONS_WRITE: 'admin.permissions.write',
+  PERMISSIONS_DELETE: 'admin.permissions.delete',
 } as const;
 
 /**
  * Permission guard error
  */
 export class PermissionDeniedError extends Error {
-  constructor(message = "Permission denied") {
+  constructor(message = 'Permission denied') {
     super(message);
-    this.name = "PermissionDeniedError";
+    this.name = 'PermissionDeniedError';
   }
 }
 
@@ -90,16 +90,16 @@ export async function requirePermission({
 
   if (!user) {
     if (redirectUrl) {
-      redirect({ href: redirectUrl, locale: locale || "" });
+      redirect({ href: redirectUrl, locale: locale || '' });
     }
-    throw new PermissionDeniedError("User not authenticated");
+    throw new PermissionDeniedError('User not authenticated');
   }
 
   const allowed = await hasPermission(user.id, code);
 
   if (!allowed) {
     if (redirectUrl) {
-      redirect({ href: redirectUrl, locale: locale || "" });
+      redirect({ href: redirectUrl, locale: locale || '' });
     }
     throw new PermissionDeniedError(`Permission required: ${code}`);
   }
@@ -121,19 +121,19 @@ export async function requireAnyPermission({
 
   if (!user) {
     if (redirectUrl) {
-      redirect({ href: redirectUrl, locale: locale || "" });
+      redirect({ href: redirectUrl, locale: locale || '' });
     }
-    throw new PermissionDeniedError("User not authenticated");
+    throw new PermissionDeniedError('User not authenticated');
   }
 
   const allowed = await hasAnyPermission(user.id, codes);
 
   if (!allowed) {
     if (redirectUrl) {
-      redirect({ href: redirectUrl, locale: locale || "" });
+      redirect({ href: redirectUrl, locale: locale || '' });
     }
     throw new PermissionDeniedError(
-      `Any of these permissions required: ${codes.join(", ")}`
+      `Any of these permissions required: ${codes.join(', ')}`
     );
   }
 }
@@ -154,19 +154,19 @@ export async function requireAllPermissions({
 
   if (!user) {
     if (redirectUrl) {
-      redirect({ href: redirectUrl, locale: locale || "" });
+      redirect({ href: redirectUrl, locale: locale || '' });
     }
-    throw new PermissionDeniedError("User not authenticated");
+    throw new PermissionDeniedError('User not authenticated');
   }
 
   const allowed = await hasAllPermissions(user.id, codes);
 
   if (!allowed) {
     if (redirectUrl) {
-      redirect({ href: redirectUrl, locale: locale || "" });
+      redirect({ href: redirectUrl, locale: locale || '' });
     }
     throw new PermissionDeniedError(
-      `All of these permissions required: ${codes.join(", ")}`
+      `All of these permissions required: ${codes.join(', ')}`
     );
   }
 }
@@ -187,16 +187,16 @@ export async function requireRole({
 
   if (!user) {
     if (redirectUrl) {
-      redirect({ href: redirectUrl, locale: locale || "" });
+      redirect({ href: redirectUrl, locale: locale || '' });
     }
-    throw new PermissionDeniedError("User not authenticated");
+    throw new PermissionDeniedError('User not authenticated');
   }
 
   const allowed = await hasRole(user.id, roleName);
 
   if (!allowed) {
     if (redirectUrl) {
-      redirect({ href: redirectUrl, locale: locale || "" });
+      redirect({ href: redirectUrl, locale: locale || '' });
     }
     throw new PermissionDeniedError(`Role required: ${roleName}`);
   }
@@ -218,19 +218,19 @@ export async function requireAnyRole({
 
   if (!user) {
     if (redirectUrl) {
-      redirect({ href: redirectUrl, locale: locale || "" });
+      redirect({ href: redirectUrl, locale: locale || '' });
     }
-    throw new PermissionDeniedError("User not authenticated");
+    throw new PermissionDeniedError('User not authenticated');
   }
 
   const allowed = await hasAnyRole(user.id, roleNames);
 
   if (!allowed) {
     if (redirectUrl) {
-      redirect({ href: redirectUrl, locale: locale || "" });
+      redirect({ href: redirectUrl, locale: locale || '' });
     }
     throw new PermissionDeniedError(
-      `Any of these roles required: ${roleNames.join(", ")}`
+      `Any of these roles required: ${roleNames.join(', ')}`
     );
   }
 }
@@ -248,13 +248,13 @@ export async function requireAdminAccess({
   const user = await getSignUser();
 
   if (!user) {
-    redirect({ href: "/sign-in", locale: locale || "" });
+    redirect({ href: '/sign-in', locale: locale || '' });
   }
 
   const allowed = await canAccessAdmin(user!.id);
 
   if (!allowed) {
-    redirect({ href: redirectUrl || "", locale: locale || "" });
+    redirect({ href: redirectUrl || '', locale: locale || '' });
   }
 }
 

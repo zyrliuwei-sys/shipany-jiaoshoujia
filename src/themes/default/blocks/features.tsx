@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { SmartIcon } from "@/shared/blocks/common/smart-icon";
-import { cn } from "@/shared/lib/utils";
-import { Features as FeaturesType } from "@/shared/types/blocks/landing";
-import { ScrollAnimation } from "@/shared/components/ui/scroll-animation";
+import { SmartIcon } from '@/shared/blocks/common/smart-icon';
+import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
+import { cn } from '@/shared/lib/utils';
+import { Features as FeaturesType } from '@/shared/types/blocks/landing';
 
 export function Features({
   features,
@@ -15,11 +15,11 @@ export function Features({
   return (
     <section
       id={features.id}
-      className={cn("py-16 md:py-24", features.className, className)}
+      className={cn('py-16 md:py-24', features.className, className)}
     >
       <div className={`container space-y-8 md:space-y-16`}>
         <ScrollAnimation>
-          <div className="mx-auto max-w-4xl text-balance text-center">
+          <div className="mx-auto max-w-4xl text-center text-balance">
             <h2 className="text-foreground mb-4 text-3xl font-semibold tracking-tight md:text-4xl">
               {features.title}
             </h2>

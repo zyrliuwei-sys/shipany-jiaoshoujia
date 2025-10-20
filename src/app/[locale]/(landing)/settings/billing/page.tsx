@@ -1,18 +1,19 @@
-import { type Table } from "@/shared/types/blocks/table";
-import { TableCard } from "@/shared/blocks/table";
-import { getUserInfo } from "@/shared/services/user";
-import { Empty } from "@/shared/blocks/common";
+import moment from 'moment';
+import { getTranslations } from 'next-intl/server';
+
+import { Empty } from '@/shared/blocks/common';
+import { PanelCard } from '@/shared/blocks/panel';
+import { TableCard } from '@/shared/blocks/table';
 import {
+  getCurrentSubscription,
   getSubscriptions,
   getSubscriptionsCount,
   Subscription,
-  getCurrentSubscription,
   SubscriptionStatus,
-} from "@/shared/services/subscription";
-import moment from "moment";
-import { PanelCard } from "@/shared/blocks/panel";
-import { Button as ButtonType, Tab } from "@/shared/types/blocks/common";
-import { getTranslations } from "next-intl/server";
+} from '@/shared/services/subscription';
+import { getUserInfo } from '@/shared/services/user';
+import { Button as ButtonType, Tab } from '@/shared/types/blocks/common';
+import { type Table } from '@/shared/types/blocks/table';
 
 export default async function BillingPage({
   searchParams,
@@ -28,7 +29,7 @@ export default async function BillingPage({
     return <Empty message="no auth" />;
   }
 
-  const t = await getTranslations("settings.billing");
+  const t = await getTranslations('settings.billing');
 
   const currentSubscription = await getCurrentSubscription(user.id);
 
@@ -45,33 +46,33 @@ export default async function BillingPage({
   });
 
   const table: Table = {
-    title: t("list.title"),
+    title: t('list.title'),
     columns: [
       {
-        name: "subscriptionNo",
-        title: t("fields.subscription_no"),
-        type: "copy",
+        name: 'subscriptionNo',
+        title: t('fields.subscription_no'),
+        type: 'copy',
       },
       {
-        name: "interval",
-        title: t("fields.interval"),
-        type: "label",
+        name: 'interval',
+        title: t('fields.interval'),
+        type: 'label',
       },
       {
-        name: "status",
-        title: t("fields.status"),
-        type: "label",
-        metadata: { variant: "outline" },
+        name: 'status',
+        title: t('fields.status'),
+        type: 'label',
+        metadata: { variant: 'outline' },
       },
       {
-        title: t("fields.amount"),
+        title: t('fields.amount'),
         callback: function (item) {
-          const currency = (item.currency || "USD").toUpperCase();
+          const currency = (item.currency || 'USD').toUpperCase();
 
-          let prefix = "";
-          if (currency === "USD") {
+          let prefix = '';
+          if (currency === 'USD') {
             prefix = `$`;
-          } else if (currency === "CNY") {
+          } else if (currency === 'CNY') {
             prefix = `¥`;
           } else {
             prefix = `${currency} `;
@@ -83,18 +84,18 @@ export default async function BillingPage({
         },
       },
       {
-        name: "createdAt",
-        title: t("fields.created_at"),
-        type: "time",
+        name: 'createdAt',
+        title: t('fields.created_at'),
+        type: 'time',
       },
       {
-        title: t("fields.current_period"),
+        title: t('fields.current_period'),
         callback: function (item) {
           let period = (
             <div>
-              {`${moment(item.currentPeriodStart).format("YYYY-MM-DD")}`} ~
+              {`${moment(item.currentPeriodStart).format('YYYY-MM-DD')}`} ~
               <br />
-              {`${moment(item.currentPeriodEnd).format("YYYY-MM-DD")}`}
+              {`${moment(item.currentPeriodEnd).format('YYYY-MM-DD')}`}
             </div>
           );
 
@@ -102,12 +103,12 @@ export default async function BillingPage({
         },
       },
       {
-        title: t("fields.end_time"),
+        title: t('fields.end_time'),
         callback: function (item) {
           if (item.canceledEndAt) {
-            return <div>{moment(item.canceledEndAt).format("YYYY-MM-DD")}</div>;
+            return <div>{moment(item.canceledEndAt).format('YYYY-MM-DD')}</div>;
           }
-          return "-";
+          return '-';
         },
       },
     ],
@@ -121,28 +122,28 @@ export default async function BillingPage({
 
   const tabs: Tab[] = [
     {
-      title: t("list.tabs.all"),
-      name: "all",
-      url: "/settings/billing",
-      is_active: !status || status === "all",
+      title: t('list.tabs.all'),
+      name: 'all',
+      url: '/settings/billing',
+      is_active: !status || status === 'all',
     },
     {
-      title: t("list.tabs.active"),
-      name: "active",
-      url: "/settings/billing?status=active",
-      is_active: status === "active",
+      title: t('list.tabs.active'),
+      name: 'active',
+      url: '/settings/billing?status=active',
+      is_active: status === 'active',
     },
     {
-      title: t("list.tabs.pending_cancel"),
-      name: "pending_cancel",
-      url: "/settings/billing?status=pending_cancel",
-      is_active: status === "pending_cancel",
+      title: t('list.tabs.pending_cancel'),
+      name: 'pending_cancel',
+      url: '/settings/billing?status=pending_cancel',
+      is_active: status === 'pending_cancel',
     },
     {
-      title: t("list.tabs.canceled"),
-      name: "canceled",
-      url: "/settings/billing?status=canceled",
-      is_active: status === "canceled",
+      title: t('list.tabs.canceled'),
+      name: 'canceled',
+      url: '/settings/billing?status=canceled',
+      is_active: status === 'canceled',
     },
   ];
 
@@ -150,31 +151,31 @@ export default async function BillingPage({
   if (currentSubscription) {
     buttons = [
       {
-        title: t("view.buttons.adjust"),
-        url: "/pricing",
-        target: "_blank",
-        icon: "Pencil",
-        size: "sm",
+        title: t('view.buttons.adjust'),
+        url: '/pricing',
+        target: '_blank',
+        icon: 'Pencil',
+        size: 'sm',
       },
     ];
     if (currentSubscription.paymentUserId) {
       buttons.push({
-        title: t("view.buttons.manage"),
+        title: t('view.buttons.manage'),
         url: `/settings/billing/retrieve?subscription_no=${currentSubscription.subscriptionNo}`,
-        target: "_blank",
-        icon: "Settings",
-        size: "sm",
-        variant: "outline",
+        target: '_blank',
+        icon: 'Settings',
+        size: 'sm',
+        variant: 'outline',
       });
     }
   } else {
     buttons = [
       {
-        title: t("view.buttons.subscribe"),
-        url: "/pricing",
-        target: "_blank",
-        icon: "ArrowUpRight",
-        size: "sm",
+        title: t('view.buttons.subscribe'),
+        url: '/pricing',
+        target: '_blank',
+        icon: 'ArrowUpRight',
+        size: 'sm',
       },
     ];
   }
@@ -183,28 +184,28 @@ export default async function BillingPage({
     <div className="space-y-8">
       <PanelCard
         label={currentSubscription?.status}
-        title={t("view.title")}
+        title={t('view.title')}
         buttons={buttons}
         className="max-w-md"
       >
-        <div className="text-3xl font-bold text-primary">
-          {currentSubscription?.planName || t("view.no_subscription")}
+        <div className="text-primary text-3xl font-bold">
+          {currentSubscription?.planName || t('view.no_subscription')}
         </div>
         {currentSubscription ? (
           <>
             {currentSubscription?.status === SubscriptionStatus.ACTIVE ? (
-              <div className="text-sm font-normal text-muted-foreground mt-4">
-                {t("view.tip", {
+              <div className="text-muted-foreground mt-4 text-sm font-normal">
+                {t('view.tip', {
                   date: moment(currentSubscription?.currentPeriodEnd).format(
-                    "YYYY-MM-DD"
+                    'YYYY-MM-DD'
                   ),
                 })}
               </div>
             ) : (
-              <div className="text-sm font-normal text-destructive mt-4">
-                {t("view.end_tip", {
+              <div className="text-destructive mt-4 text-sm font-normal">
+                {t('view.end_tip', {
                   date: moment(currentSubscription?.canceledEndAt).format(
-                    "YYYY-MM-DD"
+                    'YYYY-MM-DD'
                   ),
                 })}
               </div>
@@ -212,7 +213,7 @@ export default async function BillingPage({
           </>
         ) : null}
       </PanelCard>
-      <TableCard title={t("list.title")} tabs={tabs} table={table} />
+      <TableCard title={t('list.title')} tabs={tabs} table={table} />
     </div>
   );
 }

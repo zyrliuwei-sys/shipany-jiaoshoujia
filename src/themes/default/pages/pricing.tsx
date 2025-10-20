@@ -1,10 +1,10 @@
-import { Pricing as PricingType } from "@/shared/types/blocks/pricing";
+import { Subscription } from '@/shared/services/subscription';
 import {
   FAQ as FAQType,
   Testimonials as TestimonialsType,
-} from "@/shared/types/blocks/landing";
-import { FAQ, Pricing, Testimonials } from "@/themes/default/blocks";
-import { Subscription } from "@/shared/services/subscription";
+} from '@/shared/types/blocks/landing';
+import { Pricing as PricingType } from '@/shared/types/blocks/pricing';
+import { FAQ, Pricing, Testimonials } from '@/themes/default/blocks';
 
 export default async function PricingPage({
   locale,

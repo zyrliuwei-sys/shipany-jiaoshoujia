@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 // image props for image component
 export interface Image {
@@ -51,8 +51,8 @@ export interface Tab extends NavItem {}
 
 // button props for button component
 export interface Button extends NavItem {
-  size?: "default" | "sm" | "lg" | "icon";
-  variant?: "default" | "outline" | "ghost" | "link" | "destructive";
+  size?: 'default' | 'sm' | 'lg' | 'icon';
+  variant?: 'default' | 'outline' | 'ghost' | 'link' | 'destructive';
   onClick?: () => void;
 }
 

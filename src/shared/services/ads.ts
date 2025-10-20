@@ -1,5 +1,5 @@
-import { Configs, getAllConfigs } from "@/shared/services/config";
-import { AdsManager, AdsenseProvider } from "@/extensions/ads";
+import { AdsenseProvider, AdsManager } from '@/extensions/ads';
+import { Configs, getAllConfigs } from '@/shared/services/config';
 
 /**
  * get ads manager with configs

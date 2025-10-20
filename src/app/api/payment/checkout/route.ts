@@ -1,60 +1,61 @@
-import { getSnowId, getUuid } from "@/shared/lib/hash";
-import { respData, respErr } from "@/shared/lib/resp";
+import { getTranslations } from 'next-intl/server';
+
+import {
+  PaymentInterval,
+  PaymentOrder,
+  PaymentPrice,
+  PaymentType,
+} from '@/extensions/payment';
+import { getSnowId, getUuid } from '@/shared/lib/hash';
+import { respData, respErr } from '@/shared/lib/resp';
+import { getAllConfigs } from '@/shared/services/config';
 import {
   createOrder,
   NewOrder,
   OrderStatus,
   updateOrderByOrderNo,
-} from "@/shared/services/order";
-import { getUserInfo } from "@/shared/services/user";
-import { getTranslations } from "next-intl/server";
-import { getPaymentService } from "@/shared/services/payment";
-import {
-  PaymentOrder,
-  PaymentInterval,
-  PaymentType,
-  PaymentPrice,
-} from "@/extensions/payment";
-import { getAllConfigs } from "@/shared/services/config";
+} from '@/shared/services/order';
+import { getPaymentService } from '@/shared/services/payment';
+import { getUserInfo } from '@/shared/services/user';
 
 export async function POST(req: Request) {
   try {
     const { product_id, currency, locale, payment_provider } = await req.json();
     if (!product_id) {
-      return respErr("product_id is required");
+      return respErr('product_id is required');
     }
 
-    const t = await getTranslations("pricing");
-    const pricing = t.raw("pricing");
+    const t = await getTranslations('pricing');
+    const pricing = t.raw('pricing');
 
     const pricingItem = pricing.items.find(
       (item: any) => item.product_id === product_id
     );
 
     if (!pricingItem) {
-      return respErr("pricing item not found");
+      return respErr('pricing item not found');
     }
 
     if (!pricingItem.product_id && !pricingItem.amount) {
-      return respErr("invalid pricing item");
+      return respErr('invalid pricing item');
     }
 
     // get sign user
     const user = await getUserInfo();
     if (!user || !user.email) {
-      return respErr("no auth, please sign in");
+      return respErr('no auth, please sign in');
     }
 
     // get configs
     const configs = await getAllConfigs();
 
     // choose payment provider
-    let paymentProviderName = payment_provider || "";
+    let paymentProviderName = payment_provider || '';
     if (!paymentProviderName) {
       paymentProviderName = configs.default_payment_provider;
     }
     if (!paymentProviderName) {
-      return respErr("no payment provider configured");
+      return respErr('no payment provider configured');
     }
 
     // get default payment provider
@@ -62,11 +63,11 @@ export async function POST(req: Request) {
 
     const paymentProvider = paymentService.getProvider(paymentProviderName);
     if (!paymentProvider || !paymentProvider.name) {
-      return respErr("no payment provider configured");
+      return respErr('no payment provider configured');
     }
 
     // checkout currency
-    let checkoutCurrency = currency || pricingItem.currency || "";
+    let checkoutCurrency = currency || pricingItem.currency || '';
     checkoutCurrency = checkoutCurrency.toLowerCase();
 
     // get payment interval
@@ -81,7 +82,7 @@ export async function POST(req: Request) {
 
     const orderNo = getSnowId();
 
-    const paymentProductId = pricingItem.payment_product_id || "";
+    const paymentProductId = pricingItem.payment_product_id || '';
 
     // build checkout price
     const checkoutPrice: PaymentPrice = {
@@ -92,7 +93,7 @@ export async function POST(req: Request) {
     if (!paymentProductId) {
       // checkout price validation
       if (!checkoutPrice.amount || !checkoutPrice.currency) {
-        return respErr("invalid checkout price");
+        return respErr('invalid checkout price');
       }
     }
 
@@ -162,7 +163,7 @@ export async function POST(req: Request) {
       callbackUrl: callbackUrl,
       creditsAmount: pricingItem.credits,
       creditsValidDays: pricingItem.valid_days,
-      planName: pricingItem.plan_name || "",
+      planName: pricingItem.plan_name || '',
       paymentProductId: paymentProductId,
     };
 
@@ -193,10 +194,10 @@ export async function POST(req: Request) {
         checkoutInfo: JSON.stringify(checkoutOrder),
       });
 
-      return respErr("checkout failed: " + e.message);
+      return respErr('checkout failed: ' + e.message);
     }
   } catch (e: any) {
-    console.log("checkout failed:", e);
-    return respErr("checkout failed: " + e.message);
+    console.log('checkout failed:', e);
+    return respErr('checkout failed: ' + e.message);
   }
 }

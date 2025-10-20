@@ -1,22 +1,7 @@
-"use client";
+'use client';
 
-import { Button } from "@/shared/components/ui/button";
-import { cn } from "@/shared/lib/utils";
-import { signOut } from "@/core/auth/client";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/shared/components/ui/dropdown-menu";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/shared/components/ui/avatar";
-import { useRouter } from "@/core/i18n/navigation";
+import { useEffect, useState } from 'react';
+import { Fragment } from 'react/jsx-runtime';
 import {
   Coins,
   CreditCard,
@@ -24,27 +9,43 @@ import {
   Loader2,
   LogOut,
   User,
-} from "lucide-react";
-import { envConfigs } from "@/config";
-import { SignModal } from "./sign-modal";
-import { useAppContext } from "@/shared/contexts/app";
-import { Link } from "@/core/i18n/navigation";
-import { useTranslations } from "next-intl";
-import { NavItem, UserNav } from "@/shared/types/blocks/common";
-import { SmartIcon } from "../common/smart-icon";
-import { Fragment } from "react/jsx-runtime";
-import { useEffect, useState } from "react";
+} from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
+import { signOut } from '@/core/auth/client';
+import { Link, useRouter } from '@/core/i18n/navigation';
+import { envConfigs } from '@/config';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@/shared/components/ui/avatar';
+import { Button } from '@/shared/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/shared/components/ui/dropdown-menu';
+import { useAppContext } from '@/shared/contexts/app';
+import { cn } from '@/shared/lib/utils';
+import { NavItem, UserNav } from '@/shared/types/blocks/common';
+
+import { SmartIcon } from '../common/smart-icon';
+import { SignModal } from './sign-modal';
 
 export function SignUser({
   isScrolled,
-  signButtonSize = "sm",
+  signButtonSize = 'sm',
   userNav,
 }: {
   isScrolled?: boolean;
-  signButtonSize?: "default" | "sm" | "lg" | "icon";
+  signButtonSize?: 'default' | 'sm' | 'lg' | 'icon';
   userNav?: UserNav;
 }) {
-  const t = useTranslations("common.sign");
+  const t = useTranslations('common.sign');
   const { isCheckSign, user, setIsShowSignModal } = useAppContext();
   const router = useRouter();
 
@@ -67,7 +68,7 @@ export function SignUser({
               className="relative h-10 w-10 rounded-full p-0"
             >
               <Avatar>
-                <AvatarImage src={user.image || ""} alt={user.name || ""} />
+                <AvatarImage src={user.image || ''} alt={user.name || ''} />
                 <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
               </Avatar>
             </Button>
@@ -77,7 +78,7 @@ export function SignUser({
               <>
                 <DropdownMenuItem asChild>
                   <Link
-                    className="cursor-pointer w-full"
+                    className="w-full cursor-pointer"
                     href="/settings/profile"
                   >
                     <User />
@@ -92,7 +93,7 @@ export function SignUser({
               <>
                 <DropdownMenuItem asChild>
                   <Link
-                    className="cursor-pointer w-full"
+                    className="w-full cursor-pointer"
                     href="/settings/credits"
                   >
                     <Coins />
@@ -107,14 +108,14 @@ export function SignUser({
               <Fragment key={idx}>
                 <DropdownMenuItem asChild>
                   <Link
-                    className="cursor-pointer w-full"
-                    href={item.url || ""}
-                    target={item.target || "_self"}
+                    className="w-full cursor-pointer"
+                    href={item.url || ''}
+                    target={item.target || '_self'}
                   >
                     {item.icon && (
                       <SmartIcon
                         name={item.icon as string}
-                        className="w-4 h-4"
+                        className="h-4 w-4"
                       />
                     )}
                     {item.title}
@@ -126,19 +127,19 @@ export function SignUser({
 
             {userNav?.show_sign_out && (
               <DropdownMenuItem
-                className="cursor-pointer w-full"
+                className="w-full cursor-pointer"
                 onClick={() =>
                   signOut({
                     fetchOptions: {
                       onSuccess: () => {
-                        router.push("/");
+                        router.push('/');
                       },
                     },
                   })
                 }
               >
                 <LogOut />
-                <span>{t("sign_out_title")}</span>
+                <span>{t('sign_out_title')}</span>
               </DropdownMenuItem>
             )}
           </DropdownMenuContent>
@@ -149,12 +150,12 @@ export function SignUser({
             asChild
             size={signButtonSize}
             className={cn(
-              "border-foreground/10 ml-4 ring-0 cursor-pointer",
-              isScrolled && "lg:hidden"
+              'border-foreground/10 ml-4 cursor-pointer ring-0',
+              isScrolled && 'lg:hidden'
             )}
             onClick={() => setIsShowSignModal(true)}
           >
-            <span>{t("sign_in_title")}</span>
+            <span>{t('sign_in_title')}</span>
           </Button>
           <SignModal />
         </div>

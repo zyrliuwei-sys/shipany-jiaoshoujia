@@ -1,27 +1,28 @@
-import "@/config/style/global.css";
+import '@/config/style/global.css';
 
-import { getLocale, setRequestLocale } from "next-intl/server";
-import { locales } from "@/config/locale";
-import { envConfigs } from "@/config";
-import { getAdsService } from "@/shared/services/ads";
-import { getAnalyticsService } from "@/shared/services/analytics";
-import { Noto_Sans_Mono, Merriweather, JetBrains_Mono } from "next/font/google";
-import NextTopLoader from "nextjs-toploader";
+import { JetBrains_Mono, Merriweather, Noto_Sans_Mono } from 'next/font/google';
+import { getLocale, setRequestLocale } from 'next-intl/server';
+import NextTopLoader from 'nextjs-toploader';
+
+import { envConfigs } from '@/config';
+import { locales } from '@/config/locale';
+import { getAdsService } from '@/shared/services/ads';
+import { getAnalyticsService } from '@/shared/services/analytics';
 
 const notoSansMono = Noto_Sans_Mono({
-  subsets: ["latin"],
-  variable: "--font-sans",
+  subsets: ['latin'],
+  variable: '--font-sans',
 });
 
 const merriweather = Merriweather({
-  subsets: ["latin"],
-  weight: ["300", "400", "700", "900"],
-  variable: "--font-serif",
+  subsets: ['latin'],
+  weight: ['300', '400', '700', '900'],
+  variable: '--font-serif',
 });
 
 const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
+  subsets: ['latin'],
+  variable: '--font-mono',
 });
 
 export default async function RootLayout({
@@ -32,10 +33,10 @@ export default async function RootLayout({
   const locale = await getLocale();
   setRequestLocale(locale);
 
-  const isProduction = process.env.NODE_ENV === "production";
+  const isProduction = process.env.NODE_ENV === 'production';
 
   // app url
-  const appUrl = envConfigs.app_url || "";
+  const appUrl = envConfigs.app_url || '';
 
   // ads components
   let adsMetaTags = null;
@@ -79,7 +80,7 @@ export default async function RootLayout({
                 key={loc}
                 rel="alternate"
                 hrefLang={loc}
-                href={`${appUrl}${loc === "en" ? "" : `/${loc}`}`}
+                href={`${appUrl}${loc === 'en' ? '' : `/${loc}`}`}
               />
             ))}
           </>

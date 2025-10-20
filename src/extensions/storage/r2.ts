@@ -1,10 +1,10 @@
 import type {
+  StorageConfigs,
+  StorageDownloadUploadOptions,
   StorageProvider,
   StorageUploadOptions,
   StorageUploadResult,
-  StorageDownloadUploadOptions,
-  StorageConfigs,
-} from ".";
+} from '.';
 
 /**
  * R2 storage provider configs
@@ -25,7 +25,7 @@ export interface R2Configs extends StorageConfigs {
  * @website https://www.cloudflare.com/products/r2/
  */
 export class R2Provider implements StorageProvider {
-  readonly name = "r2";
+  readonly name = 'r2';
   configs: R2Configs;
 
   constructor(configs: R2Configs) {
@@ -40,7 +40,7 @@ export class R2Provider implements StorageProvider {
       if (!uploadBucket) {
         return {
           success: false,
-          error: "Bucket is required",
+          error: 'Bucket is required',
           provider: this.name,
         };
       }
@@ -57,23 +57,23 @@ export class R2Provider implements StorageProvider {
         `https://${this.configs.accountId}.r2.cloudflarestorage.com`;
       const url = `${endpoint}/${uploadBucket}/${options.key}`;
 
-      const { AwsClient } = await import("aws4fetch");
+      const { AwsClient } = await import('aws4fetch');
 
       // R2 uses "auto" as region for S3 API compatibility
       const client = new AwsClient({
         accessKeyId: this.configs.accessKeyId,
         secretAccessKey: this.configs.secretAccessKey,
-        region: this.configs.region || "auto",
+        region: this.configs.region || 'auto',
       });
 
       const headers: Record<string, string> = {
-        "Content-Type": options.contentType || "application/octet-stream",
-        "Content-Disposition": options.disposition || "inline",
-        "Content-Length": bodyArray.length.toString(),
+        'Content-Type': options.contentType || 'application/octet-stream',
+        'Content-Disposition': options.disposition || 'inline',
+        'Content-Length': bodyArray.length.toString(),
       };
 
       const request = new Request(url, {
-        method: "PUT",
+        method: 'PUT',
         headers,
         body: bodyArray as any,
       });
@@ -97,14 +97,14 @@ export class R2Provider implements StorageProvider {
         location: url,
         bucket: uploadBucket,
         key: options.key,
-        filename: options.key.split("/").pop(),
+        filename: options.key.split('/').pop(),
         url: publicUrl,
         provider: this.name,
       };
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : 'Unknown error',
         provider: this.name,
       };
     }
@@ -126,7 +126,7 @@ export class R2Provider implements StorageProvider {
       if (!response.body) {
         return {
           success: false,
-          error: "No body in response",
+          error: 'No body in response',
           provider: this.name,
         };
       }
@@ -144,7 +144,7 @@ export class R2Provider implements StorageProvider {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : 'Unknown error',
         provider: this.name,
       };
     }

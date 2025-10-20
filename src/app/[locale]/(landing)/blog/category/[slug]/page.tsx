@@ -1,24 +1,25 @@
+import moment from 'moment';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+
+import { getThemePage } from '@/core/theme';
+import { envConfigs } from '@/config';
+import { Empty } from '@/shared/blocks/common';
 import {
-  Blog as BlogType,
-  Post as PostType,
-  Category as CategoryType,
-} from "@/shared/types/blocks/blog";
-import {
+  PostType as DBPostType,
   getPosts,
   PostStatus,
-  PostType as DBPostType,
-} from "@/shared/services/post";
+} from '@/shared/services/post';
 import {
   findTaxonomy,
   getTaxonomies,
   TaxonomyStatus,
   TaxonomyType,
-} from "@/shared/services/taxonomy";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import moment from "moment";
-import { envConfigs } from "@/config";
-import { Empty } from "@/shared/blocks/common";
-import { getThemePage } from "@/core/theme";
+} from '@/shared/services/taxonomy';
+import {
+  Blog as BlogType,
+  Category as CategoryType,
+  Post as PostType,
+} from '@/shared/types/blocks/blog';
 
 export async function generateMetadata({
   params,
@@ -26,11 +27,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const t = await getTranslations("blog.metadata");
+  const t = await getTranslations('blog.metadata');
 
   return {
-    title: `${slug} | ${t("title")}`,
-    description: t("description"),
+    title: `${slug} | ${t('title')}`,
+    description: t('description'),
     alternates: {
       canonical:
         locale !== envConfigs.locale
@@ -51,7 +52,7 @@ export default async function CategoryBlogPage({
   setRequestLocale(locale);
 
   // load blog data
-  const t = await getTranslations("blog");
+  const t = await getTranslations('blog');
 
   const { page: pageNum, pageSize } = await searchParams;
   const page = pageNum || 1;
@@ -97,34 +98,34 @@ export default async function CategoryBlogPage({
     url: `/blog/category/${category.slug}`,
   }));
   categories.unshift({
-    id: "all",
-    slug: "all",
-    title: t("page.all"),
+    id: 'all',
+    slug: 'all',
+    title: t('page.all'),
     url: `/blog`,
   });
 
   // build posts
   const posts: PostType[] = postsData.map((post) => ({
     id: post.id,
-    title: post.title || "",
-    description: post.description || "",
-    author_name: post.authorName || "",
-    author_image: post.authorImage || "",
-    created_at: moment(post.createdAt).format("MMM D, YYYY") || "",
-    image: post.image || "",
+    title: post.title || '',
+    description: post.description || '',
+    author_name: post.authorName || '',
+    author_image: post.authorImage || '',
+    created_at: moment(post.createdAt).format('MMM D, YYYY') || '',
+    image: post.image || '',
     url: `/blog/${post.slug}`,
   }));
 
   // build blog
   const blog: BlogType = {
-    ...t.raw("blog"),
+    ...t.raw('blog'),
     categories,
     currentCategory,
     posts,
   };
 
   // load page component
-  const Page = await getThemePage("blog");
+  const Page = await getThemePage('blog');
 
   return <Page locale={locale} blog={blog} />;
 }

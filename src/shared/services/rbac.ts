@@ -1,8 +1,9 @@
-import { db } from "@/core/db";
-import { role, permission, rolePermission, userRole } from "@/config/db/schema";
-import { eq, and, inArray, isNull, gt } from "drizzle-orm";
-import { getUuid } from "@/shared/lib/hash";
-import { cache } from "react";
+import { cache } from 'react';
+import { and, eq, gt, inArray, isNull } from 'drizzle-orm';
+
+import { db } from '@/core/db';
+import { permission, role, rolePermission, userRole } from '@/config/db/schema';
+import { getUuid } from '@/shared/lib/hash';
 
 // Types
 export type Role = typeof role.$inferSelect;
@@ -15,25 +16,25 @@ export type NewPermission = typeof permission.$inferInsert;
 export type NewRolePermission = typeof rolePermission.$inferInsert;
 export type NewUserRole = typeof userRole.$inferInsert;
 
-export type UpdateRole = Partial<Omit<Role, "id" | "createdAt">>;
-export type UpdatePermission = Partial<Omit<Permission, "id" | "createdAt">>;
+export type UpdateRole = Partial<Omit<Role, 'id' | 'createdAt'>>;
+export type UpdatePermission = Partial<Omit<Permission, 'id' | 'createdAt'>>;
 export type UpdateRolePermission = Partial<
-  Omit<RolePermission, "id" | "createdAt">
+  Omit<RolePermission, 'id' | 'createdAt'>
 >;
-export type UpdateUserRole = Partial<Omit<UserRole, "id" | "createdAt">>;
+export type UpdateUserRole = Partial<Omit<UserRole, 'id' | 'createdAt'>>;
 
 // Role constants
 export const ROLES = {
-  SUPER_ADMIN: "super_admin",
-  ADMIN: "admin",
-  EDITOR: "editor",
-  VIEWER: "viewer",
+  SUPER_ADMIN: 'super_admin',
+  ADMIN: 'admin',
+  EDITOR: 'editor',
+  VIEWER: 'viewer',
 } as const;
 
 export enum RoleStatus {
-  ACTIVE = "active",
-  DISABLED = "disabled",
-  DELETED = "deleted",
+  ACTIVE = 'active',
+  DISABLED = 'disabled',
+  DELETED = 'deleted',
 }
 
 /**
@@ -284,16 +285,16 @@ export const hasPermission = cache(
 
     // Check wildcard match
     // If user has "admin.*", they have all "admin.xxx" permissions
-    const parts = permissionCode.split(".");
+    const parts = permissionCode.split('.');
     for (let i = parts.length - 1; i > 0; i--) {
-      const wildcard = parts.slice(0, i).join(".") + ".*";
+      const wildcard = parts.slice(0, i).join('.') + '.*';
       if (permissionCodes.includes(wildcard)) {
         return true;
       }
     }
 
     // Check if user has "*" (super admin)
-    if (permissionCodes.includes("*")) {
+    if (permissionCodes.includes('*')) {
       return true;
     }
 

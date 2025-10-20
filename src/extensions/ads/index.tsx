@@ -1,4 +1,4 @@
-import { Fragment, ReactNode } from "react";
+import { Fragment, ReactNode } from 'react';
 
 /**
  * Ads configs interface
@@ -59,4 +59,4 @@ export class AdsManager {
   }
 }
 
-export * from "./adsense";
+export * from './adsense';

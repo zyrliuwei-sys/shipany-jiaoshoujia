@@ -1,10 +1,11 @@
-import { type CreateEmailOptions, Resend } from "resend";
+import { Resend, type CreateEmailOptions } from 'resend';
+
 import type {
-  EmailProvider,
-  EmailMessage,
-  EmailSendResult,
   EmailConfigs,
-} from ".";
+  EmailMessage,
+  EmailProvider,
+  EmailSendResult,
+} from '.';
 
 /**
  * Resend email provider configs
@@ -20,7 +21,7 @@ export interface ResendConfigs extends EmailConfigs {
  * @website https://resend.com/
  */
 export class ResendProvider implements EmailProvider {
-  readonly name = "resend";
+  readonly name = 'resend';
   configs: ResendConfigs;
 
   private client: Resend;
@@ -34,7 +35,7 @@ export class ResendProvider implements EmailProvider {
     try {
       // Convert our format to Resend format
       const resendEmail: Partial<CreateEmailOptions> = {
-        from: email.from || this.configs.defaultFrom || "",
+        from: email.from || this.configs.defaultFrom || '',
         to: Array.isArray(email.to) ? email.to : [email.to],
         subject: email.subject,
       };
@@ -64,7 +65,7 @@ export class ResendProvider implements EmailProvider {
       }
       if (email.tags) {
         resendEmail.tags = email.tags.map((tag) => ({
-          name: "category",
+          name: 'category',
           value: tag,
         }));
       }
@@ -73,7 +74,7 @@ export class ResendProvider implements EmailProvider {
       }
 
       if (email.react) {
-        console.log("resend email react", email.react);
+        console.log('resend email react', email.react);
         resendEmail.react = email.react;
       }
 
@@ -81,7 +82,7 @@ export class ResendProvider implements EmailProvider {
         resendEmail as CreateEmailOptions
       );
 
-      console.log("resend email result", result);
+      console.log('resend email result', result);
 
       if (result.error) {
         return {
@@ -99,7 +100,7 @@ export class ResendProvider implements EmailProvider {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : 'Unknown error',
         provider: this.name,
       };
     }

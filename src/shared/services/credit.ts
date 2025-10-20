@@ -1,36 +1,38 @@
-import { db } from "@/core/db";
-import { credit } from "@/config/db/schema";
-import { Order } from "./order";
-import { getSnowId, getUuid } from "@/shared/lib/hash";
-import { and, asc, desc, eq, gt, sum, or, isNull, count } from "drizzle-orm";
-import { PaymentType } from "@/extensions/payment";
-import { appendUserToResult, getUserByUserIds, User } from "./user";
+import { and, asc, count, desc, eq, gt, isNull, or, sum } from 'drizzle-orm';
+
+import { db } from '@/core/db';
+import { credit } from '@/config/db/schema';
+import { PaymentType } from '@/extensions/payment';
+import { getSnowId, getUuid } from '@/shared/lib/hash';
+
+import { Order } from './order';
+import { appendUserToResult, getUserByUserIds, User } from './user';
 
 export type Credit = typeof credit.$inferSelect & {
   user?: User;
 };
 export type NewCredit = typeof credit.$inferInsert;
 export type UpdateCredit = Partial<
-  Omit<NewCredit, "id" | "transactionNo" | "createdAt">
+  Omit<NewCredit, 'id' | 'transactionNo' | 'createdAt'>
 >;
 
 export enum CreditStatus {
-  ACTIVE = "active",
-  EXPIRED = "expired",
-  DELETED = "deleted",
+  ACTIVE = 'active',
+  EXPIRED = 'expired',
+  DELETED = 'deleted',
 }
 
 export enum CreditTransactionType {
-  GRANT = "grant", // grant credit
-  CONSUME = "consume", // consume credit
+  GRANT = 'grant', // grant credit
+  CONSUME = 'consume', // consume credit
 }
 
 export enum CreditTransactionScene {
-  PAYMENT = "payment", // payment
-  SUBSCRIPTION = "subscription", // subscription
-  RENEWAL = "renewal", // renewal
-  GIFT = "gift", // gift
-  AWARD = "award", // award
+  PAYMENT = 'payment', // payment
+  SUBSCRIPTION = 'subscription', // subscription
+  RENEWAL = 'renewal', // renewal
+  GIFT = 'gift', // gift
+  AWARD = 'award', // award
 }
 
 // Calculate credit expiration time based on order and subscription info
@@ -219,7 +221,7 @@ export async function consumeCredits({
         )
         .limit(batchSize) // batch size
         .offset((batchNo - 1) * batchSize) // offset
-        .for("update"); // lock for update
+        .for('update'); // lock for update
 
       // no more credits
       if (batchCredits?.length === 0) {
@@ -305,5 +307,5 @@ export async function getRemainingCredits(userId: string): Promise<number> {
       )
     );
 
-  return parseInt(result?.total || "0");
+  return parseInt(result?.total || '0');
 }

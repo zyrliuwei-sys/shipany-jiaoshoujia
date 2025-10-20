@@ -1,12 +1,13 @@
-import moment from "moment";
-import { User as UserType } from "@/shared/services/user";
+import moment from 'moment';
+
+import { Link } from '@/core/i18n/navigation';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/shared/components/ui/avatar";
-import { cn } from "@/shared/lib/utils";
-import { Link } from "@/core/i18n/navigation";
+} from '@/shared/components/ui/avatar';
+import { cn } from '@/shared/lib/utils';
+import { User as UserType } from '@/shared/services/user';
 
 export function User({
   value,
@@ -30,11 +31,11 @@ export function User({
   return (
     <Link
       href={`/admin/users/${value.id}`}
-      className={cn("flex items-center gap-2", className)}
+      className={cn('flex items-center gap-2', className)}
     >
       <Avatar className={className}>
-        <AvatarImage src={value.image || ""} alt={value.name} />
-        <AvatarFallback>{value.name?.charAt(0) || "U"}</AvatarFallback>
+        <AvatarImage src={value.image || ''} alt={value.name} />
+        <AvatarFallback>{value.name?.charAt(0) || 'U'}</AvatarFallback>
       </Avatar>
       {value.name}
     </Link>

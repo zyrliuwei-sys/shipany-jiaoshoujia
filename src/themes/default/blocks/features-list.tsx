@@ -1,13 +1,14 @@
-"use client";
+'use client';
 
-import { ChevronRight } from "lucide-react";
-import Link from "next/link";
-import { cn } from "@/shared/lib/utils";
-import Image from "next/image";
-import { Features as FeaturesType } from "@/shared/types/blocks/landing";
-import { SmartIcon } from "@/shared/blocks/common";
-import { Button } from "@/shared/components/ui/button";
-import { ScrollAnimation } from "@/shared/components/ui/scroll-animation";
+import Image from 'next/image';
+import Link from 'next/link';
+import { ChevronRight } from 'lucide-react';
+
+import { SmartIcon } from '@/shared/blocks/common';
+import { Button } from '@/shared/components/ui/button';
+import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
+import { cn } from '@/shared/lib/utils';
+import { Features as FeaturesType } from '@/shared/types/blocks/landing';
 
 export function FeaturesList({
   features,
@@ -18,52 +19,52 @@ export function FeaturesList({
 }) {
   return (
     // Prevent horizontal scrolling
-    <section className={`py-16 md:py-24 overflow-x-hidden ${className}`}>
+    <section className={`overflow-x-hidden py-16 md:py-24 ${className}`}>
       <div className="container overflow-x-hidden">
-        <div className="flex flex-wrap items-center pb-12 md:gap-24 gap-8">
+        <div className="flex flex-wrap items-center gap-8 pb-12 md:gap-24">
           <ScrollAnimation direction="left">
-            <div className="w-full max-w-[500px] flex-shrink-0 mx-auto md:mx-0">
+            <div className="mx-auto w-full max-w-[500px] flex-shrink-0 md:mx-0">
               <Image
-                src={features.image?.src ?? ""}
-                alt={features.image?.alt ?? ""}
+                src={features.image?.src ?? ''}
+                alt={features.image?.alt ?? ''}
                 width={500}
                 height={300}
-                className="rounded-lg object-cover w-full h-auto"
+                className="h-auto w-full rounded-lg object-cover"
                 // Limit max image width & responsive width
-                style={{ maxWidth: "100%", height: "auto", display: "block" }}
+                style={{ maxWidth: '100%', height: 'auto', display: 'block' }}
               />
             </div>
           </ScrollAnimation>
-          <div className="flex-1 min-w-0 w-full">
+          <div className="w-full min-w-0 flex-1">
             <ScrollAnimation delay={0.1}>
-              <h2 className="text-foreground text-balance text-4xl font-semibold break-words">
+              <h2 className="text-foreground text-4xl font-semibold text-balance break-words">
                 {features.title}
               </h2>
             </ScrollAnimation>
             <ScrollAnimation delay={0.2}>
-              <p className="my-6 text-balance text-md text-muted-foreground break-words">
+              <p className="text-md text-muted-foreground my-6 text-balance break-words">
                 {features.description}
               </p>
             </ScrollAnimation>
 
             {features.buttons && features.buttons.length > 0 && (
               <ScrollAnimation delay={0.3}>
-                <div className="flex flex-wrap items-center gap-2 justify-start">
+                <div className="flex flex-wrap items-center justify-start gap-2">
                   {features.buttons?.map((button, idx) => (
                     <Button
                       asChild
                       key={idx}
-                      variant={button.variant || "default"}
-                      size={button.size || "default"}
+                      variant={button.variant || 'default'}
+                      size={button.size || 'default'}
                     >
                       <Link
                         key={idx}
-                        href={button.url ?? ""}
-                        target={button.target ?? "_self"}
+                        href={button.url ?? ''}
+                        target={button.target ?? '_self'}
                         className={cn(
-                          "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
-                          "h-9 px-4 py-2",
-                          "shadow-sm shadow-black/15 border border-transparent bg-background ring-1 ring-foreground/10 duration-200 hover:bg-muted/50 dark:ring-foreground/15 dark:hover:bg-muted/50"
+                          'focus-visible:ring-ring inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-1 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
+                          'h-9 px-4 py-2',
+                          'bg-background ring-foreground/10 hover:bg-muted/50 dark:ring-foreground/15 dark:hover:bg-muted/50 border border-transparent shadow-sm ring-1 shadow-black/15 duration-200'
                         )}
                       >
                         {button.icon && (
@@ -81,19 +82,19 @@ export function FeaturesList({
 
         <ScrollAnimation delay={0.1}>
           {/* Prevent horizontal scrolling, min-w-0 and break-words */}
-          <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 sm:gap-6 border-t pt-12 min-w-0 break-words">
+          <div className="relative grid min-w-0 grid-cols-1 gap-x-3 gap-y-6 border-t pt-12 break-words sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {features.items?.map((item, idx) => (
-              <div className="space-y-3 min-w-0 break-words" key={idx}>
-                <div className="flex items-center gap-2 min-w-0">
+              <div className="min-w-0 space-y-3 break-words" key={idx}>
+                <div className="flex min-w-0 items-center gap-2">
                   {item.icon && (
                     <SmartIcon name={item.icon as string} size={16} />
                   )}
-                  <h3 className="text-sm font-medium min-w-0 break-words">
+                  <h3 className="min-w-0 text-sm font-medium break-words">
                     {item.title}
                   </h3>
                 </div>
-                <p className="text-muted-foreground text-sm min-w-0 break-words">
-                  {item.description ?? ""}
+                <p className="text-muted-foreground min-w-0 text-sm break-words">
+                  {item.description ?? ''}
                 </p>
               </div>
             ))}

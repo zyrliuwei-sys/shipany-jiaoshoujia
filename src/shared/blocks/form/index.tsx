@@ -1,5 +1,16 @@
-"use client";
+'use client';
 
+import { isArray } from 'util';
+import { useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
+
+import { useRouter } from '@/core/i18n/navigation';
+import { SmartIcon } from '@/shared/blocks/common/smart-icon';
+import { Button } from '@/shared/components/ui/button';
 import {
   Form as FormComponent,
   FormControl,
@@ -8,39 +19,28 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/shared/components/ui/form";
+} from '@/shared/components/ui/form';
+import { Label } from '@/shared/components/ui/label';
+import { Textarea } from '@/shared/components/ui/textarea';
 import {
   FormField as FormFieldType,
   FormSubmit,
-} from "@/shared/types/blocks/form";
+} from '@/shared/types/blocks/form';
 
-import { Button } from "@/shared/components/ui/button";
-import { SmartIcon } from "@/shared/blocks/common/smart-icon";
-import { Input } from "./input";
-import { Loader } from "lucide-react";
-import { Select } from "./select";
-import { Switch } from "./switch";
-import { Markdown } from "./markdown";
-
-import { Textarea } from "@/shared/components/ui/textarea";
-import { toast } from "sonner";
-import { useForm } from "react-hook-form";
-import { useRouter } from "@/core/i18n/navigation";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { Checkbox } from "./checkbox";
-import { isArray } from "util";
-import { Label } from "@/shared/components/ui/label";
-import { UploadImage } from "./upload-image";
+import { Checkbox } from './checkbox';
+import { Input } from './input';
+import { Markdown } from './markdown';
+import { Select } from './select';
+import { Switch } from './switch';
+import { UploadImage } from './upload-image';
 
 function buildFieldSchema(field: FormFieldType) {
-  if (field.type === "switch") {
+  if (field.type === 'switch') {
     return z.boolean();
   }
 
   if (
-    field.type === "upload_image" &&
+    field.type === 'upload_image' &&
     field.metadata?.max &&
     field.metadata.max > 1
   ) {
@@ -55,13 +55,13 @@ function buildFieldSchema(field: FormFieldType) {
     return arraySchema;
   }
 
-  if (field.type === "checkbox") {
+  if (field.type === 'checkbox') {
     let schema = z.array(z.string());
 
     return schema;
   }
 
-  if (field.type === "upload_image") {
+  if (field.type === 'upload_image') {
     let schema = z.string();
 
     if (field.validation?.required) {
@@ -146,28 +146,28 @@ export function Form({
 
   fields.forEach((field) => {
     if (field.name) {
-      if (field.type === "switch") {
+      if (field.type === 'switch') {
         const val = data?.[field.name] ?? field.value;
-        console.log("switch value", val, field.name);
+        console.log('switch value', val, field.name);
         defaultValues[field.name] =
-          val === true || val === "true" || val === 1 || val === "1";
+          val === true || val === 'true' || val === 1 || val === '1';
       } else if (
-        field.type === "upload_image" &&
+        field.type === 'upload_image' &&
         field.metadata?.max &&
         field.metadata.max > 1
       ) {
         // Multiple image upload: default value is an array
         const val = data?.[field.name] ?? field.value;
-        if (typeof val === "string" && val) {
+        if (typeof val === 'string' && val) {
           // If it's a comma-separated string, convert to array
-          defaultValues[field.name] = val.split(",").filter(Boolean);
+          defaultValues[field.name] = val.split(',').filter(Boolean);
         } else if (Array.isArray(val)) {
           defaultValues[field.name] = val;
         } else {
           defaultValues[field.name] = [];
         }
       } else {
-        defaultValues[field.name] = data?.[field.name] || field.value || "";
+        defaultValues[field.name] = data?.[field.name] || field.value || '';
       }
     }
   });
@@ -178,12 +178,12 @@ export function Form({
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("=== Form Submit Start ===");
-    console.log("[Form Submit] Raw form data:", data);
+    console.log('=== Form Submit Start ===');
+    console.log('[Form Submit] Raw form data:', data);
 
     // Check upload_image field
     fields?.forEach((field) => {
-      if (field.type === "upload_image" && field.name) {
+      if (field.type === 'upload_image' && field.name) {
         console.log(`[Form Submit] Upload field "${field.name}":`, {
           value: data[field.name],
           type: typeof data[field.name],
@@ -216,11 +216,11 @@ export function Form({
       const res = await submit.handler(formData, passby);
 
       if (!res) {
-        throw new Error("No response received from server");
+        throw new Error('No response received from server');
       }
 
       if (res.message) {
-        if (res.status === "success") {
+        if (res.status === 'success') {
           toast.success(res.message);
         } else {
           toast.error(res.message);
@@ -233,8 +233,8 @@ export function Form({
 
       setLoading(false);
     } catch (err: any) {
-      console.log("submit form error", err);
-      toast.error(err.message || "submit form failed");
+      console.log('submit form error', err);
+      toast.error(err.message || 'submit form failed');
       setLoading(false);
     }
   }
@@ -243,41 +243,41 @@ export function Form({
     <FormComponent {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full md:max-w-xl space-y-0 pb-2"
+        className="w-full space-y-0 pb-2 md:max-w-xl"
       >
         {/* {title && <h2 className="text-lg font-bold">{title}</h2>}
         {description && <p className="text-muted-foreground">{description}</p>} */}
-        <div className="space-y-6 mb-6">
+        <div className="mb-6 space-y-6">
           {fields.map((item, index) => {
             return (
               <FormField
                 key={index}
                 control={form.control}
-                name={item.name || ""}
+                name={item.name || ''}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
                       {item.title}
                       {item.validation?.required && (
-                        <span className="text-red-500 ml-1">*</span>
+                        <span className="ml-1 text-red-500">*</span>
                       )}
                     </FormLabel>
                     <FormControl>
-                      {item.type === "textarea" ? (
+                      {item.type === 'textarea' ? (
                         <Textarea
                           {...(field as any)}
                           placeholder={item.placeholder}
                           {...item.attributes}
                         />
-                      ) : item.type === "select" ? (
+                      ) : item.type === 'select' ? (
                         <Select field={item} formField={field} data={data} />
-                      ) : item.type === "switch" ? (
+                      ) : item.type === 'switch' ? (
                         <Switch field={item} formField={field} data={data} />
-                      ) : item.type === "checkbox" ? (
+                      ) : item.type === 'checkbox' ? (
                         <Checkbox field={item} formField={field} data={data} />
-                      ) : item.type === "markdown_editor" ? (
+                      ) : item.type === 'markdown_editor' ? (
                         <Markdown field={item} formField={field} data={data} />
-                      ) : item.type === "upload_image" ? (
+                      ) : item.type === 'upload_image' ? (
                         <UploadImage
                           field={item}
                           formField={field}
@@ -304,9 +304,9 @@ export function Form({
           <Button
             type="submit"
             variant={submit.button.variant}
-            className="flex items-center justify-center gap-2 font-semibold cursor-pointer"
+            className="flex cursor-pointer items-center justify-center gap-2 font-semibold"
             disabled={loading}
-            size={submit.button.size || "sm"}
+            size={submit.button.size || 'sm'}
           >
             {loading ? (
               <Loader className="mr-2 h-4 w-4 animate-spin" />
@@ -326,4 +326,4 @@ export function Form({
   );
 }
 
-export * from "./form-card";
+export * from './form-card';

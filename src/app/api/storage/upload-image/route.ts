@@ -1,13 +1,14 @@
-import { respData, respErr } from "@/shared/lib/resp";
-import { getStorageService } from "@/shared/services/storage";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
+
+import { respData, respErr } from '@/shared/lib/resp';
+import { getStorageService } from '@/shared/services/storage';
 
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
-    const files = formData.getAll("files") as File[];
+    const files = formData.getAll('files') as File[];
 
-    console.log("[API] Received files:", files.length);
+    console.log('[API] Received files:', files.length);
     files.forEach((file, i) => {
       console.log(`[API] File ${i}:`, {
         name: file.name,
@@ -17,19 +18,19 @@ export async function POST(req: Request) {
     });
 
     if (!files || files.length === 0) {
-      return respErr("No files provided");
+      return respErr('No files provided');
     }
 
     const uploadResults = [];
 
     for (const file of files) {
       // Validate file type
-      if (!file.type.startsWith("image/")) {
+      if (!file.type.startsWith('image/')) {
         return respErr(`File ${file.name} is not an image`);
       }
 
       // Generate unique key
-      const ext = file.name.split(".").pop();
+      const ext = file.name.split('.').pop();
       const key = `uploads/${Date.now()}-${uuidv4()}.${ext}`;
 
       // Convert file to buffer
@@ -43,15 +44,15 @@ export async function POST(req: Request) {
         body: buffer,
         key: key,
         contentType: file.type,
-        disposition: "inline",
+        disposition: 'inline',
       });
 
       if (!result.success) {
-        console.error("[API] Upload failed:", result.error);
-        return respErr(result.error || "Upload failed");
+        console.error('[API] Upload failed:', result.error);
+        return respErr(result.error || 'Upload failed');
       }
 
-      console.log("[API] Upload success:", result.url);
+      console.log('[API] Upload success:', result.url);
 
       uploadResults.push({
         url: result.url,
@@ -61,7 +62,7 @@ export async function POST(req: Request) {
     }
 
     console.log(
-      "[API] All uploads complete. Returning URLs:",
+      '[API] All uploads complete. Returning URLs:',
       uploadResults.map((r) => r.url)
     );
 
@@ -70,7 +71,7 @@ export async function POST(req: Request) {
       results: uploadResults,
     });
   } catch (e) {
-    console.error("upload image failed:", e);
-    return respErr("upload image failed");
+    console.error('upload image failed:', e);
+    return respErr('upload image failed');
   }
 }

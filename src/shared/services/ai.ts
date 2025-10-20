@@ -1,5 +1,5 @@
-import { AIManager, KieProvider } from "@/extensions/ai";
-import { Configs, getAllConfigs } from "@/shared/services/config";
+import { AIManager, KieProvider } from '@/extensions/ai';
+import { Configs, getAllConfigs } from '@/shared/services/config';
 
 /**
  * get ai manager with configs

@@ -1,12 +1,13 @@
-"use client";
+'use client';
 
-import { Button } from "@/shared/components/ui/button";
-import { Loader2, Mail, SendHorizonal } from "lucide-react";
-import type { Subscribe as SubscribeType } from "@/shared/types/blocks/landing";
-import { useState } from "react";
-import { toast } from "sonner";
-import { cn } from "@/shared/lib/utils";
-import { ScrollAnimation } from "@/shared/components/ui/scroll-animation";
+import { useState } from 'react';
+import { Loader2, Mail, SendHorizonal } from 'lucide-react';
+import { toast } from 'sonner';
+
+import { Button } from '@/shared/components/ui/button';
+import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
+import { cn } from '@/shared/lib/utils';
+import type { Subscribe as SubscribeType } from '@/shared/types/blocks/landing';
 
 export function Subscribe({
   subscribe,
@@ -15,7 +16,7 @@ export function Subscribe({
   subscribe: SubscribeType;
   className?: string;
 }) {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubscribe = async () => {
@@ -30,7 +31,7 @@ export function Subscribe({
     try {
       setLoading(true);
       const resp = await fetch(subscribe.submit.action, {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify({ email }),
       });
 
@@ -50,19 +51,19 @@ export function Subscribe({
       }
     } catch (e: any) {
       setLoading(false);
-      toast.error(e.message || "subscribe failed");
+      toast.error(e.message || 'subscribe failed');
     }
   };
 
   return (
     <section
       id={subscribe.id}
-      className={cn("py-16 md:py-24", subscribe.className, className)}
+      className={cn('py-16 md:py-24', subscribe.className, className)}
     >
       <div className="mx-auto max-w-5xl px-6">
         <div className="text-center">
           <ScrollAnimation>
-            <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
+            <h2 className="text-4xl font-semibold text-balance lg:text-5xl">
               {subscribe.title}
             </h2>
           </ScrollAnimation>
@@ -71,8 +72,8 @@ export function Subscribe({
           </ScrollAnimation>
 
           <ScrollAnimation delay={0.3}>
-            <div className="mx-auto mt-10 max-w-xl lg:mt-12 overflow-hidden">
-              <div className="bg-background has-[input:focus]:ring-muted relative grid grid-cols-[1fr_auto] items-center rounded-[calc(var(--radius)+0.75rem)] overflow-hidden border pr-3 shadow shadow-zinc-950/5 has-[input:focus]:ring-2">
+            <div className="mx-auto mt-10 max-w-xl overflow-hidden lg:mt-12">
+              <div className="bg-background has-[input:focus]:ring-muted relative grid grid-cols-[1fr_auto] items-center overflow-hidden rounded-[calc(var(--radius)+0.75rem)] border pr-3 shadow shadow-zinc-950/5 has-[input:focus]:ring-2">
                 <Mail className="text-caption pointer-events-none absolute inset-y-0 left-5 my-auto size-5" />
 
                 <input

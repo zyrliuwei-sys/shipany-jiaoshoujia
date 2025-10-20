@@ -1,1 +1,1 @@
-export * from "./panel-card";
+export * from './panel-card';

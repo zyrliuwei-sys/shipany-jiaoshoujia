@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { ReactNode } from "react";
-import { toast } from "sonner";
-import { CopyIcon } from "lucide-react";
+import { ReactNode } from 'react';
+import { CopyIcon } from 'lucide-react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { toast } from 'sonner';
 
 export function Copy({
   value,
@@ -21,11 +21,11 @@ export function Copy({
   return (
     <CopyToClipboard
       text={value}
-      onCopy={() => toast.success(metadata?.message ?? "Copied")}
+      onCopy={() => toast.success(metadata?.message ?? 'Copied')}
     >
-      <div className={`cursor-pointer flex items-center gap-2 ${className}`}>
+      <div className={`flex cursor-pointer items-center gap-2 ${className}`}>
         {children}
-        <CopyIcon className="w-3 h-3" />
+        <CopyIcon className="h-3 w-3" />
       </div>
     </CopyToClipboard>
   );

@@ -43,25 +43,25 @@ export interface PaymentProduct {
 }
 
 export enum PaymentType {
-  ONE_TIME = "one-time",
-  SUBSCRIPTION = "subscription",
-  RENEW = "renew",
+  ONE_TIME = 'one-time',
+  SUBSCRIPTION = 'subscription',
+  RENEW = 'renew',
 }
 
 export enum PaymentInterval {
-  ONE_TIME = "one-time",
-  DAY = "day",
-  WEEK = "week",
-  MONTH = "month",
-  YEAR = "year",
+  ONE_TIME = 'one-time',
+  DAY = 'day',
+  WEEK = 'week',
+  MONTH = 'month',
+  YEAR = 'year',
 }
 
 export enum PaymentStatus {
-  PROCESSING = "processing", // processing means waiting for payment
+  PROCESSING = 'processing', // processing means waiting for payment
   // final status
-  SUCCESS = "paid", // paid means payment success
-  FAILED = "failed", // failed means payment failed
-  CANCELED = "canceled", // canceled means payment canceled
+  SUCCESS = 'paid', // paid means payment success
+  FAILED = 'failed', // failed means payment failed
+  CANCELED = 'canceled', // canceled means payment canceled
 }
 
 /**
@@ -106,8 +106,8 @@ export interface CheckoutInfo {
 }
 
 export enum SubscriptionCycleType {
-  CREATE = "create",
-  RENEWAL = "renew",
+  CREATE = 'create',
+  RENEWAL = 'renew',
 }
 
 /**
@@ -130,9 +130,9 @@ export interface PaymentInfo {
 }
 
 export enum SubscriptionStatus {
-  ACTIVE = "active",
-  PENDING_CANCEL = "pending_cancel",
-  CANCELED = "canceled",
+  ACTIVE = 'active',
+  PENDING_CANCEL = 'pending_cancel',
+  CANCELED = 'canceled',
 }
 
 export interface SubscriptionInfo {
@@ -189,12 +189,12 @@ export interface PaymentSession {
 }
 
 export enum PaymentEventType {
-  CHECKOUT_SUCCESS = "checkout.success", // checkout success
-  PAYMENT_SUCCESS = "payment.success", // payment success
-  PAYMENT_FAILED = "payment.failed", // payment failed
-  PAYMENT_REFUNDED = "payment.refunded", // payment refunded
-  SUBSCRIBE_UPDATED = "subscribe.updated", // subscription updated
-  SUBSCRIBE_CANCELED = "subscribe.canceled", // subscription canceled
+  CHECKOUT_SUCCESS = 'checkout.success', // checkout success
+  PAYMENT_SUCCESS = 'payment.success', // payment success
+  PAYMENT_FAILED = 'payment.failed', // payment failed
+  PAYMENT_REFUNDED = 'payment.refunded', // payment refunded
+  SUBSCRIBE_UPDATED = 'subscribe.updated', // subscription updated
+  SUBSCRIBE_CANCELED = 'subscribe.canceled', // subscription canceled
 }
 
 export interface EventInfo {}
@@ -326,7 +326,7 @@ export class PaymentManager {
 
     const defaultProvider = this.getDefaultProvider();
     if (!defaultProvider) {
-      throw new Error("No payment provider configured");
+      throw new Error('No payment provider configured');
     }
 
     return defaultProvider.createPayment({ order });
@@ -350,7 +350,7 @@ export class PaymentManager {
 
     const defaultProvider = this.getDefaultProvider();
     if (!defaultProvider) {
-      throw new Error("No payment provider configured");
+      throw new Error('No payment provider configured');
     }
 
     return defaultProvider.getPaymentSession({ sessionId });
@@ -374,7 +374,7 @@ export class PaymentManager {
 
     const defaultProvider = this.getDefaultProvider();
     if (!defaultProvider) {
-      throw new Error("No payment provider configured");
+      throw new Error('No payment provider configured');
     }
 
     return defaultProvider.getPaymentEvent({ req });
@@ -385,6 +385,6 @@ export class PaymentManager {
 export const paymentManager = new PaymentManager();
 
 // Export all providers
-export * from "./stripe";
-export * from "./creem";
-export * from "./paypal";
+export * from './stripe';
+export * from './creem';
+export * from './paypal';

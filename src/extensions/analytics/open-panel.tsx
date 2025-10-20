@@ -1,6 +1,7 @@
-import { AnalyticsConfigs, AnalyticsProvider } from ".";
-import { ReactNode } from "react";
-import Script from "next/script";
+import { ReactNode } from 'react';
+import Script from 'next/script';
+
+import { AnalyticsConfigs, AnalyticsProvider } from '.';
 
 /**
  * OpenPanel analytics configs
@@ -20,7 +21,7 @@ export interface OpenPanelAnalyticsConfigs extends AnalyticsConfigs {
  * @website https://openpanel.dev/
  */
 export class OpenPanelAnalyticsProvider implements AnalyticsProvider {
-  readonly name = "open-panel";
+  readonly name = 'open-panel';
 
   configs: OpenPanelAnalyticsConfigs;
 

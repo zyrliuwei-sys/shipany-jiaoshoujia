@@ -1,28 +1,29 @@
-"use client";
+'use client';
 
-import { cn } from "@/shared/lib/utils";
+import { useEffect, useState } from 'react';
+import { Check, Lightbulb, Loader2, SendHorizonal, Zap } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
+import { toast } from 'sonner';
+
+import { SmartIcon } from '@/shared/blocks/common';
+import { PaymentModal } from '@/shared/blocks/payment/payment-modal';
+import { Badge } from '@/shared/components/ui/badge';
+import { Button } from '@/shared/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/shared/components/ui/card";
-import { Check, Lightbulb, Loader2, SendHorizonal, Zap } from "lucide-react";
+} from '@/shared/components/ui/card';
+import { Tabs, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
+import { useAppContext } from '@/shared/contexts/app';
+import { cn } from '@/shared/lib/utils';
+import { Subscription } from '@/shared/services/subscription';
 import {
-  Pricing as PricingType,
   PricingItem,
-} from "@/shared/types/blocks/pricing";
-import { useLocale, useTranslations } from "next-intl";
-import { useAppContext } from "@/shared/contexts/app";
-import { useState, useEffect } from "react";
-import { toast } from "sonner";
-import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
-import { Badge } from "@/shared/components/ui/badge";
-import { Button } from "@/shared/components/ui/button";
-import { SmartIcon } from "@/shared/blocks/common";
-import { Subscription } from "@/shared/services/subscription";
-import { PaymentModal } from "@/shared/blocks/payment/payment-modal";
+  Pricing as PricingType,
+} from '@/shared/types/blocks/pricing';
 
 export function Pricing({
   pricing,
@@ -34,7 +35,7 @@ export function Pricing({
   currentSubscription?: Subscription;
 }) {
   const locale = useLocale();
-  const t = useTranslations("pricing.page");
+  const t = useTranslations('pricing.page');
   const {
     user,
     isShowPaymentModal,
@@ -68,7 +69,7 @@ export function Pricing({
       setIsShowSignModal(true);
       return;
     }
-    if (configs.select_payment_enabled === "true") {
+    if (configs.select_payment_enabled === 'true') {
       setPricingItem(item);
       setIsShowPaymentModal(true);
     } else {
@@ -89,17 +90,17 @@ export function Pricing({
       const params = {
         product_id: item.product_id,
         currency: item.currency,
-        locale: locale || "en",
-        payment_provider: paymentProvider || "",
+        locale: locale || 'en',
+        payment_provider: paymentProvider || '',
       };
 
       setIsLoading(true);
       setProductId(item.product_id);
 
-      const response = await fetch("/api/payment/checkout", {
-        method: "POST",
+      const response = await fetch('/api/payment/checkout', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(params),
       });
@@ -123,13 +124,13 @@ export function Pricing({
 
       const { checkoutUrl } = data;
       if (!checkoutUrl) {
-        throw new Error("checkout url not found");
+        throw new Error('checkout url not found');
       }
 
       window.location.href = checkoutUrl;
     } catch (e: any) {
-      console.log("checkout failed: ", e);
-      toast.error("checkout failed: " + e.message);
+      console.log('checkout failed: ', e);
+      toast.error('checkout failed: ' + e.message);
 
       setIsLoading(false);
       setProductId(null);
@@ -147,28 +148,28 @@ export function Pricing({
   return (
     <section
       id={pricing.id}
-      className={cn("py-24 md:py-36", pricing.className, className)}
+      className={cn('py-24 md:py-36', pricing.className, className)}
     >
-      <div className="mx-auto mb-12 text-center px-4 md:px-8">
+      <div className="mx-auto mb-12 px-4 text-center md:px-8">
         {pricing.sr_only_title && (
           <h1 className="sr-only">{pricing.sr_only_title}</h1>
         )}
-        <h2 className="mb-6 text-pretty text-3xl font-bold lg:text-4xl">
+        <h2 className="mb-6 text-3xl font-bold text-pretty lg:text-4xl">
           {pricing.title}
         </h2>
-        <p className="mb-4 max-w-xl mx-auto text-muted-foreground lg:max-w-none lg:text-lg">
+        <p className="text-muted-foreground mx-auto mb-4 max-w-xl lg:max-w-none lg:text-lg">
           {pricing.description}
         </p>
       </div>
 
       <div className="container">
         {pricing.groups && pricing.groups.length > 0 && (
-          <div className="mb-16 mt-8 flex justify-center w-full md:max-w-lg mx-auto">
+          <div className="mx-auto mt-8 mb-16 flex w-full justify-center md:max-w-lg">
             <Tabs value={group} onValueChange={setGroup} className="">
               <TabsList>
                 {pricing.groups.map((item, i) => {
                   return (
-                    <TabsTrigger key={i} value={item.name || ""}>
+                    <TabsTrigger key={i} value={item.name || ''}>
                       {item.title}
                       {item.label && (
                         <Badge className="ml-2">{item.label}</Badge>
@@ -182,7 +183,7 @@ export function Pricing({
         )}
 
         <div
-          className={`w-full mt-0 grid gap-6 md:grid-cols-${
+          className={`mt-0 grid w-full gap-6 md:grid-cols-${
             pricing.items?.filter((item) => !item.group || item.group === group)
               ?.length
           }`}
@@ -203,7 +204,7 @@ export function Pricing({
             return (
               <Card key={idx} className="relative">
                 {item.label && (
-                  <span className="bg-linear-to-br/increasing absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full from-purple-400 to-amber-300 px-3 py-1 text-xs font-medium text-amber-950 ring-1 ring-inset ring-white/20 ring-offset-1 ring-offset-gray-950/5">
+                  <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-linear-to-br/increasing from-purple-400 to-amber-300 px-3 py-1 text-xs font-medium text-amber-950 ring-1 ring-white/20 ring-offset-1 ring-offset-gray-950/5 ring-inset">
                     {item.label}
                   </span>
                 )}
@@ -214,14 +215,14 @@ export function Pricing({
                   </CardTitle>
 
                   <span className="my-3 block text-2xl font-semibold">
-                    {item.price} {item.unit ? `${item.unit}` : ""}
+                    {item.price} {item.unit ? `${item.unit}` : ''}
                   </span>
 
                   <CardDescription className="text-sm">
                     {item.description}
                   </CardDescription>
                   {item.tip && (
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-muted-foreground text-sm">
                       {item.tip}
                     </span>
                   )}
@@ -229,11 +230,11 @@ export function Pricing({
                   {isCurrentPlan ? (
                     <Button
                       variant="outline"
-                      className="mt-4 w-full h-9 px-4 py-2"
+                      className="mt-4 h-9 w-full px-4 py-2"
                       disabled
                     >
-                      <span className="hidden md:block text-sm">
-                        {t("current_plan")}
+                      <span className="hidden text-sm md:block">
+                        {t('current_plan')}
                       </span>
                     </Button>
                   ) : (
@@ -241,15 +242,15 @@ export function Pricing({
                       onClick={() => handlePayment(item)}
                       disabled={isLoading}
                       className={cn(
-                        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
-                        "mt-4 w-full h-9 px-4 py-2",
-                        "shadow-md border-[0.5px] border-white/25 shadow-black/20 bg-primary text-primary-foreground hover:bg-primary/90"
+                        'focus-visible:ring-ring inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-1 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
+                        'mt-4 h-9 w-full px-4 py-2',
+                        'bg-primary text-primary-foreground hover:bg-primary/90 border-[0.5px] border-white/25 shadow-md shadow-black/20'
                       )}
                     >
                       {isLoading && item.product_id === productId ? (
                         <>
                           <Loader2 className="size-4 animate-spin" />
-                          <span className="block">{t("processing")}</span>
+                          <span className="block">{t('processing')}</span>
                         </>
                       ) : (
                         <>

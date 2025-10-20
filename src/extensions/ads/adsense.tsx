@@ -1,5 +1,6 @@
-import { AdsConfigs, AdsProvider } from "@/extensions/ads";
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
+
+import { AdsConfigs, AdsProvider } from '@/extensions/ads';
 
 /**
  * Google adsense configs
@@ -13,7 +14,7 @@ export interface AdsenseConfigs extends AdsConfigs {
  * @website https://adsense.google.com/
  */
 export class AdsenseProvider implements AdsProvider {
-  readonly name = "adsense";
+  readonly name = 'adsense';
 
   configs: AdsenseConfigs;
 

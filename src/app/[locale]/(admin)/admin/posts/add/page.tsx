@@ -1,14 +1,13 @@
-import { Header, Main, MainHeader } from "@/shared/blocks/dashboard";
-import { FormCard } from "@/shared/blocks/form";
-import { Form } from "@/shared/types/blocks/form";
-import { getUuid } from "@/shared/lib/hash";
-import { addPost, NewPost, PostType } from "@/shared/services/post";
-import { PostStatus } from "@/shared/services/post";
-import { Crumb } from "@/shared/types/blocks/common";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { PERMISSIONS } from "@/core/rbac";
-import { requirePermission } from "@/core/rbac";
-import { getUserInfo } from "@/shared/services/user";
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+
+import { PERMISSIONS, requirePermission } from '@/core/rbac';
+import { Header, Main, MainHeader } from '@/shared/blocks/dashboard';
+import { FormCard } from '@/shared/blocks/form';
+import { getUuid } from '@/shared/lib/hash';
+import { addPost, NewPost, PostStatus, PostType } from '@/shared/services/post';
+import { getUserInfo } from '@/shared/services/user';
+import { Crumb } from '@/shared/types/blocks/common';
+import { Form } from '@/shared/types/blocks/form';
 
 export default async function PostAddPage({
   params,
@@ -21,96 +20,96 @@ export default async function PostAddPage({
   // Check if user has permission to add posts
   await requirePermission({
     code: PERMISSIONS.POSTS_WRITE,
-    redirectUrl: "/admin/no-permission",
+    redirectUrl: '/admin/no-permission',
     locale,
   });
 
-  const t = await getTranslations("admin.posts");
+  const t = await getTranslations('admin.posts');
 
   const crumbs: Crumb[] = [
-    { title: t("add.crumbs.admin"), url: "/admin" },
-    { title: t("add.crumbs.posts"), url: "/admin/posts" },
-    { title: t("add.crumbs.add"), is_active: true },
+    { title: t('add.crumbs.admin'), url: '/admin' },
+    { title: t('add.crumbs.posts'), url: '/admin/posts' },
+    { title: t('add.crumbs.add'), is_active: true },
   ];
 
   const form: Form = {
     fields: [
       {
-        name: "slug",
-        type: "text",
-        title: t("fields.slug"),
-        tip: "unique slug for the post",
+        name: 'slug',
+        type: 'text',
+        title: t('fields.slug'),
+        tip: 'unique slug for the post',
         validation: { required: true },
       },
       {
-        name: "title",
-        type: "text",
-        title: t("fields.title"),
+        name: 'title',
+        type: 'text',
+        title: t('fields.title'),
         validation: { required: true },
       },
       {
-        name: "description",
-        type: "textarea",
-        title: t("fields.description"),
+        name: 'description',
+        type: 'textarea',
+        title: t('fields.description'),
       },
       {
-        name: "content",
-        type: "markdown_editor",
-        title: t("fields.content"),
+        name: 'content',
+        type: 'markdown_editor',
+        title: t('fields.content'),
       },
     ],
     passby: {
-      type: "post",
+      type: 'post',
     },
     data: {},
     submit: {
       button: {
-        title: t("add.buttons.submit"),
+        title: t('add.buttons.submit'),
       },
       handler: async (data, passby) => {
-        "use server";
+        'use server';
 
         const user = await getUserInfo();
         if (!user) {
-          throw new Error("no auth");
+          throw new Error('no auth');
         }
 
-        const slug = data.get("slug") as string;
-        const title = data.get("title") as string;
-        const description = data.get("description") as string;
-        const content = data.get("content") as string;
+        const slug = data.get('slug') as string;
+        const title = data.get('title') as string;
+        const description = data.get('description') as string;
+        const content = data.get('content') as string;
 
         if (!slug?.trim() || !title?.trim()) {
-          throw new Error("slug and title are required");
+          throw new Error('slug and title are required');
         }
 
         const newPost: NewPost = {
           id: getUuid(),
           userId: user.id,
-          parentId: "", // todo: select parent category
+          parentId: '', // todo: select parent category
           slug: slug.trim().toLowerCase(),
           type: PostType.ARTICLE,
           title: title.trim(),
           description: description.trim(),
-          image: "",
+          image: '',
           content: content.trim(),
-          categories: "",
-          tags: "",
-          authorName: "",
-          authorImage: "",
+          categories: '',
+          tags: '',
+          authorName: '',
+          authorImage: '',
           status: PostStatus.PUBLISHED,
         };
 
         const result = await addPost(newPost);
 
         if (!result) {
-          throw new Error("add post failed");
+          throw new Error('add post failed');
         }
 
         return {
-          status: "success",
-          message: "post added",
-          redirect_url: "/admin/posts",
+          status: 'success',
+          message: 'post added',
+          redirect_url: '/admin/posts',
         };
       },
     },
@@ -120,7 +119,7 @@ export default async function PostAddPage({
     <>
       <Header crumbs={crumbs} />
       <Main>
-        <MainHeader title={t("add.title")} />
+        <MainHeader title={t('add.title')} />
         <FormCard form={form} className="md:max-w-xl" />
       </Main>
     </>

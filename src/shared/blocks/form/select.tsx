@@ -1,4 +1,5 @@
-import * as React from "react";
+import * as React from 'react';
+import { ControllerRenderProps } from 'react-hook-form';
 
 import {
   Select as SelectComponent,
@@ -6,9 +7,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shared/components/ui/select";
-import { FormField } from "@/shared/types/blocks/form";
-import { ControllerRenderProps } from "react-hook-form";
+} from '@/shared/components/ui/select';
+import { FormField } from '@/shared/types/blocks/form';
 
 export function Select({
   field,
@@ -26,7 +26,7 @@ export function Select({
       defaultValue={field.value}
       {...field.attributes}
     >
-      <SelectTrigger className="w-full bg-background rounded-md">
+      <SelectTrigger className="bg-background w-full rounded-md">
         <SelectValue placeholder={field.placeholder} />
       </SelectTrigger>
       <SelectContent className="bg-background rounded-md">

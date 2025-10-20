@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Stats as StatsType } from "@/shared/types/blocks/landing";
-import { ScrollAnimation } from "@/shared/components/ui/scroll-animation";
+import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
+import { Stats as StatsType } from '@/shared/types/blocks/landing';
 
 export function Stats({
   stats,
@@ -34,7 +34,7 @@ export function Stats({
                 <h3 className="sr-only">
                   {item.title} {item.description}
                 </h3>
-                <div className="text-5xl font-bold text-primary">
+                <div className="text-primary text-5xl font-bold">
                   {item.title}
                 </div>
                 <p>{item.description}</p>
