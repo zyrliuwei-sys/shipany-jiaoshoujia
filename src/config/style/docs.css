@@ -19,3 +19,7 @@ body {
 .docs h2 {
   font-size: 1.5em;
 }
+
+.docs a:not([href^='#']) {
+  color: var(--primary);
+}

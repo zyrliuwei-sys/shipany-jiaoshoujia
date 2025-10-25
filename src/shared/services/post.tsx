@@ -5,7 +5,9 @@ import moment from 'moment';
 
 import { db } from '@/core/db';
 import { pagesSource, postsSource } from '@/core/docs/source';
+import { generateTOC } from '@/core/docs/toc';
 import { post } from '@/config/db/schema';
+import { MDXContent } from '@/shared/blocks/common/mdx-content';
 import {
   Category as BlogCategoryType,
   Post as BlogPostType,
@@ -154,12 +156,22 @@ export async function getPost({
   const postData = await findPost({ slug, status: PostStatus.PUBLISHED });
   if (postData) {
     // post exist in database
+    const content = postData.content || '';
+
+    // Convert markdown content to MDXContent component
+    const body = content ? <MDXContent source={content} /> : undefined;
+
+    // Generate TOC from content
+    const toc = content ? generateTOC(content) : undefined;
+
     post = {
       id: postData.id,
       slug: postData.slug,
       title: postData.title || '',
       description: postData.description || '',
-      content: postData.content || '',
+      content: '',
+      body: body,
+      toc: toc,
       created_at:
         getPostDate({
           created_at: postData.createdAt.toISOString(),
@@ -213,6 +225,7 @@ export async function getLocalPost({
     description: localPost.data.description || '',
     content: '',
     body: body,
+    toc: localPost.data.toc, // Use fumadocs auto-generated TOC
     created_at: frontmatter.created_at
       ? getPostDate({
           created_at: frontmatter.created_at,
@@ -260,6 +273,7 @@ export async function getLocalPage({
     description: localPage.data.description || '',
     content: '',
     body: body,
+    toc: localPage.data.toc, // Use fumadocs auto-generated TOC
     created_at: frontmatter.created_at
       ? getPostDate({
           created_at: frontmatter.created_at,

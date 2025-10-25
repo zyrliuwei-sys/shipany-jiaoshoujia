@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 
+import type { TOCItemType } from '@/core/docs/toc';
+
 export interface Blog {
   id?: string;
   sr_only_title?: string;
@@ -26,6 +28,7 @@ export interface Post {
   target?: string;
   categories?: Category[];
   body?: ReactNode;
+  toc?: TOCItemType[];
 }
 
 export interface Category {
