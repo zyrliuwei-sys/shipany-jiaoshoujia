@@ -30,14 +30,15 @@ export function User({
 
   return (
     <Link
-      href={`/admin/users/${value.id}`}
+      href={`/admin/users?email=${value.email}`}
+      target="_blank"
       className={cn('flex items-center gap-2', className)}
     >
       <Avatar className={className}>
         <AvatarImage src={value.image || ''} alt={value.name} />
         <AvatarFallback>{value.name?.charAt(0) || 'U'}</AvatarFallback>
       </Avatar>
-      {value.name}
+      <div className="flex flex-col">{value.name}</div>
     </Link>
   );
 }
