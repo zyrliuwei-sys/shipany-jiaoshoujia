@@ -83,7 +83,16 @@ export async function POST(req: Request) {
 
     const orderNo = getSnowId();
 
-    const paymentProductId = pricingItem.payment_product_id || '';
+    // get payment product id from pricing table in local file
+    let paymentProductId = pricingItem.payment_product_id || '';
+
+    if (!paymentProductId) {
+      // get payment product id from payment provider's config
+      paymentProductId = await getPaymentProductId(
+        pricingItem.product_id,
+        paymentProviderName
+      );
+    }
 
     // build checkout price
     const checkoutPrice: PaymentPrice = {
@@ -96,6 +105,8 @@ export async function POST(req: Request) {
       if (!checkoutPrice.amount || !checkoutPrice.currency) {
         return respErr('invalid checkout price');
       }
+    } else {
+      paymentProductId = paymentProductId.trim();
     }
 
     let callbackBaseUrl = `${configs.app_url}`;
@@ -201,5 +212,25 @@ export async function POST(req: Request) {
   } catch (e: any) {
     console.log('checkout failed:', e);
     return respErr('checkout failed: ' + e.message);
+  }
+}
+
+// get payemt product id from payment provider's config
+async function getPaymentProductId(productId: string, provider: string) {
+  if (provider !== 'creem') {
+    // currently only creem supports payment product id mapping
+    return;
+  }
+
+  try {
+    const configs = await getAllConfigs();
+    const creemProductIds = configs.creem_product_ids;
+    if (creemProductIds) {
+      const productIds = JSON.parse(creemProductIds);
+      return productIds[productId];
+    }
+  } catch (e: any) {
+    console.log('get payment product id failed:', e);
+    return;
   }
 }

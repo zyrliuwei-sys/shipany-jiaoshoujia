@@ -286,6 +286,29 @@ export class StripeProvider implements PaymentProvider {
     }
   }
 
+  async cancelSubscription({
+    subscriptionId,
+  }: {
+    subscriptionId: string;
+  }): Promise<PaymentSession> {
+    try {
+      if (!subscriptionId) {
+        throw new Error('subscriptionId is required');
+      }
+
+      const subscription =
+        await this.client.subscriptions.cancel(subscriptionId);
+
+      if (!subscription.canceled_at) {
+        throw new Error('Cancel subscription failed');
+      }
+
+      return await this.buildPaymentSessionFromSubscription(subscription);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   private mapStripeEventType(eventType: string): PaymentEventType {
     switch (eventType) {
       case 'checkout.session.completed':
@@ -391,10 +414,25 @@ export class StripeProvider implements PaymentProvider {
       undefined;
     let billingUrl = '';
 
-    if (invoice.lines.data.length > 0 && invoice.lines.data[0].subscription) {
-      subscription = await this.client.subscriptions.retrieve(
-        invoice.lines.data[0].subscription as string
-      );
+    if (invoice.lines.data.length > 0) {
+      const data = invoice.lines.data[0];
+      let subscriptionId = '';
+
+      // get subscription id from invoice line data
+      if (data.subscription) {
+        subscriptionId = data.subscription as string;
+      } else if (
+        data.parent &&
+        data.parent.subscription_item_details &&
+        data.parent.subscription_item_details.subscription
+      ) {
+        subscriptionId = data.parent.subscription_item_details
+          .subscription as string;
+      }
+
+      if (subscriptionId) {
+        subscription = await this.client.subscriptions.retrieve(subscriptionId);
+      }
     }
 
     const result: PaymentSession = {
