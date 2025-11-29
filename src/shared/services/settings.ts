@@ -99,6 +99,12 @@ export async function getSettingGroups() {
   const t = await getTranslations('admin.settings');
   const settingGroups: SettingGroup[] = [
     {
+      name: 'appinfo',
+      title: t('groups.appinfo'),
+      description: 'custom your app info',
+      tab: 'general',
+    },
+    {
       name: 'credit',
       title: t('groups.credit'),
       description: 'custom credit settings',
@@ -265,6 +271,37 @@ export async function getSettingGroups() {
 
 export async function getSettings() {
   const settings: Setting[] = [
+    {
+      name: 'app_name',
+      title: 'App Name',
+      placeholder: 'ShipAny',
+      type: 'text',
+      group: 'appinfo',
+      tab: 'general',
+    },
+    {
+      name: 'app_description',
+      title: 'App Description',
+      placeholder:
+        'ShipAny is a NextJS boilerplate for building AI SaaS startups. ',
+      type: 'textarea',
+      group: 'appinfo',
+      tab: 'general',
+    },
+    {
+      name: 'app_logo',
+      title: 'App Logo',
+      type: 'upload_image',
+      group: 'appinfo',
+      tab: 'general',
+    },
+    {
+      name: 'app_preview_image',
+      title: 'App Preview Image',
+      type: 'upload_image',
+      group: 'appinfo',
+      tab: 'general',
+    },
     {
       name: 'initial_credits_enabled',
       title: 'Initial Credits Enabled',
