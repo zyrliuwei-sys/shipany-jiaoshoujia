@@ -5,6 +5,7 @@ import { X } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
 import { usePathname, useRouter } from '@/core/i18n/navigation';
+import { envConfigs } from '@/config';
 import { localeNames, locales } from '@/config/locale';
 import { Button } from '@/shared/components/ui/button';
 import { cacheGet, cacheSet } from '@/shared/lib/cache';
@@ -15,6 +16,10 @@ const DISMISSED_EXPIRY_DAYS = 1; // Expiry in days
 const PREFERRED_LOCALE_KEY = 'locale';
 
 export function LocaleDetector() {
+  if (envConfigs.locale_detect_enabled !== 'true') {
+    return null;
+  }
+
   const currentLocale = useLocale();
   const router = useRouter();
   const pathname = usePathname();

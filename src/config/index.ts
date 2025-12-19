@@ -47,4 +47,6 @@ export const envConfigs: ConfigMap = {
   auth_url: process.env.AUTH_URL || process.env.NEXT_PUBLIC_APP_URL || '',
   auth_secret: process.env.AUTH_SECRET ?? '', // openssl rand -base64 32
   version: packageJson.version,
+  locale_detect_enabled:
+    process.env.NEXT_PUBLIC_LOCALE_DETECT_ENABLED ?? 'true',
 };
