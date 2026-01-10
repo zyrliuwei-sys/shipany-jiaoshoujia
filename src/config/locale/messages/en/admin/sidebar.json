@@ -1,10 +1,10 @@
 {
   "header": {
     "brand": {
-      "title": "Univideo AI Two",
+      "title": "Univideo AI",
       "logo": {
         "src": "/logo.png",
-        "alt": "Univideo AI Two"
+        "alt": "Univideo AI"
       },
       "url": "/admin"
     },
