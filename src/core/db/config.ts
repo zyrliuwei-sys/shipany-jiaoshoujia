@@ -1,23 +1,22 @@
-import { defineConfig } from 'drizzle-kit';
+import dotenv from 'dotenv'
+dotenv.config({
+  path: '.env.development',
+  override: true,   // 🔥 关键
+})
 
-import { envConfigs } from '@/config';
+import { defineConfig } from 'drizzle-kit'
+
+console.log('DRIZZLE DATABASE_URL =', JSON.stringify(process.env.DATABASE_URL))
+
+if (!process.env.DATABASE_URL) {
+  throw new Error('DATABASE_URL is missing for drizzle-kit')
+}
 
 export default defineConfig({
-  out: envConfigs.db_migrations_out,
+  dialect: 'postgresql',
   schema: './src/config/db/schema.ts',
-  dialect: envConfigs.database_provider as
-    | 'sqlite'
-    | 'postgresql'
-    | 'mysql'
-    | 'turso'
-    | 'singlestore'
-    | 'gel',
+  out: './src/config/db/migrations',
   dbCredentials: {
-    url: envConfigs.database_url ?? '',
+    url: process.env.DATABASE_URL,
   },
-  // Migration journal location (used by drizzle-kit migrate)
-  migrations: {
-    schema: envConfigs.db_migrations_schema,
-    table: envConfigs.db_migrations_table,
-  },
-});
+})
