@@ -57,31 +57,6 @@
               "icon": "RiMessage2Line"
             }
           ]
-        },
-        {
-          "title": "Resources",
-          "icon": "FileText",
-          "children": [
-            {
-              "title": "Blog",
-              "description": "Read articles about AI video generation",
-              "url": "/blog",
-              "icon": "Newspaper"
-            },
-            {
-              "title": "Updates",
-              "description": "Latest updates and improvements",
-              "url": "/updates",
-              "icon": "Clock"
-            },
-            {
-              "title": "Docs",
-              "description": "Documentation and guides",
-              "url": "/docs",
-              "target": "_blank",
-              "icon": "BookOpenText"
-            }
-          ]
         }
       ]
     },
@@ -141,26 +116,6 @@
             {
               "title": "Pricing",
               "url": "/pricing",
-              "target": "_self"
-            }
-          ]
-        },
-        {
-          "title": "Resources",
-          "children": [
-            {
-              "title": "Documentation",
-              "url": "/docs",
-              "target": "_self"
-            },
-            {
-              "title": "Blog",
-              "url": "/blog",
-              "target": "_self"
-            },
-            {
-              "title": "AI Chat",
-              "url": "/chat",
               "target": "_self"
             }
           ]
