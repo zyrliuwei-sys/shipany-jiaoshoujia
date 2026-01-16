@@ -91,6 +91,7 @@
         "title": "What is Univideo AI",
         "label": "Introduce",
         "description": "Univideo AI is an advanced AI video production platform that leverages cutting-edge multimodal AI technology to transform video creation.",
+        "text_align": "center",
         "items": [
           {
             "title": "AI Video Generation",
